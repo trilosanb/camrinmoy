@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Check-In — Investments & Insurance | CA Mrinmoy + BigMind</title>
+<link rel="icon" type="image/png" href="assets/img/ca_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213D;
+    --ink-soft:#3A4664;
+    --paper:#F7F6F2;
+    --card:#FFFFFF;
+    --gold:#B8863B;
+    --gold-soft:#E9DAC0;
+    --green:#1F7A5C;
+    --slate:#6B7280;
+    --line:#E4E1D8;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 16px;
+  }
+  .wrap{
+    width:100%;
+    max-width:560px;
+  }
+  .brand{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:18px;
+    padding:0 4px;
+  }
+  .brand-name{
+    font-family:'Fraunces',serif;
+    font-size:15px;
+    font-weight:500;
+    color:var(--ink);
+    letter-spacing:.01em;
+  }
+  .brand-tag{
+    font-size:11px;
+    color:var(--slate);
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .progress-track{
+    height:3px;
+    background:var(--line);
+    border-radius:2px;
+    margin-bottom:28px;
+    overflow:hidden;
+    position:relative;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--gold);
+    width:0%;
+    transition:width .45s ease;
+  }
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:0 1px 2px rgba(20,33,61,.04), 0 12px 32px rgba(20,33,61,.06);
+    padding:40px 36px 32px;
+    position:relative;
+    overflow:hidden;
+  }
+  .step{
+    display:none;
+    animation:rise .4s ease;
+  }
+  .step.active{display:block;}
+  @keyframes rise{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .eyebrow{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:10px;
+  }
+  .question{
+    font-family:'Fraunces',serif;
+    font-size:24px;
+    font-weight:500;
+    line-height:1.35;
+    color:var(--ink);
+    margin:0 0 8px;
+  }
+  .hint{
+    font-size:14px;
+    color:var(--slate);
+    margin:0 0 22px;
+    line-height:1.5;
+  }
+  .hint b{color:var(--ink-soft); font-weight:600;}
+  input[type=text], input[type=email], input[type=tel], input[type=date]{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    padding:14px 16px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    background:var(--paper);
+    color:var(--ink);
+    outline:none;
+    transition:border-color .2s;
+  }
+  input:focus{border-color:var(--gold);}
+  .yn-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .yn-btn{
+    padding:20px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    font-weight:600;
+    color:var(--ink);
+    cursor:pointer;
+    text-align:center;
+    transition:all .15s;
+  }
+  .yn-btn:hover{border-color:var(--gold-soft); background:#FBF7EF;}
+  .yn-btn.selected{
+    border-color:var(--gold);
+    background:var(--gold);
+    color:#fff;
+  }
+  .chip-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .chip{
+    padding:11px 18px;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .chip:hover{border-color:var(--gold-soft);}
+  .chip.selected{
+    border-color:var(--green);
+    background:#EAF4EF;
+    color:var(--green);
+  }
+  .nav-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:30px;
+  }
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    font-weight:600;
+    padding:13px 26px;
+    border-radius:9px;
+    border:none;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .btn-primary{
+    background:var(--ink);
+    color:#fff;
+  }
+  .btn-primary:hover{background:#0C1830;}
+  .btn-primary:disabled{background:var(--line); color:#9A9689; cursor:not-allowed;}
+  .btn-ghost{
+    background:transparent;
+    color:var(--slate);
+  }
+  .btn-ghost:hover{color:var(--ink);}
+  .btn-ghost:disabled{visibility:hidden;}
+  .err{
+    color:#B4483C;
+    font-size:13px;
+    margin-top:8px;
+    display:none;
+  }
+  .final{
+    text-align:center;
+    padding:20px 0;
+  }
+  .final .mark{
+    width:52px;height:52px;border-radius:50%;
+    background:#EAF4EF;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 18px;
+    font-size:24px;color:var(--green);
+  }
+  .final h2{
+    font-family:'Fraunces',serif;
+    font-size:22px;font-weight:500;
+    margin:0 0 8px;
+  }
+  .final p{color:var(--slate); font-size:14.5px; line-height:1.6; margin:0;}
+  .footer-note{
+    text-align:center;
+    font-size:12px;
+    color:var(--slate);
+    margin-top:18px;
+  }
+  @media (max-width:480px){
+    .card{padding:28px 22px 24px;}
+    .question{font-size:20px;}
+    .yn-row{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand" style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="assets/img/ca_logo.png" alt="CA India Logo" style="height: 32px; width: auto; object-fit: contain;">
+      <span class="brand-name" style="margin: 0; line-height: 1.2;">CA Mrinmoy &amp; Co. · BigMind Consulting</span>
+    </div>
+    <span class="brand-tag">Client Check-In</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+  <div class="card">
+    <form id="checkinForm">
+
+      <!-- Step: intro-ish name -->
+      <div class="step active" data-step="fullName">
+        <div class="eyebrow">Let's start</div>
+        <p class="question">What's your full name?</p>
+        <input type="text" id="fullName" autocomplete="name" placeholder="e.g. Rakesh Sharma">
+        <div class="err">Please enter your name.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" disabled>Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="email">
+        <div class="eyebrow">Contact</div>
+        <p class="question">And your email address?</p>
+        <input type="email" id="email" autocomplete="email" placeholder="you@example.com">
+        <div class="err">Please enter a valid email.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="whatsapp">
+        <div class="eyebrow">Contact</div>
+        <p class="question">WhatsApp number for follow-up?</p>
+        <input type="tel" id="whatsapp" autocomplete="tel" placeholder="98xxxxxxxx">
+        <div class="err">Please enter a valid number.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="investingNow">
+        <div class="eyebrow">Your investments</div>
+        <p class="question">Are you currently investing anywhere?</p>
+        <p class="hint">Mutual Funds, Stocks, FDs, Insurance, Crypto Currency etc.</p>
+        <div class="yn-row">
+          <div class="yn-btn" onclick="selectYN('investingNow','Yes',this)">Yes</div>
+          <div class="yn-btn" onclick="selectYN('investingNow','No',this)">No</div>
+        </div>
+        <div class="err">Please select an option.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="whereInvested">
+        <div class="eyebrow">Your investments</div>
+        <p class="question">Where have you invested?</p>
+        <p class="hint">Select all that apply.</p>
+        <div class="chip-grid">
+          <div class="chip" onclick="toggleChip('whereInvested','Fixed Deposit',this)">Fixed Deposit</div>
+          <div class="chip" onclick="toggleChip('whereInvested','Mutual Funds',this)">Mutual Funds</div>
+          <div class="chip" onclick="toggleChip('whereInvested','Shares',this)">Shares</div>
+          <div class="chip" onclick="toggleChip('whereInvested','Insurance-Backed Plans',this)">Insurance-Backed Plans</div>
+          <div class="chip" onclick="toggleChip('whereInvested','Crypto Currency',this)">Crypto Currency</div>
+        </div>
+        <div class="err">Please select at least one.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="professionalHelp">
+        <div class="eyebrow">Your investments</div>
+        <p class="question">Do you avail professional help while investing?</p>
+        <div class="yn-row">
+          <div class="yn-btn" onclick="selectYN('professionalHelp','Yes',this)">Yes</div>
+          <div class="yn-btn" onclick="selectYN('professionalHelp','No',this)">No</div>
+        </div>
+        <div class="err">Please select an option.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="portfolioReview">
+        <div class="eyebrow">Portfolio review</div>
+        <p class="question">Would you like a free review of your existing investment portfolio?</p>
+        <div class="yn-row">
+          <div class="yn-btn" onclick="selectYN('portfolioReview','Yes',this)">Yes</div>
+          <div class="yn-btn" onclick="selectYN('portfolioReview','No',this)">No</div>
+        </div>
+        <div class="err">Please select an option.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="wantToStart">
+        <div class="eyebrow">Getting started</div>
+        <p class="question">Would you like to start?</p>
+        <p class="hint"><b>Yes</b> means we'll guide you through: Understanding options → Building a plan → Opening an account → Starting to invest.</p>
+        <div class="yn-row">
+          <div class="yn-btn" onclick="selectYN('wantToStart','Yes',this)">Yes</div>
+          <div class="yn-btn" onclick="selectYN('wantToStart','No',this)">No</div>
+        </div>
+        <div class="err">Please select an option.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="insuranceHeld">
+        <div class="eyebrow">Insurance</div>
+        <p class="question">Do you currently have:</p>
+        <p class="hint">Select all that apply.</p>
+        <div class="chip-grid">
+          <div class="chip" onclick="toggleChip('insuranceHeld','Term Plan',this)">Term Plan</div>
+          <div class="chip" onclick="toggleChip('insuranceHeld','Health Insurance',this)">Health Insurance</div>
+          <div class="chip" onclick="toggleChip('insuranceHeld','Life Policy Plan - Guaranteed Return',this)">Guaranteed Savings Plan</div>
+          <div class="chip" onclick="toggleChip('insuranceHeld','None of the Above',this)">None of the above</div>
+        </div>
+        <div class="err">Please select at least one.</div>
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" onclick="next()">Continue</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="followUpDate">
+        <div class="eyebrow">Almost done</div>
+        <p class="question">Preferred date for a follow-up call?</p>
+        <p class="hint">Optional — our team will confirm a time with you.</p>
+        <input type="date" id="followUpDate">
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" onclick="back()">Back</button>
+          <button type="button" class="btn btn-primary" id="submitBtn" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="done">
+        <div class="final">
+          <div class="mark">✓</div>
+          <h2>Thank you</h2>
+          <p>We've received your responses. Our team will call you at your preferred time to walk through the next steps.</p>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <p class="footer-note">Your responses are shared only with CA Mrinmoy &amp; Co. / BigMind Consulting.</p>
+</div>
+
+<script>
+// ====== CONFIGURE THIS ======
+// You can paste your Google Apps Script URL here, or save it in your browser's localStorage as "SCRIPT_URL"
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLgAOtpmYwrgnbpfBQRLIsQg2I6WGp-O7ybOzKb-pKmvEu7Xtqhx1hJD1VzfhmUWfB/exec";
+// =============================
+
+const answers = {
+  fullName:"", email:"", whatsapp:"",
+  investingNow:"", whereInvested:[], professionalHelp:"", portfolioReview:"",
+  wantToStart:"", insuranceHeld:[], followUpDate:""
+};
+
+// linear base order; branching decided at runtime
+function getFlow(){
+  let flow = ["fullName","email","whatsapp","investingNow"];
+  if(answers.investingNow === "Yes"){
+    flow.push("whereInvested","professionalHelp","portfolioReview");
+  } else if(answers.investingNow === "No"){
+    flow.push("wantToStart");
+  }
+  flow.push("insuranceHeld","followUpDate","done");
+  return flow;
+}
+
+let stepIndex = 0;
+
+function currentFlow(){ return getFlow(); }
+
+function showStep(name){
+  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+  document.querySelector(`.step[data-step="${name}"]`).classList.add("active");
+  const flow = currentFlow();
+  const idx = flow.indexOf(name);
+  const pct = Math.round((idx/(flow.length-1))*100);
+  document.getElementById("progressFill").style.width = pct+"%";
+}
+
+function selectYN(key, val, el){
+  answers[key] = val;
+  el.parentElement.querySelectorAll(".yn-btn").forEach(b=>b.classList.remove("selected"));
+  el.classList.add("selected");
+  hideErr(el.closest(".step"));
+}
+
+function toggleChip(key, val, el){
+  const arr = answers[key];
+  if(val === 'None of the Above'){
+    answers[key] = [val];
+    el.parentElement.querySelectorAll(".chip").forEach(c => {
+      if(c === el) c.classList.add("selected");
+      else c.classList.remove("selected");
+    });
+  } else {
+    const noneIdx = arr.indexOf('None of the Above');
+    if(noneIdx > -1){
+      arr.splice(noneIdx, 1);
+      el.parentElement.querySelectorAll(".chip").forEach(c => {
+        if(c.textContent.trim().toLowerCase() === 'none of the above'){
+          c.classList.remove("selected");
+        }
+      });
+    }
+    const i = arr.indexOf(val);
+    if(i>-1){ arr.splice(i,1); el.classList.remove("selected"); }
+    else{ arr.push(val); el.classList.add("selected"); }
+  }
+  hideErr(el.closest(".step"));
+}
+
+function hideErr(stepEl){
+  const err = stepEl.querySelector(".err");
+  if(err) err.style.display="none";
+}
+function showErr(stepEl){
+  const err = stepEl.querySelector(".err");
+  if(err) err.style.display="block";
+}
+
+function validate(name){
+  const stepEl = document.querySelector(`.step[data-step="${name}"]`);
+  let ok = true;
+  if(name==="fullName") ok = document.getElementById("fullName").value.trim().length>0;
+  if(name==="email") ok = /\S+@\S+\.\S+/.test(document.getElementById("email").value.trim());
+  if(name==="whatsapp") ok = document.getElementById("whatsapp").value.trim().length>=7;
+  if(name==="investingNow") ok = answers.investingNow !== "";
+  if(name==="whereInvested") ok = answers.whereInvested.length>0;
+  if(name==="professionalHelp") ok = answers.professionalHelp !== "";
+  if(name==="portfolioReview") ok = answers.portfolioReview !== "";
+  if(name==="wantToStart") ok = answers.wantToStart !== "";
+  if(name==="insuranceHeld") ok = answers.insuranceHeld.length>0;
+  if(!ok) showErr(stepEl); else hideErr(stepEl);
+  return ok;
+}
+
+function syncField(name){
+  if(name==="fullName") answers.fullName = document.getElementById("fullName").value.trim();
+  if(name==="email") answers.email = document.getElementById("email").value.trim();
+  if(name==="whatsapp") answers.whatsapp = document.getElementById("whatsapp").value.trim();
+  if(name==="followUpDate") answers.followUpDate = document.getElementById("followUpDate").value;
+}
+
+function next(){
+  const flow = currentFlow();
+  const name = flow[stepIndex];
+  syncField(name);
+  if(!validate(name)) return;
+  stepIndex++;
+  showStep(flow[stepIndex]);
+}
+
+function back(){
+  const flow = currentFlow();
+  if(stepIndex===0) return;
+  stepIndex--;
+  showStep(flow[stepIndex]);
+}
+
+function submitForm(){
+  syncField("followUpDate");
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Submitting...";
+
+  const payload = {
+    fullName: answers.fullName,
+    email: answers.email,
+    whatsapp: answers.whatsapp,
+    investingNow: answers.investingNow,
+    whereInvested: answers.whereInvested,
+    professionalHelp: answers.professionalHelp,
+    portfolioReview: answers.portfolioReview,
+    wantToStart: answers.wantToStart,
+    insuranceHeld: answers.insuranceHeld,
+    followUpDate: answers.followUpDate
+  };
+
+  // Resolve URL (check localStorage if not hardcoded in the file)
+  let targetUrl = SCRIPT_URL;
+  if (!targetUrl || targetUrl.includes("PASTE_YOUR")) {
+    targetUrl = localStorage.getItem("SCRIPT_URL") || "";
+  }
+
+  if (targetUrl) {
+    fetch(targetUrl, {
+      method:"POST",
+      mode:"no-cors",
+      headers:{ "Content-Type":"text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    }).then(()=>{
+      stepIndex++;
+      showStep("done");
+    }).catch(()=>{
+      stepIndex++;
+      showStep("done"); // fallback to success message
+    });
+  } else {
+    console.warn("Google Apps Script URL is not configured. Submission simulated.");
+    setTimeout(()=>{
+      stepIndex++;
+      showStep("done");
+    }, 800);
+  }
+}
+
+showStep("fullName");
+</script>
+</body>
+</html>

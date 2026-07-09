@@ -1,0 +1,12 @@
+{
+  "name": "Mrinmoy & Co. — Chartered Accountants",
+  "short_name": "Mrinmoy & Co.",
+  "description": "Chartered accountancy firm in Guwahati, Assam — accounting, tax, compliance and financial advisory.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0B4F8A",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

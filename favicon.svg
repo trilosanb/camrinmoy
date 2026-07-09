@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mrinmoy & Co.">
+  <rect width="64" height="64" rx="14" fill="#0F5132"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="38" fill="#ffffff">M</text>
+  <rect x="14" y="50" width="36" height="2" rx="1" fill="#7FC7A0"/>
+</svg>

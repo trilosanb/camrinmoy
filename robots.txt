@@ -1,0 +1,11 @@
+# robots.txt — Mrinmoy & Co., Chartered Accountants
+# Per ICAI guidance, search listing is intended for the field of "Chartered Accountants".
+
+User-agent: *
+Allow: /
+
+# Housekeeping / non-content
+Disallow: /README.md
+Disallow: /checkin-form.html
+
+Sitemap: https://www.camrinmoy.com/sitemap.xml

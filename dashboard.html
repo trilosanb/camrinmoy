@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Check-In Dashboard — CA Mrinmoy & Co. | BigMind</title>
+  <link rel="icon" type="image/png" href="assets/img/ca_logo.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js CDN for premium interactive charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+
+  <style>
+    :root {
+      --bg-base: #F7F6F2;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --border-color: #E4E1D8;
+      
+      --text-main: #14213D;
+      --text-muted: #6B7280;
+      --text-dark: #14213D;
+      
+      --gold: #B8863B;
+      --gold-dark: #966A2C;
+      --gold-soft: rgba(184, 134, 59, 0.12);
+      
+      --green: #1F7A5C;
+      --green-soft: rgba(31, 122, 92, 0.12);
+      
+      --blue: #2A5A7A;
+      --blue-soft: rgba(42, 90, 122, 0.12);
+      
+      --danger: #B4483C;
+      --danger-soft: rgba(180, 72, 60, 0.12);
+      
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      line-height: 1.5;
+      padding: 24px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Header styling */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 1px 3px rgba(20,33,61,.04), 0 12px 32px rgba(20,33,61,.06);
+    }
+
+    .brand-group h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 24px;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-group p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .status-badge.simulated {
+      background: var(--gold-soft);
+      color: var(--gold);
+      border: 1px solid rgba(184, 134, 59, 0.3);
+    }
+
+    .status-badge.live {
+      background: var(--green-soft);
+      color: var(--green);
+      border: 1px solid rgba(31, 122, 92, 0.3);
+    }
+
+    .status-badge .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #FFF;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-base);
+      border-color: var(--text-muted);
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: 0 1px 2px rgba(20,33,61,.04), 0 8px 24px rgba(20,33,61,.04);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(20,33,61,.08);
+      border-color: var(--gold);
+    }
+
+    .stat-card .label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .stat-card .value {
+      font-size: 32px;
+      font-weight: 700;
+      font-family: 'Fraunces', serif;
+      color: var(--text-main);
+    }
+
+    .stat-card .subtext {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stat-card .trend-up {
+      color: var(--green);
+    }
+
+    .stat-card .icon-holder {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      opacity: 0.12;
+      font-size: 48px;
+      color: var(--text-main);
+      pointer-events: none;
+    }
+
+    /* Charts & Analytics Layout */
+    .analytics-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .analytics-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .analytics-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 1px 2px rgba(20,33,61,.04), 0 8px 24px rgba(20,33,61,.04);
+    }
+
+    .analytics-card h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 18px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .chart-container {
+      position: relative;
+      height: 220px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Data Table Section */
+    .leads-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 1px 2px rgba(20,33,61,.04), 0 8px 24px rgba(20,33,61,.04);
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .search-filter-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-base);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 16px 10px 38px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px var(--gold-soft);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      width: 16px;
+      height: 16px;
+    }
+
+    .select-filter {
+      background: var(--bg-base);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      outline: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .select-filter:focus {
+      border-color: var(--gold);
+    }
+
+    /* Table grid wrapper */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #F4F2EB;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+      white-space: nowrap;
+      max-width: 250px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #FAF9F6;
+      cursor: pointer;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .badge-yes {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .badge-no {
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .badge-maybe {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .badge-gold {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .empty-state {
+      padding: 48px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    /* Modal Overlay Base */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(20, 33, 61, 0.4);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 20px 48px rgba(20, 33, 61, 0.15);
+      overflow: hidden;
+      transform: translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      color: var(--text-main);
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 20px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-btn:hover {
+      color: var(--text-main);
+    }
+
+    .modal-body {
+      padding: 24px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      background: var(--bg-base);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Lead detail rows */
+    .detail-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .detail-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .detail-item .label {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .detail-item .value {
+      font-weight: 600;
+      color: var(--text-main);
+      word-break: break-word;
+    }
+
+    .detail-item .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .detail-chip {
+      background: var(--bg-base);
+      border: 1px solid var(--border-color);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--text-main);
+    }
+
+    /* Config Dialog Inputs */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-group input {
+      background: var(--bg-base);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+      font-family: monospace;
+    }
+
+    .form-group input:focus {
+      border-color: var(--gold);
+    }
+
+    .form-help {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .form-help a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .form-help a:hover {
+      text-decoration: underline;
+    }
+
+    /* Notification Banner */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-surface);
+      border-left: 4px solid var(--gold);
+      box-shadow: 0 10px 25px rgba(20,33,61,0.08);
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      z-index: 200;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .toast.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-success {
+      border-left-color: var(--green);
+    }
+
+    .toast-error {
+      border-left-color: var(--danger);
+    }
+
+    /* SVG styling */
+    .icon {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-whatsapp {
+      stroke: none;
+      fill: currentColor;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      border: 3px solid rgba(20,33,61,0.1);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border-left-color: var(--gold);
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- Header -->
+  <header>
+    <div class="brand-group" style="display: flex; align-items: center; gap: 16px;">
+      <img src="assets/img/ca_logo.png" alt="CA India Logo" style="height: 48px; width: auto; object-fit: contain;">
+      <div>
+        <h1 style="font-family: 'Fraunces', serif; font-weight: 500; font-size: 22px; color: var(--text-main); margin: 0; line-height: 1.2;">
+          Mrinmoy & Co. · BigMind Consulting
+        </h1>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px; margin-bottom: 0; line-height: 1;">
+          Financial Check-In Leads &amp; Management Dashboard
+        </p>
+      </div>
+    </div>
+    
+    <div class="header-actions">
+      <div id="connStatus" class="status-badge simulated">
+        <span class="indicator"></span>
+        <span class="status-text">Simulated Data</span>
+      </div>
+      
+      <button class="btn btn-secondary" onclick="refreshData()" title="Refresh database">
+        <svg class="icon"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        Refresh
+      </button>
+      
+      <button class="btn btn-secondary" onclick="openConfigModal()" title="Setup Connection Settings">
+        <svg class="icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        API Settings
+      </button>
+    </div>
+  </header>
+
+  <!-- KPI Stats Bar -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="label">Total Check-Ins</span>
+      <span class="value" id="statTotal">0</span>
+      <span class="subtext"><span class="trend-up">↑ 100%</span> all-time checkins</span>
+      <span class="icon-holder">📋</span>
+    </div>
+    <div class="stat-card">
+      <span class="label">Portfolio Reviews</span>
+      <span class="value" id="statReviews">0</span>
+      <span class="subtext">Wants free audit review</span>
+      <span class="icon-holder">📊</span>
+    </div>
+    <div class="stat-card">
+      <span class="label">Onboarding Leads</span>
+      <span class="value" id="statOnboard">0</span>
+      <span class="subtext">Wants to start investing</span>
+      <span class="icon-holder">🚀</span>
+    </div>
+    <div class="stat-card">
+      <span class="label">Active Investors</span>
+      <span class="value" id="statInvesting">0</span>
+      <span class="subtext" id="statInvestingPct">0% currently invest</span>
+      <span class="icon-holder">💰</span>
+    </div>
+  </div>
+
+  <!-- Analytics Row -->
+  <div class="analytics-row">
+    <!-- Investment Status breakdown -->
+    <div class="analytics-card">
+      <h2>Investment Portfolio Status</h2>
+      <div class="chart-container">
+        <canvas id="investingChart"></canvas>
+      </div>
+    </div>
+    <!-- Financial assets distribution breakdown -->
+    <div class="analytics-card">
+      <h2>Financial Asset Holdings</h2>
+      <div class="chart-container">
+        <canvas id="assetsChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leads Database Section -->
+  <div class="leads-section">
+    <div class="controls-row">
+      <div class="search-filter-group">
+        <!-- Search bar -->
+        <div class="search-wrapper">
+          <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by name, email..." oninput="handleSearchFilter()">
+        </div>
+        
+        <!-- Filter dropdowns -->
+        <select id="filterInvesting" class="select-filter" onchange="handleSearchFilter()">
+          <option value="ALL">Currently Investing: All</option>
+          <option value="Yes">Investing: Yes</option>
+          <option value="No">Investing: No</option>
+        </select>
+        
+        <select id="filterReview" class="select-filter" onchange="handleSearchFilter()">
+          <option value="ALL">Portfolio Review: All</option>
+          <option value="Yes">Needs Review</option>
+          <option value="No">No Review Needed</option>
+        </select>
+        
+        <select id="filterStart" class="select-filter" onchange="handleSearchFilter()">
+          <option value="ALL">Onboarding Flow: All</option>
+          <option value="Yes">Ready to Start</option>
+          <option value="No">Not Starting</option>
+        </select>
+      </div>
+      
+      <button class="btn btn-primary" onclick="exportFilteredCSV()">
+        <svg class="icon" style="stroke: var(--bg-base);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Export CSV
+      </button>
+    </div>
+
+    <!-- Leads Table Grid -->
+    <div class="table-container">
+      <table id="leadsTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>WhatsApp</th>
+            <th>Investing</th>
+            <th>Review Requested</th>
+            <th>Wants to Start</th>
+            <th>Preferred Follow-Up</th>
+          </tr>
+        </thead>
+        <tbody id="leadsTableBody">
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Lead Detail Modal -->
+<div id="detailModal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modalName">Lead Details</h3>
+      <button class="close-btn" onclick="closeModal('detailModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid" id="modalDetailsContent">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('detailModal')">Close</button>
+      <a id="btnEmail" href="#" class="btn btn-secondary" target="_blank">
+        <svg class="icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+        Email
+      </a>
+      <a id="btnWhatsApp" href="#" class="btn btn-primary" target="_blank">
+        <svg class="icon icon-whatsapp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.517 2.266 2.27 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.5-5.739-1.446L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 1.966 14.12 .942 11.49 1.942c-5.432 0-9.858 4.37-9.863 9.8-.001 1.742.469 3.442 1.358 4.965l-.982 3.582 3.654-.956zm11.904-7.662c-.3-.15-1.774-.875-2.046-.975-.273-.1-.472-.15-.67.15-.198.3-.77.975-.944 1.175-.173.2-.347.225-.647.075-.3-.15-1.266-.467-2.41-1.485-.89-.795-1.49-1.77-1.664-2.07-.173-.3-.018-.462.13-.61.135-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.67-1.613-.918-2.213-.242-.58-.488-.5-.67-.51-.173-.01-.371-.01-.57-.01-.198 0-.52.075-.792.375-.272.3-1.04 1.013-1.04 2.475s1.04 2.875 1.188 3.075c.149.2 2.048 3.125 4.962 4.38.694.3 1.236.478 1.658.613.698.223 1.332.192 1.834.118.56-.083 1.774-.725 2.022-1.425.248-.7.248-1.3.173-1.425-.074-.125-.272-.2-.572-.35z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- API Config Modal -->
+<div id="configModal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Connection Setup</h3>
+      <button class="close-btn" onclick="closeModal('configModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="scriptUrlInput">Google Apps Script Web App URL</label>
+        <input type="text" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
+        <p class="form-help">
+          Paste the web app URL generated after deploying your Google Apps Script workspace project. Leave it empty to return to the interactive simulation mode. Need help setting it up? Refer to the <a href="file:///C:/Users/TRILOSAN%20%20BORO/.gemini/antigravity-ide/brain/b50eeb24-2929-4801-9cdc-920d00b00ceb/scratch/apps-script-source.js" target="_blank">setup instructions script file</a>.
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('configModal')">Cancel</button>
+      <button class="btn btn-secondary" onclick="clearConfig()">Reset to Demo</button>
+      <button class="btn btn-primary" onclick="saveConfig()">Save Connection</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification banner -->
+<div id="toast" class="toast">
+  <span id="toastMessage">Message goes here</span>
+</div>
+
+<script>
+  // High fidelity realistic mock leads for immediate dashboard demonstration
+  const MOCK_LEADS = [
+    {
+      timestamp: "2026-07-09T08:14:32.000Z",
+      fullName: "Anirban Goswami",
+      email: "anirban.g@gmail.com",
+      whatsapp: "9864022312",
+      investingNow: "Yes",
+      whereInvested: ["Mutual Funds", "Shares"],
+      professionalHelp: "No",
+      portfolioReview: "Yes",
+      wantToStart: "",
+      insuranceHeld: ["Term Plan", "Health Insurance"],
+      followUpDate: "2026-07-12"
+    },
+    {
+      timestamp: "2026-07-08T14:22:10.000Z",
+      fullName: "Priyanka Barua",
+      email: "priyanka.barua@outlook.com",
+      whatsapp: "7002155490",
+      investingNow: "No",
+      whereInvested: [],
+      professionalHelp: "",
+      portfolioReview: "",
+      wantToStart: "Yes",
+      insuranceHeld: ["Health Insurance"],
+      followUpDate: "2026-07-10"
+    },
+    {
+      timestamp: "2026-07-08T11:05:45.000Z",
+      fullName: "Devashish Sarma",
+      email: "devashish_s@rediffmail.com",
+      whatsapp: "8811029384",
+      investingNow: "Yes",
+      whereInvested: ["Fixed Deposit", "Insurance-Backed Plans"],
+      professionalHelp: "Yes",
+      portfolioReview: "No",
+      wantToStart: "",
+      insuranceHeld: ["Life Policy Plan - Guaranteed Return"],
+      followUpDate: ""
+    },
+    {
+      timestamp: "2026-07-07T16:40:18.000Z",
+      fullName: "Jahnavi Deka",
+      email: "jahnavi.deka@gmail.com",
+      whatsapp: "9435011223",
+      investingNow: "Yes",
+      whereInvested: ["Fixed Deposit", "Mutual Funds", "Shares", "Crypto Currency"],
+      professionalHelp: "No",
+      portfolioReview: "Yes",
+      wantToStart: "",
+      insuranceHeld: ["Term Plan", "Health Insurance", "Life Policy Plan - Guaranteed Return"],
+      followUpDate: "2026-07-15"
+    },
+    {
+      timestamp: "2026-07-07T09:12:02.000Z",
+      fullName: "Rajesh Kalita",
+      email: "rkalita@techcorp.in",
+      whatsapp: "9864233211",
+      investingNow: "No",
+      whereInvested: [],
+      professionalHelp: "",
+      portfolioReview: "",
+      wantToStart: "No",
+      insuranceHeld: ["None of the Above"],
+      followUpDate: ""
+    },
+    {
+      timestamp: "2026-07-06T15:30:11.000Z",
+      fullName: "Mridusmita Bora",
+      email: "mridu.bora@yahoo.com",
+      whatsapp: "8473822109",
+      investingNow: "Yes",
+      whereInvested: ["Mutual Funds"],
+      professionalHelp: "No",
+      portfolioReview: "Yes",
+      wantToStart: "",
+      insuranceHeld: ["Health Insurance"],
+      followUpDate: "2026-07-11"
+    }
+  ];
+
+  let rawLeads = [];
+  let filteredLeads = [];
+  let investingChartInstance = null;
+  let assetsChartInstance = null;
+
+  // Initial load
+  document.addEventListener("DOMContentLoaded", () => {
+    initApp();
+  });
+
+  // Default production script URL fallback
+  const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLgAOtpmYwrgnbpfBQRLIsQg2I6WGp-O7ybOzKb-pKmvEu7Xtqhx1hJD1VzfhmUWfB/exec";
+
+  function initApp() {
+    const savedUrl = localStorage.getItem("SCRIPT_URL") || DEFAULT_SCRIPT_URL;
+    const statusBadge = document.getElementById("connStatus");
+    
+    if (savedUrl && savedUrl.trim().length > 0) {
+      statusBadge.className = "status-badge live";
+      statusBadge.querySelector(".status-text").textContent = "Live Connect";
+      fetchLiveLeads(savedUrl);
+    } else {
+      statusBadge.className = "status-badge simulated";
+      statusBadge.querySelector(".status-text").textContent = "Simulated Data";
+      loadDemoData();
+    }
+  }
+
+  function loadDemoData() {
+    rawLeads = [...MOCK_LEADS];
+    filteredLeads = [...rawLeads];
+    updateDashboardUI();
+    showToast("Loaded demo lead dataset", "success");
+  }
+
+  function fetchLiveLeads(url) {
+    const statusBadge = document.getElementById("connStatus");
+    const textNode = statusBadge.querySelector(".status-text");
+    textNode.innerHTML = '<span class="spinner" style="width: 12px; height: 12px; border-width: 2px; margin-right: 6px;"></span> Fetching...';
+    
+    // We append a random parameter to avoid aggressive browser caching
+    const requestUrl = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+
+    fetch(requestUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("HTTP error " + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        textNode.textContent = "Live Connect";
+        if (Array.isArray(data)) {
+          rawLeads = data;
+          filteredLeads = [...rawLeads];
+          updateDashboardUI();
+          showToast(`Successfully synced ${data.length} live entries`, "success");
+        } else {
+          console.error("Format error: script returned non-array body", data);
+          throw new Error("Invalid response format (expected JSON array)");
+        }
+      })
+      .catch(err => {
+        console.error("Fetch failed", err);
+        statusBadge.className = "status-badge simulated";
+        textNode.textContent = "Sync Failed (Demo Mode)";
+        showToast("Unable to sync from Apps Script. Loading simulation backup...", "error");
+        loadDemoData();
+      });
+  }
+
+  function refreshData() {
+    initApp();
+  }
+
+  function updateDashboardUI() {
+    // 1. Calculate and update KPI values
+    const total = rawLeads.length;
+    const reviews = rawLeads.filter(l => l.portfolioReview === "Yes").length;
+    const onboarding = rawLeads.filter(l => l.wantToStart === "Yes").length;
+    const investing = rawLeads.filter(l => l.investingNow === "Yes").length;
+    const investPct = total > 0 ? Math.round((investing / total) * 100) : 0;
+
+    document.getElementById("statTotal").textContent = total;
+    document.getElementById("statReviews").textContent = reviews;
+    document.getElementById("statOnboard").textContent = onboarding;
+    document.getElementById("statInvesting").textContent = investing;
+    document.getElementById("statInvestingPct").textContent = `${investPct}% currently invest`;
+
+    // 2. Refresh Table Content
+    handleSearchFilter();
+
+    // 3. Render charts
+    setTimeout(() => {
+      renderCharts(investing, total - investing);
+    }, 100);
+  }
+
+  function renderCharts(investingCount, nonInvestingCount) {
+    if (typeof Chart === 'undefined') {
+      console.warn("Chart.js library is not yet loaded");
+      return;
+    }
+
+    // Asset distribution counter
+    const assetCounts = {
+      "Fixed Deposit": 0,
+      "Mutual Funds": 0,
+      "Shares": 0,
+      "Insurance-Backed Plans": 0,
+      "Crypto Currency": 0
+    };
+
+    // Insurance Held counter
+    const insuranceCounts = {
+      "Term Plan": 0,
+      "Health Insurance": 0,
+      "Guaranteed Savings Plan": 0
+    };
+
+    rawLeads.forEach(l => {
+      if (Array.isArray(l.whereInvested)) {
+        l.whereInvested.forEach(asset => {
+          if (assetCounts[asset] !== undefined) {
+            assetCounts[asset]++;
+          }
+        });
+      }
+      if (Array.isArray(l.insuranceHeld)) {
+        l.insuranceHeld.forEach(ins => {
+          // Normalize names
+          let normalized = ins;
+          if (ins === "Life Policy Plan - Guaranteed Return" || ins === "Guaranteed Return Policy") {
+            normalized = "Guaranteed Savings Plan";
+          }
+          if (insuranceCounts[normalized] !== undefined) {
+            insuranceCounts[normalized]++;
+          }
+        });
+      }
+    });
+
+    // Chart 1: Donut for Investing Yes/No
+    const ctxInvesting = document.getElementById("investingChart").getContext("2d");
+    if (investingChartInstance) investingChartInstance.destroy();
+    investingChartInstance = new Chart(ctxInvesting, {
+      type: "doughnut",
+      data: {
+        labels: ["Active Investors", "Non-Investors"],
+        datasets: [{
+          data: [investingCount, nonInvestingCount],
+          backgroundColor: ["#B8863B", "#E4E1D8"],
+          borderColor: "#FFFFFF",
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+            labels: { color: "#14213D", font: { family: "Inter", size: 12 } }
+          }
+        }
+      }
+    });
+
+    // Chart 2: Horizontal Bar for Assets
+    const ctxAssets = document.getElementById("assetsChart").getContext("2d");
+    if (assetsChartInstance) assetsChartInstance.destroy();
+    
+    const assetLabels = Object.keys(assetCounts);
+    const assetValues = Object.values(assetCounts);
+
+    assetsChartInstance = new Chart(ctxAssets, {
+      type: "bar",
+      data: {
+        labels: assetLabels,
+        datasets: [{
+          label: "Leads Holding Asset",
+          data: assetValues,
+          backgroundColor: "#1F7A5C",
+          borderColor: "#FFFFFF",
+          borderWidth: 1,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            grid: { color: "#E4E1D8" },
+            ticks: { color: "#6B7280", stepSize: 1 }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: "#6B7280", font: { family: "Inter" } }
+          }
+        }
+      }
+    });
+  }
+
+  function handleSearchFilter() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const investingFilter = document.getElementById("filterInvesting").value;
+    const reviewFilter = document.getElementById("filterReview").value;
+    const startFilter = document.getElementById("filterStart").value;
+
+    filteredLeads = rawLeads.filter(lead => {
+      // 1. Text Search matches
+      const textMatch = 
+        (lead.fullName && lead.fullName.toLowerCase().includes(query)) ||
+        (lead.email && lead.email.toLowerCase().includes(query)) ||
+        (lead.whatsapp && lead.whatsapp.includes(query));
+
+      // 2. Investing Status matches
+      let investingMatch = true;
+      if (investingFilter !== "ALL") {
+        investingMatch = lead.investingNow === investingFilter;
+      }
+
+      // 3. Portfolio Review matches
+      let reviewMatch = true;
+      if (reviewFilter !== "ALL") {
+        reviewMatch = lead.portfolioReview === reviewFilter;
+      }
+
+      // 4. Onboarding matches
+      let startMatch = true;
+      if (startFilter !== "ALL") {
+        startMatch = lead.wantToStart === startFilter;
+      }
+
+      return textMatch && investingMatch && reviewMatch && startMatch;
+    });
+
+    renderTableRows();
+  }
+
+  function renderTableRows() {
+    const tbody = document.getElementById("leadsTableBody");
+    tbody.innerHTML = "";
+
+    if (filteredLeads.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No leads match the active filters or dataset is empty.</div></td></tr>`;
+      return;
+    }
+
+    filteredLeads.forEach((lead, idx) => {
+      const tr = document.createElement("tr");
+      tr.onclick = () => openLeadDetails(lead);
+
+      // Formatted date
+      let dateStr = "N/A";
+      if (lead.timestamp) {
+        const d = new Date(lead.timestamp);
+        dateStr = d.toLocaleDateString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+      }
+
+      // Value Badges
+      const investBadge = lead.investingNow === "Yes" 
+        ? `<span class="badge badge-yes">Yes</span>` 
+        : (lead.investingNow === "No" ? `<span class="badge badge-no">No</span>` : `<span class="badge badge-maybe">-</span>`);
+        
+      const reviewBadge = lead.portfolioReview === "Yes"
+        ? `<span class="badge badge-yes">Yes</span>`
+        : (lead.portfolioReview === "No" ? `<span class="badge badge-no">No</span>` : `<span class="badge badge-maybe">-</span>`);
+
+      const startBadge = lead.wantToStart === "Yes"
+        ? `<span class="badge badge-gold">Start</span>`
+        : (lead.wantToStart === "No" ? `<span class="badge badge-no">No</span>` : `<span class="badge badge-maybe">-</span>`);
+
+      tr.innerHTML = `
+        <td>${dateStr}</td>
+        <td style="font-weight: 600; color: #FFF;">${escapeHtml(lead.fullName || "")}</td>
+        <td>${escapeHtml(lead.email || "")}</td>
+        <td>${escapeHtml(lead.whatsapp || "")}</td>
+        <td>${investBadge}</td>
+        <td>${reviewBadge}</td>
+        <td>${startBadge}</td>
+        <td>${lead.followUpDate ? lead.followUpDate : '<span style="color: var(--text-muted);">-</span>'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function openLeadDetails(lead) {
+    document.getElementById("modalName").textContent = lead.fullName || "Lead Details";
+    const detailsContainer = document.getElementById("modalDetailsContent");
+    
+    // Formatting timestamp
+    let submittedAt = "N/A";
+    if (lead.timestamp) {
+      submittedAt = new Date(lead.timestamp).toLocaleString("en-IN", { dateStyle: "long", timeStyle: "medium" });
+    }
+
+    // Creating chips for list-like values
+    const assetChips = Array.isArray(lead.whereInvested) && lead.whereInvested.length > 0
+      ? lead.whereInvested.map(item => `<span class="detail-chip">${escapeHtml(item)}</span>`).join("")
+      : '<span style="color: var(--text-muted); font-style: italic;">None or Not Disclosed</span>';
+
+    const insChips = Array.isArray(lead.insuranceHeld) && lead.insuranceHeld.length > 0
+      ? lead.insuranceHeld.map(item => `<span class="detail-chip">${escapeHtml(item)}</span>`).join("")
+      : '<span style="color: var(--text-muted); font-style: italic;">None or Not Disclosed</span>';
+
+    detailsContainer.innerHTML = `
+      <div class="detail-item">
+        <span class="label">Submitted Time</span>
+        <span class="value">${submittedAt}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Full Name</span>
+        <span class="value" style="color: var(--gold);">${escapeHtml(lead.fullName || "N/A")}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Email Address</span>
+        <span class="value">${escapeHtml(lead.email || "N/A")}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">WhatsApp Number</span>
+        <span class="value">${escapeHtml(lead.whatsapp || "N/A")}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Currently Investing?</span>
+        <span class="value">${lead.investingNow || "No / Not Disclosed"}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Existing Assets</span>
+        <span class="value"><div class="chip-list">${assetChips}</div></span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Avails Professional Help?</span>
+        <span class="value">${lead.professionalHelp || '<span style="color: var(--text-muted);">-</span>'}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Wants Portfolio Review?</span>
+        <span class="value">${lead.portfolioReview || '<span style="color: var(--text-muted);">-</span>'}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Wants to Start?</span>
+        <span class="value">${lead.wantToStart || '<span style="color: var(--text-muted);">-</span>'}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Insurance Coverage</span>
+        <span class="value"><div class="chip-list">${insChips}</div></span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Preferred Follow-Up Date</span>
+        <span class="value">${lead.followUpDate ? lead.followUpDate : '<span style="color: var(--text-muted);">-</span>'}</span>
+      </div>
+    `;
+
+    // Configure Action Links
+    const emailLink = document.getElementById("btnEmail");
+    const waLink = document.getElementById("btnWhatsApp");
+    
+    // Email body prefill
+    const emailSubject = encodeURIComponent("CA Mrinmoy & Co. — Financial Portfolio Follow-Up");
+    const emailBody = encodeURIComponent(`Hi ${lead.fullName || ""},\n\nThank you for checking in with Mrinmoy & Co. We received your financial survey details. We'd love to schedule a quick 10-minute call on your preferred date (${lead.followUpDate || "as soon as possible"}) to discuss your portfolio review.\n\nWarm regards,\nCA Mrinmoy & Co. Team`);
+    emailLink.href = `mailto:${lead.email || ""}?subject=${emailSubject}&body=${emailBody}`;
+
+    // WhatsApp prefill message
+    let phone = lead.whatsapp ? String(lead.whatsapp) : "";
+    // Clean up typical Indian phone prefixes if present
+    phone = phone.replace(/[^0-9]/g, "");
+    if (phone.length === 10) phone = "91" + phone; // Add country code by default for India
+    
+    const waMsg = encodeURIComponent(`Hi ${lead.fullName || ""}, this is the team at Mrinmoy & Co. We have received your financial check-in details. We would like to follow up with you on the date you specified (${lead.followUpDate || "as soon as possible"}). Let us know if you are free for a brief call!`);
+    waLink.href = `https://api.whatsapp.com/send?phone=${phone}&text=${waMsg}`;
+
+    openModal("detailModal");
+  }
+
+  function openConfigModal() {
+    const savedUrl = localStorage.getItem("SCRIPT_URL") || "";
+    document.getElementById("scriptUrlInput").value = savedUrl;
+    openModal("configModal");
+  }
+
+  function saveConfig() {
+    const inputUrl = document.getElementById("scriptUrlInput").value.trim();
+    if (inputUrl.length > 0 && !inputUrl.startsWith("https://script.google.com/")) {
+      showToast("URL should be a Google Script endpoint (starts with https://script.google.com/)", "error");
+      return;
+    }
+    
+    if (inputUrl.length > 0) {
+      localStorage.setItem("SCRIPT_URL", inputUrl);
+      showToast("Saved script connection settings", "success");
+    } else {
+      localStorage.removeItem("SCRIPT_URL");
+      showToast("Returned to Interactive Simulated Data Mode", "success");
+    }
+    
+    closeModal("configModal");
+    initApp();
+  }
+
+  function clearConfig() {
+    localStorage.removeItem("SCRIPT_URL");
+    document.getElementById("scriptUrlInput").value = "";
+    closeModal("configModal");
+    showToast("Reset configurations to simulation default", "success");
+    initApp();
+  }
+
+  function exportFilteredCSV() {
+    if (filteredLeads.length === 0) {
+      showToast("No data entries to export", "error");
+      return;
+    }
+
+    const headers = [
+      "Timestamp", "Full Name", "Email Address", "WhatsApp Number", 
+      "Currently Investing", "Existing Assets", "Avails Professional Help", 
+      "Wants Portfolio Review", "Wants to Start", "Insurance Held", "Preferred Follow Up"
+    ];
+
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += headers.map(h => `"${h}"`).join(",") + "\n";
+
+    filteredLeads.forEach(lead => {
+      const row = [
+        lead.timestamp || "",
+        lead.fullName || "",
+        lead.email || "",
+        lead.whatsapp || "",
+        lead.investingNow || "",
+        Array.isArray(lead.whereInvested) ? lead.whereInvested.join("; ") : "",
+        lead.professionalHelp || "",
+        lead.portfolioReview || "",
+        lead.wantToStart || "",
+        Array.isArray(lead.insuranceHeld) ? lead.insuranceHeld.join("; ") : "",
+        lead.followUpDate || ""
+      ];
+      csvContent += row.map(val => `"${val.toString().replace(/"/g, '""')}"`).join(",") + "\n";
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `mrinmoy_co_leads_export_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("Downloaded CSV file successfully", "success");
+  }
+
+  // Modal handlers
+  function openModal(id) {
+    document.getElementById(id).classList.add("active");
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove("active");
+  }
+
+  // Toast notifier
+  function showToast(message, type = "success") {
+    const toast = document.getElementById("toast");
+    const toastMsg = document.getElementById("toastMessage");
+    
+    toast.className = `toast toast-${type} active`;
+    toastMsg.textContent = message;
+    
+    setTimeout(() => {
+      toast.classList.remove("active");
+    }, 4000);
+  }
+
+  // HTML sanitization helper
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return "";
+    const stringVal = String(str);
+    return stringVal
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+</script>
+</body>
+</html>
