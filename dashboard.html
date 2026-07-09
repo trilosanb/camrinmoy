@@ -678,6 +678,58 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* Mobile-only Enhancements for Dashboard */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+      .header-actions .btn {
+        flex: 1;
+        justify-content: center;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .analytics-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      .search-filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 10px;
+      }
+      .search-wrapper {
+        max-width: none;
+      }
+      .select-filter {
+        width: 100%;
+      }
+      .controls-row .btn-primary {
+        width: 100%;
+        justify-content: center;
+        margin-top: 4px;
+      }
+      .modal-card {
+        max-width: 100%;
+        margin: 10px;
+      }
+    }
   </style>
 </head>
 <body>
