@@ -291,7 +291,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 650; line-height: 1.1; 
 }
 .mobile-menu a .num { font-family: var(--mono); font-size: .65rem; color: var(--faint); }
 .mobile-menu a[aria-current="page"] { color: var(--emerald); }
-.mobile-menu .btn { margin-top: 1rem; width: 100%; justify-content: center; }
+.mobile-menu .btn { margin-top: 1rem; width: 100%; justify-content: center; color: #fff; }
 @media (min-width: 940px){ .mobile-menu { display: none; } }
 
 /* -----------------------------------------------------------------
