@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reading your GST returns like a diagnostic | Mrinmoy & Co.</title>
+  <meta name="description" content="Plain-English notes on business finance, tax, and compliance.">
+  <meta name="theme-color" content="#0B4F8A">
+  <link rel="icon" type="image/png" href="../assets/img/ca_logo.png">
+  <link rel="apple-touch-icon" href="../assets/img/ca_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../assets/css/styles.css?v=1.1">
+  <style>
+    :root {
+  --navy: var(--forest);
+  --navy-soft: var(--forest-2);
+  --emerald: var(--emerald);
+  --emerald-soft: var(--mint);
+  --amber: #b5762a;
+  --amber-soft: #fbf1e2;
+  --paper: var(--paper-2);
+  --ink: var(--ink);
+  --ink-soft: var(--ink-soft);
+  --line: var(--line);
+}
+
+/* hero */
+  .article-hero {
+  max-width:820px;margin:0 auto;padding:46px 24px 10px;text-align:left;
+}
+
+.eyebrow {
+  display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--emerald);background:var(--emerald-soft);
+    padding:6px 12px;border-radius:20px;
+}
+
+h1 {
+  font-size:38px;line-height:1.2;color:var(--navy);margin:20px 0 14px;
+    font-weight:800;letter-spacing:-.01em;
+}
+
+.dek {
+  font-size:18px;color:var(--ink-soft);max-width:620px;margin:0 0 6px;
+}
+
+.article-body {
+  max-width:820px;margin:0 auto;padding:10px 24px 20px;
+}
+
+h2 {
+  font-size:23px;color:var(--navy);margin:46px 0 14px;
+    padding-top:6px;border-top:3px solid var(--emerald);
+}
+
+h3 {
+  font-size:17px;color:var(--navy);margin:26px 0 8px;
+}
+
+p {
+  font-size:16px;color:var(--ink);
+}
+
+.lede {
+  font-size:17.5px;color:var(--ink);
+}
+
+/* vitals cards */
+  .vitals {
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0 8px;
+}
+
+.vital-card {
+  background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px;
+    border-top:4px solid var(--emerald);
+}
+
+.vital-card h4 {
+  margin:0 0 6px;font-size:15px;color:var(--navy);
+}
+
+.vital-card .code {
+  display:inline-block;font-size:11px;font-weight:700;color:var(--emerald);
+    background:var(--emerald-soft);padding:2px 8px;border-radius:12px;margin-bottom:8px;
+}
+
+.vital-card p {
+  font-size:14px;color:var(--ink-soft);margin:0;
+}
+
+/* diagram */
+  .diagram-wrap {
+  background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:22px 18px;margin:26px 0;
+}
+
+.diagram-caption {
+  text-align:center;font-size:13px;color:var(--ink-soft);margin-top:10px;
+}
+
+/* mismatch table */
+  table.mismatch {
+  width:100%;border-collapse:collapse;margin:22px 0;font-size:14.5px;
+    background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;
+}
+
+table.mismatch th {
+  background:var(--navy);color:#fff;text-align:left;padding:12px 14px;font-size:13px;
+    text-transform:uppercase;letter-spacing:.04em;
+}
+
+table.mismatch td {
+  padding:14px;border-top:1px solid var(--line);vertical-align:top;
+}
+
+table.mismatch tr:nth-child(even) td {
+  background:#fbfbfa;
+}
+
+.tag-red {
+  color:#a13a2f;font-weight:700;
+}
+
+.tag-amber {
+  color:var(--amber);font-weight:700;
+}
+
+.tag-emerald {
+  color:var(--emerald);font-weight:700;
+}
+
+/* callout */
+  .article-callout {
+  background:var(--amber-soft);border-left:4px solid var(--amber);
+    padding:16px 20px;margin:26px 0;border-radius:0 6px 6px 0;font-size:15px;
+}
+
+.article-callout strong {
+  color:var(--navy);
+}
+
+/* example box */
+  .example-box {
+  background:var(--emerald-soft);border:1px dashed var(--emerald);
+    border-radius:8px;padding:18px 20px;margin:22px 0;font-size:14.5px;
+}
+
+.example-box .ex-label {
+  font-size:12px;font-weight:700;color:var(--emerald);text-transform:uppercase;
+    letter-spacing:.06em;margin-bottom:8px;display:block;
+}
+
+/* root cause grid */
+  .causes {
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;
+}
+
+.cause-card {
+  background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;text-align:center;
+}
+
+.cause-num {
+  width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 10px;font-size:14px;
+}
+
+.cause-card p {
+  font-size:13.5px;color:var(--ink-soft);margin:0;
+}
+
+/* tracker mock */
+  .tracker {
+  background:var(--navy);color:#fff;border-radius:10px;padding:20px;margin:24px 0;
+}
+
+.tracker h4 {
+  margin:0 0 12px;font-size:14px;color:#9fd6c1;text-transform:uppercase;letter-spacing:.05em;
+}
+
+.tracker-row {
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;
+    padding:10px 0;border-bottom:1px solid #24374a;font-size:13.5px;align-items:center;
+}
+
+.tracker-row.head {
+  color:#9fb3c2;font-size:11px;text-transform:uppercase;border-bottom:1px solid #33495f;
+}
+
+.dot {
+  width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px;
+}
+
+.dot.ok {
+  background:#4fd1a5;
+}
+
+.dot.warn {
+  background:#e0a13e;
+}
+
+.dot.bad {
+  background:#e0645a;
+}
+
+.author-box {
+  display:flex;gap:16px;align-items:flex-start;margin:44px 0 20px;
+    padding:20px;background:#fff;border:1px solid var(--line);border-radius:8px;
+}
+
+.author-avatar {
+  width:48px;height:48px;border-radius:50%;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;
+}
+
+.author-box h4 {
+  margin:0 0 4px;color:var(--navy);
+}
+
+.author-box p {
+  margin:0;font-size:13.5px;color:var(--ink-soft);
+}
+
+@media (max-width:720px) {
+  .article-hero, .article-body {
+  padding-left:18px;padding-right:18px;
+}
+
+h1 {
+  font-size:29px;
+}
+
+.vitals {
+  grid-template-columns:1fr;
+}
+
+.causes {
+  grid-template-columns:1fr;
+}
+
+table.mismatch {
+  font-size:13px;
+}
+
+.tracker-row {
+  grid-template-columns:1.4fr 1fr 1fr;font-size:12px;
+}
+
+.tracker-row span:nth-child(4) {
+  display:none;
+}
+}
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Primary">
+        <a class="wordmark" style="display: inline-flex; align-items: center; gap: 10px;" href="../index.html"
+          aria-label="Mrinmoy and Co., Chartered Accountants — home">
+          <img src="../assets/img/ca_logo.png" alt="CA India Logo"
+            style="height: 32px; width: auto; object-fit: contain; transform: translateY(-1px);">
+          <span class="wordmark__name">Mrinmoy&nbsp;&amp;&nbsp;Co.</span>
+          <span class="wordmark__rule">Chartered Accountants</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../engagements.html">Engagements</a></li>
+          <li><a href="../blogs.html">Blogs</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+        <a class="btn nav-cta" href="../request-consultation.html">Request a consultation
+          <svg class="arw" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu"
+          aria-label="Open menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="../index.html"><span class="num">01</span> Home</a></li>
+      <li><a href="../about.html"><span class="num">02</span> About</a></li>
+      <li><a href="../services.html"><span class="num">03</span> Services</a></li>
+      <li><a href="../engagements.html"><span class="num">04</span> Engagements</a></li>
+      <li><a href="../blogs.html"><span class="num">05</span> Blogs</a></li>
+      <li><a href="../contact.html"><span class="num">06</span> Contact</a></li>
+    </ul>
+    <a class="btn" href="../request-consultation.html">Request a consultation</a>
+  </div>
+
+  <div class="back-link-wrapper" style="background: var(--paper-2); border-bottom: 1px solid var(--line); padding: 1rem 0;">
+    <div class="container container--narrow">
+      <a class="back-link" href="../blogs.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: 600; text-decoration: none;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="transform: scaleX(-1);"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Back to Blogs
+      </a>
+    </div>
+  </div>
+
+  <main id="main">
+    <article class="article-post" style="padding: 2rem 0 4rem;">
+      <div class="container container--narrow">
+        <section class="article-hero">
+  <span class="eyebrow">GST · 6 min read</span>
+  <h1>Your GST returns are a health checkup. Most businesses never read the results.</h1>
+  <p class="dek">GSTR-1, 2B and 3B are three separate readings of the same body. Read together, they catch problems while they're still cheap to fix. Read separately — or not at all — they turn into scrutiny notices three years later.</p>
+</section>
+
+        <div class="article-hero-img" style="margin: 2rem 0; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-1);">
+          <img src="../images/Blogs/8 GST.jpeg" alt="GST Return Diagnostic Checkup" style="width: 100%; height: auto; object-fit: cover; display: block; aspect-ratio: 16 / 9;">
+        </div>
+
+<section class="article-body">
+
+  <p class="lede">Most businesses treat GST returns as a monthly chore: pull the numbers, file, move on. That habit throws away the one useful thing the returns actually offer — an early warning system. Think of it like a checkup: your pulse, blood pressure and temperature mean little alone, but together they tell a doctor exactly where to look. GSTR-1, 2B and 3B work the same way.</p>
+
+  <h2>The three readings</h2>
+  <p>Each return is measuring something different. None of them lies on its own — but when they disagree with each other, that gap is the diagnosis.</p>
+
+  <div class="vitals">
+    <div class="vital-card">
+      <span class="code">GSTR-1</span>
+      <h4>What you claim you sold</h4>
+      <p>The outward supplies you report yourself — your side of the story, filed by you.</p>
+    </div>
+    <div class="vital-card">
+      <span class="code">GSTR-2B</span>
+      <h4>What your vendors say they sold you</h4>
+      <p>Auto-populated from your vendors' own filings. This is their word, not yours.</p>
+    </div>
+    <div class="vital-card">
+      <span class="code">GSTR-3B</span>
+      <h4>What actually got paid</h4>
+      <p>The return that nets the two out and settles your tax. The financial outcome.</p>
+    </div>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 720 220" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing GSTR-1 and GSTR-2B feeding into GSTR-3B, with reconciliation gaps flagged">
+      <defs>
+        <marker id="arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#0c7a5b"/>
+        </marker>
+      </defs>
+      <!-- GSTR-1 box -->
+      <rect x="20" y="20" width="170" height="60" rx="8" fill="#e5f3ee" stroke="#0c7a5b" stroke-width="1.5"/>
+      <text x="105" y="44" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#0d1b2a">GSTR-1</text>
+      <text x="105" y="62" text-anchor="middle" font-family="Arial" font-size="11" fill="#54636a">Outward supply claim</text>
+
+      <!-- GSTR-2B box -->
+      <rect x="20" y="140" width="170" height="60" rx="8" fill="#e5f3ee" stroke="#0c7a5b" stroke-width="1.5"/>
+      <text x="105" y="164" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#0d1b2a">GSTR-2B</text>
+      <text x="105" y="182" text-anchor="middle" font-family="Arial" font-size="11" fill="#54636a">Vendor-reported ITC</text>
+
+      <!-- arrows to 3B -->
+      <line x1="190" y1="50" x2="300" y2="100" stroke="#0c7a5b" stroke-width="2" marker-end="url(#arrow)"/>
+      <line x1="190" y1="170" x2="300" y2="120" stroke="#0c7a5b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 3B box -->
+      <rect x="305" y="80" width="170" height="60" rx="8" fill="#0d1b2a"/>
+      <text x="390" y="104" text-anchor="middle" font-family="Arial" font-size="13" font-weight="700" fill="#ffffff">GSTR-3B</text>
+      <text x="390" y="122" text-anchor="middle" font-family="Arial" font-size="11" fill="#c8d6de">Net tax payment</text>
+
+      <!-- arrow to output -->
+      <line x1="475" y1="110" x2="560" y2="110" stroke="#b5762a" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- output diamond -->
+      <polygon points="560,80 640,110 560,140 480,110" fill="#fbf1e2" stroke="#b5762a" stroke-width="1.5" transform="translate(20,0)"/>
+      <text x="640" y="105" text-anchor="middle" font-family="Arial" font-size="12" font-weight="700" fill="#0d1b2a">Gap?</text>
+      <text x="640" y="122" text-anchor="middle" font-family="Arial" font-size="11" fill="#0d1b2a">That's your signal</text>
+
+      <!-- flag on GSTR-1 to 2B mismatch line -->
+      <line x1="105" y1="80" x2="105" y2="140" stroke="#a13a2f" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="118" y="113" font-family="Arial" font-size="10.5" fill="#a13a2f">checked against</text>
+    </svg>
+    <p class="diagram-caption">GSTR-1 and GSTR-2B both feed GSTR-3B. When the inputs disagree with each other, or with what 3B actually pays, that mismatch is the thing worth investigating — not the paperwork.</p>
+  </div>
+
+  <h2>The three mismatches worth chasing every month</h2>
+  <p>You don't need to reconcile everything. Three checks catch almost all the problems that turn into notices.</p>
+
+  <table class="mismatch">
+    <tr>
+      <th style="width:22%;">Mismatch</th>
+      <th style="width:34%;">What it usually means</th>
+      <th style="width:22%;">Urgency</th>
+      <th style="width:22%;">Action</th>
+    </tr>
+    <tr>
+      <td><strong>2B vs. purchase register</strong></td>
+      <td>A vendor hasn't filed, so their invoice is missing from 2B. Under current ITC rules, you generally can't claim that credit until it appears.</td>
+      <td><span class="tag-red">High</span> — cash flow risk</td>
+      <td>Call the vendor before it repeats a second month</td>
+    </tr>
+    <tr>
+      <td><strong>GSTR-1 vs. 3B outward tax</strong></td>
+      <td>Usually two systems that don't talk to each other — an accounting software gap more than a tax problem. But it reads as a tax problem in a notice.</td>
+      <td><span class="tag-amber">Medium</span> — process fix</td>
+      <td>Trace to the entry point, fix the workflow</td>
+    </tr>
+    <tr>
+      <td><strong>E-way bills vs. GSTR-1 turnover</strong></td>
+      <td>For businesses moving goods, this is one of the easiest cross-checks for the department to run — and one of the first things a scrutiny notice asks about.</td>
+      <td><span class="tag-red">High</span> — audit trigger</td>
+      <td>Reconcile monthly, not annually</td>
+    </tr>
+  </table>
+
+  <div class="example-box">
+    <span class="ex-label">In plain terms</span>
+    A trading firm buys ₹8 lakh of goods from a vendor in April. The vendor collects payment but files their GSTR-1 late — past the due date for April. Result: that ₹8 lakh invoice doesn't show up in the buyer's GSTR-2B for April. The buyer has genuinely paid GST on the purchase, but can't claim the input tax credit until the vendor's filing catches up. If nobody notices for three months, that's working capital sitting locked up for no reason other than a five-minute phone call that never got made.
+  </div>
+
+  <div class="article-callout">
+    <strong>A useful habit:</strong> reconcile 2B against your purchase register within the first ten days of the following month — while the invoice is still fresh in the vendor's memory and easy to chase.
+  </div>
+
+  <h2>What the mismatches usually mean in practice</h2>
+  <p>Across manufacturing, trading and services clients, most persistent mismatches trace back to one of three causes. None of them are dramatic — all of them are avoidable.</p>
+
+  <div class="causes">
+    <div class="cause-card">
+      <div class="cause-num">1</div>
+      <p><strong>QRMP timing mismatch</strong> — vendor files quarterly while you expect monthly credit.</p>
+    </div>
+    <div class="cause-card">
+      <div class="cause-num">2</div>
+      <p><strong>Data entry error</strong> — wrong HSN code or invoice value at the source.</p>
+    </div>
+    <div class="cause-card">
+      <div class="cause-num">3</div>
+      <p><strong>Credit notes</strong> issued on one side but not reflected on the other.</p>
+    </div>
+  </div>
+
+  <h2>Turning this into a habit, not a fire drill</h2>
+  <p>The businesses that stay out of scrutiny aren't the ones with perfect vendors — they're the ones who look at the gap every month and act on it while it's small. A simple tracker that flags any invoice missing from 2B for two consecutive months, and any 1-vs-3B variance above a set threshold, does most of the work.</p>
+
+  <div class="tracker">
+    <h4>What a monthly tracker should flag</h4>
+    <div class="tracker-row head">
+      <span>Vendor / check</span><span>Apr</span><span>May</span><span>Status</span>
+    </div>
+    <div class="tracker-row">
+      <span><span class="dot ok"></span>Vendor A — 2B match</span><span>✓</span><span>✓</span><span>Clean</span>
+    </div>
+    <div class="tracker-row">
+      <span><span class="dot warn"></span>Vendor B — 2B match</span><span>✓</span><span>Missing</span><span>Watch</span>
+    </div>
+    <div class="tracker-row">
+      <span><span class="dot bad"></span>Vendor C — 2B match</span><span>Missing</span><span>Missing</span><span>Call now</span>
+    </div>
+    <div class="tracker-row">
+      <span><span class="dot warn"></span>1 vs. 3B variance</span><span>0.4%</span><span>1.8%</span><span>Investigate</span>
+    </div>
+  </div>
+
+  <p>The return itself is just the output; the reconciliation is where the real information lives. Treat it that way, and GST compliance stops being a monthly chore and starts being what it should have been all along — an early warning system for the health of the business.</p>
+
+</section>
+        
+        <div class="author mt-3" data-reveal>
+          <div class="author__avatar" style="background:var(--emerald); display:grid; place-items:center;">
+            <span
+              style="font-family:var(--sans); font-weight:700; color:#fff; font-size:1.3rem; letter-spacing:.02em;">MP</span>
+          </div>
+          <div>
+            <p class="author__role">Written by</p>
+            <h3 class="author__name">CA Mrinmoy Pathak</h3>
+            <p>Chartered Accountant and principal of Mrinmoy &amp; Co., writing on tax, compliance and business finance
+              for founders and MSMEs across Northeast India. <a href="../about.html">More about the practice →</a></p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-band" data-reveal>
+        <div class="cta-band__inner">
+          <div>
+            <p class="eyebrow" style="color:#7EC4EC">Get in touch</p>
+            <h2>Have a question a post didn't answer?</h2>
+            <p>Send it across — we're happy to point you in the right direction.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--light" href="../request-consultation.html">Request a consultation</a>
+            <a class="btn btn--outline-light" href="../blogs.html">Read the blogs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="wordmark" style="display: inline-flex; align-items: center; gap: 10px;" href="../index.html"
+            aria-label="Mrinmoy and Co. — home">
+            <img src="../assets/img/ca_logo.png" alt="CA India Logo"
+              style="height: 32px; width: auto; object-fit: contain; transform: translateY(-1px);">
+            <span class="wordmark__name">Mrinmoy&nbsp;&amp;&nbsp;Co.</span>
+            <span class="wordmark__rule">Chartered Accountants</span>
+          </a>
+          <p class="footer-intro">Accounting, tax, compliance and financial advisory for founders, MSMEs and
+            institutions across Northeast India.</p>
+          <div class="social">
+            <a href="https://wa.me/918811886677" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"
+                fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.19-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36l.56.01c.18.01.42-.07.66.5.24.58.82 2.01.9 2.16.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.16-.19.69-.8.87-1.08.18-.28.36-.23.6-.14.24.09 1.55.73 1.81.86.27.14.44.21.51.32.07.12.07.66-.17 1.35Z" />
+              </svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z" />
+              </svg></a>
+            <a href="mailto:contact@camrinmoy.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg></a>
+          </div>
+        </div>
+        <nav class="footer-col" aria-label="Footer">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../services.html">Services</a></li>
+            <li><a href="../engagements.html">Engagements</a></li>
+            <li><a href="../blogs.html">Blogs</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="../services.html#accounting">Accounting &amp; Assurance</a></li>
+            <li><a href="../services.html#taxation">Taxation</a></li>
+            <li><a href="../services.html#corporate">Corporate &amp; Compliance</a></li>
+            <li><a href="../services.html#digital">Digital Transformation</a></li>
+            <li><a href="../services.html#bi">Business Intelligence</a></li>
+            <li><a href="../services.html#advisory">Financial Advisory</a></li>
+            <li><a href="../services.html#cfo">Virtual CFO Services</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-contact">
+          <h4>Office</h4>
+          <p><strong>Mrinmoy &amp; Co.</strong><br>58, Jayanagar, Sixmile<br>Guwahati, Assam 781022</p>
+          <p><strong>Phone / WhatsApp</strong><br><a href="tel:+918811886677">+91 88118 86677</a></p>
+          <p><strong>Email</strong><br><a href="mailto:contact@camrinmoy.com">contact@camrinmoy.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> Mrinmoy &amp; Co. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="../privacy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms &amp; Conditions</a>
+          <span class="footer-updated">Updated Jul 2026</span>
+        </div>
+      </div>
+      <p class="footer-disclaimer">This website is intended solely to provide general information about Mrinmoy &amp;
+        Co. It is not an advertisement, nor a solicitation or invitation of professional work. The information here does
+        not constitute professional advice and should not be relied upon as such. By accessing this website, you
+        acknowledge that there has been no inducement or solicitation of any kind by the firm, and that any information
+        is accessed at your own initiative.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg></button>
+  <script src="../assets/js/main.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Company Formation at a GO!</title>
+  <meta name="description" content="Plain-English notes on business finance, tax, and compliance.">
+  <meta name="theme-color" content="#0B4F8A">
+  <link rel="icon" type="image/png" href="../assets/img/ca_logo.png">
+  <link rel="apple-touch-icon" href="../assets/img/ca_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../assets/css/styles.css?v=1.1">
+  <style>
+    :root {
+  --navy: var(--forest);
+  --navy-2: var(--forest-2);
+  --emerald: var(--emerald);
+  --emerald-light: var(--mint);
+  --amber: #b8863b;
+  --red: #b3413a;
+  --ink: var(--ink);
+  --muted: var(--muted);
+  --line: var(--line);
+  --bg: var(--paper-2);
+}
+
+h1, h2, h3, h4 {
+  font-family:Arial, 'Open Sans', sans-serif;
+    color:var(--navy);
+    letter-spacing:-0.01em;
+}
+
+.article-hero {
+  max-width:820px; margin:0 auto; padding:50px 24px 10px; text-align:left;
+}
+
+.card-meta {
+  font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;
+}
+
+.article-hero h1 {
+  font-size:38px; line-height:1.15; margin:14px 0 10px;
+}
+
+.dek {
+  font-size:18px; color:var(--muted); margin:0 0 6px; max-width:680px;
+}
+
+.hero-img {
+  max-width:820px; margin:20px auto 0; padding:0 24px;
+}
+
+.hero-img svg {
+  width:100%; height:auto; border-radius:10px; display:block;
+}
+
+.article-body {
+  max-width:820px; margin:0 auto; padding:10px 24px 20px; font-size:16.5px;
+}
+
+.article-body h2 {
+  font-size:24px; margin-top:44px; margin-bottom:14px;
+    border-top:3px solid var(--emerald); padding-top:14px;
+}
+
+.article-body h3 {
+  font-size:18px; margin-top:26px; margin-bottom:10px;
+}
+
+.article-body p {
+  color:var(--ink);
+}
+
+.article-body ul {
+  padding-left:20px;
+}
+
+.article-body li {
+  margin-bottom:8px;
+}
+
+.article-callout {
+  background:var(--emerald-light); border-left:4px solid var(--emerald);
+    padding:20px 24px; border-radius:6px; font-size:17px; color:var(--navy-2);
+    margin:28px 0; font-weight:600;
+}
+
+.stat-row {
+  display:flex; gap:16px; margin:26px 0; flex-wrap:wrap;
+}
+
+.stat-card {
+  flex:1; min-width:150px; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:18px 16px; text-align:center;
+}
+
+.stat-card .num {
+  font-size:26px; font-weight:800; color:var(--navy);
+}
+
+.stat-card .lbl {
+  font-size:12.5px; color:var(--muted); margin-top:4px;
+}
+
+table.dash-table {
+  width:100%; border-collapse:collapse; margin:22px 0; font-size:14.5px;
+}
+
+table.dash-table th {
+  background:var(--navy); color:#fff; text-align:left; padding:10px 12px; font-weight:700;
+}
+
+table.dash-table td {
+  padding:10px 12px; border-bottom:1px solid var(--line);
+}
+
+table.dash-table tr:nth-child(even) td {
+  background:var(--bg);
+}
+
+.table-scroll {
+  overflow-x:auto;
+}
+
+.tag-pill {
+  display:inline-block; padding:2px 9px; border-radius:20px; font-size:12px; font-weight:700;
+}
+
+.pill-good {
+  background:#e2f3ea; color:var(--emerald);
+}
+
+.pill-bad {
+  background:#fbe7e5; color:var(--red);
+}
+
+.pill-warn {
+  background:#fbf1e0; color:var(--amber);
+}
+
+.diagram-box {
+  border:1px solid var(--line); border-radius:8px; padding:22px; background:var(--bg); margin:26px 0;
+}
+
+.example-box {
+  border:1px dashed var(--emerald); border-radius:8px; padding:18px 20px; margin:20px 0; background:#fbfdfc; font-size:15px;
+}
+
+.example-box .example-tag {
+  font-size:11.5px; font-weight:800; text-transform:uppercase; color:var(--emerald); letter-spacing:0.05em; margin-bottom:6px; display:block;
+}
+
+.checklist {
+  list-style:none; padding:0; margin:20px 0;
+}
+
+.checklist li {
+  padding:10px 0 10px 30px; position:relative; border-bottom:1px solid var(--line); font-size:15.5px;
+}
+
+.checklist li:before {
+  content:"✓"; position:absolute; left:0; top:10px; color:var(--emerald); font-weight:900;
+}
+
+.cols-2 {
+  display:grid; grid-template-columns:1fr 1fr; gap:28px; margin:20px 0;
+}
+
+.cols-2 h4 {
+  font-size:15px; margin:0 0 8px; color:var(--navy);
+}
+
+.problem-list {
+  margin:24px 0;
+}
+
+.problem-row {
+  display:flex; align-items:center; gap:14px; padding:13px 14px; border-left:3px solid var(--navy); background:var(--bg); border-radius:4px; margin-bottom:10px; flex-wrap:wrap;
+}
+
+.problem-row span.txt {
+  font-size:15px; font-weight:600; color:var(--ink); flex:1; min-width:200px;
+}
+
+.problem-row .sub {
+  display:block; font-size:12.5px; font-weight:400; color:var(--muted); margin-top:2px;
+}
+
+.fix-tag {
+  font-size:11.5px; font-weight:700; color:var(--emerald); background:var(--emerald-light); padding:4px 10px; border-radius:20px; white-space:nowrap;
+}
+
+.step-row {
+  display:flex; gap:16px; margin-bottom:18px; align-items:flex-start;
+}
+
+.step-num {
+  width:34px; height:34px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0;
+}
+
+.step-row h4 {
+  margin:2px 0 4px; font-size:15.5px;
+}
+
+.step-row p {
+  margin:0; font-size:14.5px; color:var(--muted);
+}
+
+.band-title {
+  display:flex; align-items:center; gap:10px; margin:34px 0 6px;
+}
+
+.band-title .dot {
+  width:11px; height:11px; border-radius:3px;
+}
+
+.dot.once {
+  background:var(--red);
+}
+
+.dot.monthly {
+  background:var(--emerald);
+}
+
+.dot.quarterly {
+  background:var(--amber);
+}
+
+.dot.annual {
+  background:var(--navy);
+}
+
+.dot.ongoing {
+  background:#8a8a8a;
+}
+
+.band-title h3 {
+  margin:0; font-size:16.5px;
+}
+
+@media (max-width:640px) {
+  .article-hero, .article-body {
+  padding-left:20px; padding-right:20px;
+}
+
+.article-hero h1 {
+  font-size:28px;
+}
+
+.cols-2 {
+  grid-template-columns:1fr;
+}
+}
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Primary">
+        <a class="wordmark" style="display: inline-flex; align-items: center; gap: 10px;" href="../index.html"
+          aria-label="Mrinmoy and Co., Chartered Accountants — home">
+          <img src="../assets/img/ca_logo.png" alt="CA India Logo"
+            style="height: 32px; width: auto; object-fit: contain; transform: translateY(-1px);">
+          <span class="wordmark__name">Mrinmoy&nbsp;&amp;&nbsp;Co.</span>
+          <span class="wordmark__rule">Chartered Accountants</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../engagements.html">Engagements</a></li>
+          <li><a href="../blogs.html">Blogs</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+        <a class="btn nav-cta" href="../request-consultation.html">Request a consultation
+          <svg class="arw" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu"
+          aria-label="Open menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="../index.html"><span class="num">01</span> Home</a></li>
+      <li><a href="../about.html"><span class="num">02</span> About</a></li>
+      <li><a href="../services.html"><span class="num">03</span> Services</a></li>
+      <li><a href="../engagements.html"><span class="num">04</span> Engagements</a></li>
+      <li><a href="../blogs.html"><span class="num">05</span> Blogs</a></li>
+      <li><a href="../contact.html"><span class="num">06</span> Contact</a></li>
+    </ul>
+    <a class="btn" href="../request-consultation.html">Request a consultation</a>
+  </div>
+
+  <div class="back-link-wrapper" style="background: var(--paper-2); border-bottom: 1px solid var(--line); padding: 1rem 0;">
+    <div class="container container--narrow">
+      <a class="back-link" href="../blogs.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: 600; text-decoration: none;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="transform: scaleX(-1);"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Back to Blogs
+      </a>
+    </div>
+  </div>
+
+  <main id="main">
+    <article class="article-post" style="padding: 2rem 0 4rem;">
+      <div class="container container--narrow">
+        <section class="article-hero">
+  <div class="card-meta" style="color:#b8863b;">Corporate Law · 12 min read</div>
+  <h1>Company Formation at a GO!</h1>
+  <p class="dek">Everything a founder actually needs to know — why this structure, how the 9-step SPICe+ process works, what paperwork to keep ready, and the compliance calendar that starts the day your certificate lands.</p>
+</section>
+
+        <div class="article-hero-img" style="margin: 2rem 0; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-1);">
+          <img src="../images/Blogs/2 COMPANY FORMATION.jpeg" alt="Company Formation Step-by-Step" style="width: 100%; height: auto; object-fit: cover; display: block; aspect-ratio: 16 / 9;">
+        </div>
+
+<div class="hero-img">
+<svg viewBox="0 0 820 220" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="820" height="220" rx="10" fill="#0d1b2a"/>
+  <rect x="0" y="0" width="820" height="220" rx="10" fill="url(#g1)" opacity="0.55"/>
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="820" y2="220">
+      <stop offset="0%" stop-color="#13293f"/>
+      <stop offset="100%" stop-color="#0c7a5b"/>
+    </linearGradient>
+  </defs>
+  <rect x="330" y="35" width="160" height="150" rx="6" fill="#f7f9fa" stroke="#b8863b" stroke-width="2"/>
+  <rect x="350" y="60" width="120" height="8" rx="2" fill="#0d1b2a"/>
+  <rect x="350" y="78" width="120" height="5" rx="2" fill="#c7d2db"/>
+  <rect x="350" y="90" width="120" height="5" rx="2" fill="#c7d2db"/>
+  <rect x="350" y="102" width="90" height="5" rx="2" fill="#c7d2db"/>
+  <circle cx="410" cy="150" r="18" fill="none" stroke="#0c7a5b" stroke-width="3"/>
+  <path d="M402 150 l6 6 l12 -14" fill="none" stroke="#0c7a5b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#e6f4ef">
+    <circle cx="120" cy="70" r="16"/><text x="120" y="75" font-size="14" font-weight="800" fill="#0d1b2a" text-anchor="middle">1</text>
+    <circle cx="120" cy="120" r="16"/><text x="120" y="125" font-size="14" font-weight="800" fill="#0d1b2a" text-anchor="middle">2</text>
+    <circle cx="120" cy="170" r="16"/><text x="120" y="175" font-size="14" font-weight="800" fill="#0d1b2a" text-anchor="middle">3</text>
+    <circle cx="700" cy="70" r="16"/><text x="700" y="75" font-size="14" font-weight="800" fill="#0d1b2a" text-anchor="middle">7</text>
+    <circle cx="700" cy="120" r="16"/><text x="700" y="125" font-size="14" font-weight="800" fill="#0d1b2a" text-anchor="middle">8</text>
+    <circle cx="700" cy="170" r="16"/><text x="700" y="175" font-size="14" font-weight="800" fill="#0d1b2a" text-anchor="middle">9</text>
+  </g>
+  <line x1="136" y1="70" x2="325" y2="70" stroke="#3d5a75" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="136" y1="120" x2="325" y2="110" stroke="#3d5a75" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="136" y1="170" x2="325" y2="150" stroke="#3d5a75" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="495" y1="70" x2="684" y2="70" stroke="#3d5a75" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="495" y1="110" x2="684" y2="120" stroke="#3d5a75" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="495" y1="150" x2="684" y2="170" stroke="#3d5a75" stroke-width="2" stroke-dasharray="4 4"/>
+</svg>
+</div>
+
+<section class="article-body">
+
+  <p>A Private Limited Company remains the most commonly recommended structure for founders building a scalable, fundable, multi-line business in India. This guide walks through why, how incorporation actually works under the current SPICe+ process, and — the part most guides skip — exactly what compliance obligations follow once the Certificate of Incorporation is in hand.</p>
+
+  <h2>Why incorporate as a Private Limited Company</h2>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="num">2</div><div class="lbl">Min. Directors &amp; Shareholders</div></div>
+    <div class="stat-card"><div class="num">200</div><div class="lbl">Max. Shareholders</div></div>
+    <div class="stat-card"><div class="num">9</div><div class="lbl">Steps to Incorporate</div></div>
+    <div class="stat-card"><div class="num">16+</div><div class="lbl">Annual Compliances</div></div>
+  </div>
+
+  <ul>
+    <li><strong>Limited liability protection.</strong> Shareholders' personal assets are protected; liability is capped at the amount of shares held, keeping personal wealth separate from business risk.</li>
+    <li><strong>Separate legal identity.</strong> The company is a distinct legal person, capable of owning property, entering contracts, and suing or being sued in its own name — independent of its members.</li>
+    <li><strong>Perpetual succession.</strong> The company continues to exist regardless of changes in membership, or the death, insolvency, or retirement of any director or shareholder.</li>
+    <li><strong>Ease of raising capital.</strong> A Pvt. Ltd. can raise equity from investors, access bank credit, apply for government schemes, and participate in tenders — routes generally unavailable to unregistered entities.</li>
+  </ul>
+
+  <div class="example-box">
+    <span class="example-tag">Think of it this way</span>
+    A proprietorship is like signing a loan with your own name and house as collateral — if the business fails, creditors can knock on your personal door. A Pvt. Ltd. is a separate box: creditors can only claim what's inside the box (the company's assets), not what's outside it (your personal wealth).
+  </div>
+
+  <h2>Which businesses suit this structure</h2>
+  <p>Almost any revenue-generating business can incorporate — but a few sectors carry extra licensing on top of the standard company registration.</p>
+
+  <div class="table-scroll">
+  <table class="dash-table">
+    <tr><th>Business vertical</th><th>Nature of business</th><th>Special note</th></tr>
+    <tr><td>Real Estate</td><td>Purchase, development, sale &amp; leasing of properties</td><td><span class="tag-pill pill-warn">RERA may apply</span></td></tr>
+    <tr><td>Hospitality</td><td>Hotels, restaurants, resorts, catering services</td><td><span class="tag-pill pill-warn">FSSAI, liquor, tourism</span></td></tr>
+    <tr><td>Education</td><td>Schools, coaching, skill training, e-learning</td><td><span class="tag-pill pill-warn">Trust/Society for schools</span></td></tr>
+    <tr><td>Healthcare</td><td>Clinics, diagnostics, pharmacy, wellness</td><td><span class="tag-pill pill-warn">Clinical &amp; drug licenses</span></td></tr>
+    <tr><td>Trading</td><td>Import, export, wholesale, retail</td><td><span class="tag-pill pill-good">IEC if applicable</span></td></tr>
+    <tr><td>Manufacturing</td><td>Production of goods across sectors</td><td><span class="tag-pill pill-warn">Factory &amp; pollution licenses</span></td></tr>
+    <tr><td>Govt. Supply &amp; Works</td><td>Government tenders, contracts, public works</td><td><span class="tag-pill pill-warn">Contractor reg. + GST</span></td></tr>
+    <tr><td>Consultancy &amp; Services</td><td>Management, IT, financial, legal consulting</td><td><span class="tag-pill pill-good">No special license</span></td></tr>
+  </table>
+  </div>
+
+  <h2>Choosing the right structure</h2>
+  <p>The right structure trades off compliance effort against liability protection and fundraising power.</p>
+
+  <div class="table-scroll">
+  <table class="dash-table">
+    <tr><th>Feature</th><th>Private Limited Company</th><th>LLP</th><th>Partnership / Proprietorship</th></tr>
+    <tr><td>Governing law</td><td>Companies Act, 2013</td><td>LLP Act, 2008</td><td>Indian Partnership Act, 1932</td></tr>
+    <tr><td>Min. members</td><td>2 directors, 2 shareholders</td><td>2 designated partners</td><td>2 partners</td></tr>
+    <tr><td>Max. members</td><td>200 shareholders</td><td>No limit</td><td>100 partners</td></tr>
+    <tr><td>Separate legal entity</td><td><span class="tag-pill pill-good">Yes</span></td><td><span class="tag-pill pill-good">Yes</span></td><td><span class="tag-pill pill-bad">No</span></td></tr>
+    <tr><td>Liability</td><td>Limited to shares</td><td>Limited to contribution</td><td>Unlimited</td></tr>
+    <tr><td>Foreign investment</td><td><span class="tag-pill pill-good">Auto route</span></td><td><span class="tag-pill pill-good">Auto route</span></td><td><span class="tag-pill pill-bad">Not allowed</span></td></tr>
+    <tr><td>Statutory audit</td><td>Mandatory</td><td>Above ₹40L turnover</td><td>Tax audit only</td></tr>
+    <tr><td>Fundraising</td><td>Equity + debt</td><td>Debt only</td><td>Limited</td></tr>
+    <tr><td>Compliance load</td><td><span class="tag-pill pill-warn">High</span></td><td><span class="tag-pill pill-warn">Moderate</span></td><td><span class="tag-pill pill-good">Low</span></td></tr>
+  </table>
+  </div>
+
+  <div class="article-callout">
+    Our recommendation: for a multi-venture, revenue-based business spanning sectors like real estate, hospitality, healthcare, trading, and government works, a Private Limited Company offers the best combination of liability protection, fundraising ability, and credibility — worth the higher compliance load for most growing businesses.
+  </div>
+
+  <h2>The 9-step SPICe+ incorporation process</h2>
+  <p>Everything now routes through one integrated form — SPICe+ — which bundles name approval, DIN, PAN, TAN, GST, EPFO/ESIC, and your bank account into a single filing.</p>
+
+  <div class="diagram-box">
+    <div class="step-row"><div class="step-num">1</div><div><h4>Obtain Digital Signature Certificate (DSC)</h4><p>Every proposed director needs a Class 3 DSC — PAN, Aadhaar, a photo, and an Aadhaar-linked email for OTP issuance.</p></div></div>
+    <div class="step-row"><div class="step-num">2</div><div><h4>Apply for Director Identification Number (DIN)</h4><p>Now built into the SPICe+ form itself — no separate DIR-3 filing needed for new directors.</p></div></div>
+    <div class="step-row"><div class="step-num">3</div><div><h4>Reserve a name via RUN</h4><p>Propose up to 2 names through the MCA portal; the name must comply with the Companies (Incorporation) Rules, 2014.</p></div></div>
+    <div class="step-row"><div class="step-num">4</div><div><h4>File SPICe+ Form INC-32 (Parts A &amp; B)</h4><p>Part A reserves the name; Part B bundles DIN, incorporation, PAN, TAN, and EPFO/ESIC/GST registration via AGILE-PRO.</p></div></div>
+    <div class="step-row"><div class="step-num">5</div><div><h4>Draft the MOA and AOA</h4><p>The MOA sets out what the company can do; the AOA sets its internal rules. For multi-venture plans, write the objects clause broadly upfront.</p></div></div>
+    <div class="step-row"><div class="step-num">6</div><div><h4>File AGILE-PRO (INC-35)</h4><p>Registers GSTIN, EPFO, ESIC, Professional Tax (in applicable states), and opens the company's bank account — all together.</p></div></div>
+    <div class="step-row"><div class="step-num">7</div><div><h4>Pay stamp duty &amp; registration fees</h4><p>Charged on the MOA, AOA, and filing, varying by state and the authorised share capital chosen.</p></div></div>
+    <div class="step-row"><div class="step-num">8</div><div><h4>Certificate of Incorporation (COI) is issued</h4><p>Once the Registrar of Companies verifies everything, you receive the COI along with your CIN, PAN, and TAN.</p></div></div>
+    <div class="step-row"><div class="step-num">9</div><div><h4>File Commencement of Business (INC-20A)</h4><p>Due within 180 days of incorporation, and only after the subscribed share capital is actually credited to the company's bank account.</p></div></div>
+  </div>
+
+  <h2>Documents to keep ready</h2>
+  <div class="cols-2">
+    <div>
+      <h4>For Directors &amp; Shareholders</h4>
+      <ul class="checklist">
+        <li>PAN card (self-certified)</li>
+        <li>Aadhaar card (for DSC/DIN OTP)</li>
+        <li>Identity proof — Voter ID / Passport / DL</li>
+        <li>Address proof, under 2 months old</li>
+        <li>Passport-size photograph</li>
+        <li>Active email &amp; mobile number</li>
+        <li>Educational qualification</li>
+        <li>Specimen signature</li>
+        <li>Proposed shareholding pattern</li>
+        <li>6 months' bank statements</li>
+        <li>Foreign nationals: notarised &amp; apostilled passport</li>
+      </ul>
+    </div>
+    <div>
+      <h4>For Registered Office &amp; Drafting</h4>
+      <ul class="checklist">
+        <li>Notarised lease/rent agreement (if rented)</li>
+        <li>NOC from the owner/landlord</li>
+        <li>Utility bill, under 2 months old</li>
+        <li>Sale deed or property tax receipt (if owned)</li>
+        <li>Co-working NOC, if using a shared office</li>
+        <li>MOA with a comprehensive objects clause</li>
+        <li>Articles of Association (AOA)</li>
+        <li>Subscription sheet for MOA &amp; AOA</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>The compliance calendar</h2>
+  <p>Incorporation is day one, not the finish line. Here's what needs to happen — and when.</p>
+
+  <div class="band-title"><span class="dot once"></span><h3>One-time, immediately after incorporation</h3></div>
+  <div class="table-scroll">
+  <table class="dash-table">
+    <tr><th>Compliance</th><th>What it involves</th><th>Deadline</th></tr>
+    <tr><td>Auditor appointment — ADT-1</td><td>Board appoints the first statutory auditor (5-year tenure)</td><td>30 days</td></tr>
+    <tr><td>First Board Meeting</td><td>Auditor appointment, director disclosures (MBP-1), office confirmation</td><td>30 days</td></tr>
+    <tr><td>Bank account &amp; capital deposit</td><td>Open current account, credit subscribed share capital</td><td>Immediately after COI</td></tr>
+    <tr><td>Commencement of Business — INC-20A</td><td>Declaration that capital is deposited</td><td>180 days</td></tr>
+    <tr><td>GST Registration</td><td>Mandatory above ₹20L turnover (₹10L in NE states)</td><td>Before taxable supply</td></tr>
+    <tr><td>PF / ESI Registration</td><td>PF if 20+ employees, ESI if 10+ employees</td><td>Before first payroll</td></tr>
+    <tr><td>Professional Tax (Assam)</td><td>Employer registration, deduct &amp; deposit from salaries</td><td>Before first salary</td></tr>
+    <tr><td>Udyam (MSME) Registration</td><td>Unlocks priority lending, CGTMSE loans, GeM access</td><td>As soon as operational</td></tr>
+  </table>
+  </div>
+
+  <div class="band-title"><span class="dot monthly"></span><h3>Monthly</h3></div>
+  <div class="table-scroll">
+  <table class="dash-table">
+    <tr><th>Compliance</th><th>Detail</th><th>Due</th></tr>
+    <tr><td>TDS Deposit</td><td>On salary, rent, professional fees, contractor payments</td><td>7th of following month</td></tr>
+    <tr><td>GSTR-3B</td><td>Summary return — monthly above ₹5cr turnover, quarterly (QRMP) below</td><td>20th of following month</td></tr>
+    <tr><td>GSTR-1</td><td>Outward supply / sales invoices</td><td>11th of following month</td></tr>
+    <tr><td>PF / ESI Deposit</td><td>Employee + employer contributions</td><td>15th of following month</td></tr>
+    <tr><td>Professional Tax Deposit</td><td>Employer &amp; employee PT</td><td>State-notified date</td></tr>
+  </table>
+  </div>
+
+  <div class="band-title"><span class="dot quarterly"></span><h3>Quarterly</h3></div>
+  <div class="table-scroll">
+  <table class="dash-table">
+    <tr><th>Compliance</th><th>Detail</th><th>Due</th></tr>
+    <tr><td>Board Meetings</td><td>Minimum 4/year, max 120-day gap between meetings</td><td>Every quarter</td></tr>
+    <tr><td>TDS Returns — 24Q / 26Q</td><td>Salary and non-salary TDS filings</td><td>31 Jul / 31 Oct / 31 Jan / 31 May</td></tr>
+    <tr><td>Advance Tax</td><td>If liability exceeds ₹10,000/year</td><td>Jun 15, Sep 15, Dec 15, Mar 15</td></tr>
+  </table>
+  </div>
+
+  <div class="band-title"><span class="dot annual"></span><h3>Annual (AGM assumed 30 September)</h3></div>
+  <div class="table-scroll">
+  <table class="dash-table">
+    <tr><th>Compliance</th><th>Detail</th><th>Due</th></tr>
+    <tr><td>Director disclosure — MBP-1</td><td>Interest in other entities, filed at first FY board meeting</td><td>April</td></tr>
+    <tr><td>Deposits return — DPT-3</td><td>Nil return mandatory even without deposits</td><td>30 June</td></tr>
+    <tr><td>Statutory Audit</td><td>Accounts audited before the AGM</td><td>By 30 Sep</td></tr>
+    <tr><td>AGM</td><td>First AGM within 9 months of FY end; after that, by 30 Sep</td><td>30 September</td></tr>
+    <tr><td>Director KYC — DIR-3 KYC</td><td>Annual KYC for every active DIN</td><td>30 September</td></tr>
+    <tr><td>Financials — AOC-4</td><td>Audited balance sheet, P&amp;L, reports filed with ROC</td><td>29 October</td></tr>
+    <tr><td>ITR-6</td><td>Company return + tax audit if turnover &gt; ₹1cr</td><td>31 Oct (30 Nov if transfer pricing)</td></tr>
+    <tr><td>Annual Return — MGT-7 / 7A</td><td>Shareholding, directors, KMPs, charges</td><td>29 November</td></tr>
+    <tr><td>GST Annual Return — GSTR-9</td><td>GSTR-9C also if turnover &gt; ₹5cr</td><td>31 December</td></tr>
+  </table>
+  </div>
+
+  <div class="band-title"><span class="dot ongoing"></span><h3>Ongoing, throughout the year</h3></div>
+  <div class="table-scroll">
+  <table class="dash-table">
+    <tr><th>Compliance</th><th>Detail</th></tr>
+    <tr><td>Statutory registers</td><td>Members, directors, charges, loans, related-party transactions — kept at the registered office</td></tr>
+    <tr><td>Meeting minutes</td><td>Recorded and signed within 30 days of every board/general meeting</td></tr>
+  </table>
+  </div>
+
+  <div class="article-callout" style="background:#fbf1e0; border-left-color:var(--amber); color:var(--navy);">
+    ⚠️ Fair warning: late filings under the Companies Act attract progressively increasing fees, and repeated defaults can even lead to director disqualification. Treat this calendar as non-negotiable, not optional.
+  </div>
+
+  <h2>Event-based filings</h2>
+  <p>Beyond the fixed calendar, certain business events trigger their own filing deadlines.</p>
+  <div class="table-scroll">
+  <table class="dash-table">
+    <tr><th>Event</th><th>Form</th><th>Time limit</th></tr>
+    <tr><td>Change in registered office</td><td>INC-22</td><td>15 days</td></tr>
+    <tr><td>Change in directors/KMP</td><td>DIR-12</td><td>30 days</td></tr>
+    <tr><td>Increase in authorised capital</td><td>SH-7</td><td>30 days</td></tr>
+    <tr><td>Filing of resolutions</td><td>MGT-14</td><td>30 days</td></tr>
+    <tr><td>Allotment of shares</td><td>PAS-3</td><td>15 days</td></tr>
+    <tr><td>Creation/satisfaction of charge</td><td>CHG-1 / CHG-4</td><td>30 days</td></tr>
+    <tr><td>Change in company name</td><td>INC-24</td><td>After special resolution</td></tr>
+    <tr><td>Conversion Pvt. ↔ Public</td><td>INC-27</td><td>15 days of resolution</td></tr>
+    <tr><td>Related party transactions</td><td>AOC-2</td><td>With Directors' Report</td></tr>
+    <tr><td>Appointment of MD/WTD</td><td>MR-1</td><td>60 days</td></tr>
+    <tr><td>Buy-back of shares</td><td>SH-11</td><td>30 days of completion</td></tr>
+    <tr><td>Strike off / dissolution</td><td>STK-2</td><td>If dormant 2+ years</td></tr>
+  </table>
+  </div>
+
+  <h2>Sector-specific add-on compliances</h2>
+  <div class="problem-list">
+    <div class="problem-row"><span class="txt">Real Estate<span class="sub">RERA Act · Transfer of Property Act</span></span><span class="fix-tag">RERA · approved plans · env. clearance</span></div>
+    <div class="problem-row"><span class="txt">Hospitality<span class="sub">FSS Act · Tourism regulations</span></span><span class="fix-tag">FSSAI · fire NOC · liquor · tourism reg</span></div>
+    <div class="problem-row"><span class="txt">Education<span class="sub">UGC / AICTE / State Board norms</span></span><span class="fix-tag">Affiliation · land norms · trust/society</span></div>
+    <div class="problem-row"><span class="txt">Healthcare<span class="sub">Clinical Establishments Act</span></span><span class="fix-tag">Clinical reg · drug license · biomedical waste</span></div>
+    <div class="problem-row"><span class="txt">Trading<span class="sub">Foreign Trade Policy · Excise</span></span><span class="fix-tag">IEC · weights &amp; measures · APMC</span></div>
+    <div class="problem-row"><span class="txt">Manufacturing<span class="sub">Factories Act · Environment Protection Act</span></span><span class="fix-tag">Factory license · PCB NOC · BIS</span></div>
+    <div class="problem-row"><span class="txt">Govt. Supply &amp; Works<span class="sub">CPWD/State PWD · GFR · MSME Act</span></span><span class="fix-tag">Contractor reg · Udyam · GeM</span></div>
+    <div class="problem-row"><span class="txt">Consultancy<span class="sub">Professional norms · SEBI · IT Act</span></span><span class="fix-tag">Indemnity · SEBI/RBI reg · IT Act</span></div>
+  </div>
+
+</section>
+
+<div class="site-footer">
+  This guide is prepared for general informational and educational purposes only, based on the Companies Act, 2013, Income Tax Act, GST laws, and other applicable statutes as amended from time to time. It does not constitute legal, financial, or professional advice. Laws change — please verify current statutory provisions and consult a qualified Chartered Accountant, Company Secretary, or legal advisor before acting on any of it.
+</div>
+        
+        <div class="author mt-3" data-reveal>
+          <div class="author__avatar" style="background:var(--emerald); display:grid; place-items:center;">
+            <span
+              style="font-family:var(--sans); font-weight:700; color:#fff; font-size:1.3rem; letter-spacing:.02em;">MP</span>
+          </div>
+          <div>
+            <p class="author__role">Written by</p>
+            <h3 class="author__name">CA Mrinmoy Pathak</h3>
+            <p>Chartered Accountant and principal of Mrinmoy &amp; Co., writing on tax, compliance and business finance
+              for founders and MSMEs across Northeast India. <a href="../about.html">More about the practice →</a></p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-band" data-reveal>
+        <div class="cta-band__inner">
+          <div>
+            <p class="eyebrow" style="color:#7EC4EC">Get in touch</p>
+            <h2>Have a question a post didn't answer?</h2>
+            <p>Send it across — we're happy to point you in the right direction.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--light" href="../request-consultation.html">Request a consultation</a>
+            <a class="btn btn--outline-light" href="../blogs.html">Read the blogs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="wordmark" style="display: inline-flex; align-items: center; gap: 10px;" href="../index.html"
+            aria-label="Mrinmoy and Co. — home">
+            <img src="../assets/img/ca_logo.png" alt="CA India Logo"
+              style="height: 32px; width: auto; object-fit: contain; transform: translateY(-1px);">
+            <span class="wordmark__name">Mrinmoy&nbsp;&amp;&nbsp;Co.</span>
+            <span class="wordmark__rule">Chartered Accountants</span>
+          </a>
+          <p class="footer-intro">Accounting, tax, compliance and financial advisory for founders, MSMEs and
+            institutions across Northeast India.</p>
+          <div class="social">
+            <a href="https://wa.me/918811886677" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"
+                fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.19-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36l.56.01c.18.01.42-.07.66.5.24.58.82 2.01.9 2.16.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.16-.19.69-.8.87-1.08.18-.28.36-.23.6-.14.24.09 1.55.73 1.81.86.27.14.44.21.51.32.07.12.07.66-.17 1.35Z" />
+              </svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z" />
+              </svg></a>
+            <a href="mailto:contact@camrinmoy.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg></a>
+          </div>
+        </div>
+        <nav class="footer-col" aria-label="Footer">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../services.html">Services</a></li>
+            <li><a href="../engagements.html">Engagements</a></li>
+            <li><a href="../blogs.html">Blogs</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="../services.html#accounting">Accounting &amp; Assurance</a></li>
+            <li><a href="../services.html#taxation">Taxation</a></li>
+            <li><a href="../services.html#corporate">Corporate &amp; Compliance</a></li>
+            <li><a href="../services.html#digital">Digital Transformation</a></li>
+            <li><a href="../services.html#bi">Business Intelligence</a></li>
+            <li><a href="../services.html#advisory">Financial Advisory</a></li>
+            <li><a href="../services.html#cfo">Virtual CFO Services</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-contact">
+          <h4>Office</h4>
+          <p><strong>Mrinmoy &amp; Co.</strong><br>58, Jayanagar, Sixmile<br>Guwahati, Assam 781022</p>
+          <p><strong>Phone / WhatsApp</strong><br><a href="tel:+918811886677">+91 88118 86677</a></p>
+          <p><strong>Email</strong><br><a href="mailto:contact@camrinmoy.com">contact@camrinmoy.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> Mrinmoy &amp; Co. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="../privacy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms &amp; Conditions</a>
+          <span class="footer-updated">Updated Jul 2026</span>
+        </div>
+      </div>
+      <p class="footer-disclaimer">This website is intended solely to provide general information about Mrinmoy &amp;
+        Co. It is not an advertisement, nor a solicitation or invitation of professional work. The information here does
+        not constitute professional advice and should not be relied upon as such. By accessing this website, you
+        acknowledge that there has been no inducement or solicitation of any kind by the firm, and that any information
+        is accessed at your own initiative.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg></button>
+  <script src="../assets/js/main.js" defer></script>
+</body>
+
+</html>

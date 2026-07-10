@@ -16,8 +16,8 @@ camrinmoy-website/
 ├── index.html          Home
 ├── about.html          About the practice / CA Mrinmoy Pathak
 ├── services.html       6 services (description · benefits · process · CTA) + FAQ
-├── work.html           Engagements — anonymised & filterable
-├── blog.html           Insights — search + category filter + author + sharing
+├── engagements.html    Engagements — anonymised & filterable
+├── blogs.html Blogs — search + category filter + author + sharing
 ├── contact.html        Enquiry form + details + map
 ├── privacy.html        Privacy Policy (review before publishing)
 ├── terms.html          Terms & Conditions (review before publishing)
@@ -44,8 +44,8 @@ Search the project for the word `TODO` and these placeholders:
 | `contact@camrinmoy.com` | every page footer, contact page, `main.js` | the firm's **real email** |
 | LinkedIn `href="#"` | every footer + contact page | the firm's **LinkedIn URL** (or delete the icon) |
 | Map `iframe` query | `contact.html` | an exact Google Maps pin / embed for the office |
-| Portrait image slots | `index.html`, `about.html`, `blog.html` (author) | a **professional portrait** of CA Mrinmoy Pathak (see §3) |
-| Blog post links → `business-blogs-hub` | `blog.html` | real article URLs once posts are migrated |
+| Portrait image slots | `index.html`, `about.html`, `blogs.html` (author) | a **professional portrait** of CA Mrinmoy Pathak (see §3) |
+| Blog post links → `business-blogs-hub` | `blogs.html` | real article URLs once posts are migrated |
 | `Updated Jul 2026` | footers | keep current — ICAI expects a visible "last updated" date |
 
 Optional but recommended: add a **Membership No. / Firm Registration No.** to the About page if the firm wishes (ICAI permits it), and confirm the **year of establishment** if you'd like it shown.

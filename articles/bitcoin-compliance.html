@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compliance Framework for Foreign Bitcoin Holdings | Mrinmoy & Co.</title>
+  <meta name="description" content="Plain-English notes on business finance, tax, and compliance.">
+  <meta name="theme-color" content="#0B4F8A">
+  <link rel="icon" type="image/png" href="../assets/img/ca_logo.png">
+  <link rel="apple-touch-icon" href="../assets/img/ca_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../assets/css/styles.css?v=1.1">
+  <style>
+    :root {
+  --navy: var(--forest);
+  --navy-2: var(--forest-2);
+  --emerald: var(--emerald);
+  --emerald-light: var(--mint);
+  --gold: #e07b0f;
+  --gold-light: #fdf0e0;
+  --red: #c04a17;
+  --red-light: #fcede3;
+  --paper: var(--paper-2);
+  --ink: var(--ink);
+  --slate: var(--muted);
+  --line: var(--line);
+}
+
+.article-hero {
+  max-width:900px;margin:0 auto;padding:48px 40px 20px;text-align:left;
+}
+
+.eyebrow {
+  display:inline-block;color:var(--emerald);font-weight:700;font-size:12.5px;
+    letter-spacing:1.2px;text-transform:uppercase;margin-bottom:14px;
+}
+
+h1 {
+  font-size:38px;line-height:1.18;margin:0 0 16px;color:var(--navy);font-weight:800;
+    letter-spacing:-.3px;
+}
+
+.dek {
+  font-size:18px;color:var(--slate);max-width:700px;margin:0 0 8px;
+}
+
+.headline-stat-row {
+  display:flex;gap:16px;max-width:900px;margin:28px auto 0;padding:0 40px;flex-wrap:wrap;
+}
+
+.stat-chip {
+  flex:1;min-width:180px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--emerald);
+    border-radius:6px;padding:16px 18px;
+}
+
+.stat-chip.gold {
+  border-left-color:var(--gold);
+}
+
+.stat-chip.red {
+  border-left-color:var(--red);
+}
+
+.stat-chip .num {
+  font-size:24px;font-weight:800;color:var(--navy);
+}
+
+.stat-chip .lbl {
+  font-size:12.5px;color:var(--slate);margin-top:2px;
+}
+
+.article-body {
+  max-width:900px;margin:0 auto;padding:36px 40px 10px;
+}
+
+h2 {
+  color:var(--navy);font-size:24px;margin:46px 0 14px;font-weight:800;
+    border-bottom:2px solid var(--line);padding-bottom:10px;
+}
+
+h3 {
+  color:var(--navy);font-size:17px;margin:22px 0 8px;
+}
+
+p {
+  font-size:16px;color:#333;
+}
+
+ul {
+  padding-left:20px;
+}
+
+li {
+  margin-bottom:8px;font-size:16px;
+}
+
+.lede {
+  font-size:17px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 24px;
+    color:#2b3947;
+}
+
+/* Fork diagram */
+  .fork-wrap {
+  margin:28px 0 8px;
+}
+
+.fork-svg {
+  width:100%;height:auto;display:block;
+}
+
+/* Callout */
+  .callout {
+  border-radius:8px;padding:18px 22px;margin:22px 0;font-size:15.5px;
+}
+
+.callout.gold {
+  background:var(--gold-light);border:1px solid #ecd8a0;
+}
+
+.callout.red {
+  background:var(--red-light);border:1px solid #edc0c8;
+}
+
+.callout .callout-label {
+  font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:.8px;display:block;margin-bottom:6px;
+}
+
+.callout.gold .callout-label {
+  color:var(--gold);
+}
+
+.callout.red .callout-label {
+  color:var(--red);
+}
+
+/* Tables */
+  table {
+  width:100%;border-collapse:collapse;margin:18px 0 8px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;
+}
+
+thead th {
+  background:var(--navy);color:#fff;text-align:left;padding:12px 16px;font-size:13.5px;
+    text-transform:uppercase;letter-spacing:.4px;
+}
+
+td, tbody th {
+  padding:12px 16px;border-top:1px solid var(--line);font-size:15px;vertical-align:top;
+}
+
+tbody tr:nth-child(even) {
+  background:#fafaf8;
+}
+
+.penalty-table thead th {
+  background:var(--red);
+}
+
+.penalty-amount {
+  font-weight:800;color:var(--red);font-size:16px;
+}
+
+/* Card grid */
+  .card-grid {
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;
+}
+
+.info-card {
+  background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px 20px;
+}
+
+.info-card .icon {
+  font-size:22px;margin-bottom:8px;display:block;
+}
+
+.info-card h4 {
+  margin:0 0 6px;color:var(--navy);font-size:15.5px;
+}
+
+.info-card p {
+  font-size:14.5px;color:var(--slate);margin:0;
+}
+
+/* Timeline */
+  .timeline-wrap {
+  margin:26px 0 10px;
+}
+
+/* Checklist */
+  .checklist {
+  list-style:none;padding:0;margin:18px 0;
+}
+
+.checklist li {
+  background:#fff;border:1px solid var(--line);border-left:4px solid var(--emerald);
+    border-radius:6px;padding:14px 18px;margin-bottom:10px;font-size:15.5px;
+}
+
+.checklist li strong {
+  color:var(--navy);
+}
+
+/* Example box */
+  .example-box {
+  background:var(--emerald-light);border:1px solid #bfe2d3;border-radius:8px;
+    padding:20px 24px;margin:20px 0;
+}
+
+.example-box .ex-label {
+  font-weight:800;color:var(--emerald);text-transform:uppercase;font-size:12px;letter-spacing:.8px;
+    display:block;margin-bottom:10px;
+}
+
+.example-box p {
+  margin:0 0 8px;font-size:15.5px;
+}
+
+.example-box p:last-child {
+  margin-bottom:0;
+}
+
+.divider {
+  height:1px;background:var(--line);margin:40px 0;
+}
+
+.author-box {
+  max-width:900px;margin:44px auto 0;padding:24px 40px;display:flex;gap:16px;align-items:center;
+    border-top:1px solid var(--line);
+}
+
+.author-avatar {
+  width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;
+}
+
+.author-box h4 {
+  margin:0;color:var(--navy);font-size:15.5px;
+}
+
+.author-box p {
+  margin:4px 0 0;font-size:13.5px;color:var(--slate);
+}
+
+@media (max-width:640px) {
+  .article-hero, .article-body, .author-box {
+  padding-left:20px;padding-right:20px;
+}
+
+.headline-stat-row {
+  padding:0 20px;
+}
+
+h1 {
+  font-size:28px;
+}
+
+.card-grid {
+  grid-template-columns:1fr;
+}
+}
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Primary">
+        <a class="wordmark" style="display: inline-flex; align-items: center; gap: 10px;" href="../index.html"
+          aria-label="Mrinmoy and Co., Chartered Accountants — home">
+          <img src="../assets/img/ca_logo.png" alt="CA India Logo"
+            style="height: 32px; width: auto; object-fit: contain; transform: translateY(-1px);">
+          <span class="wordmark__name">Mrinmoy&nbsp;&amp;&nbsp;Co.</span>
+          <span class="wordmark__rule">Chartered Accountants</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../engagements.html">Engagements</a></li>
+          <li><a href="../blogs.html">Blogs</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+        <a class="btn nav-cta" href="../request-consultation.html">Request a consultation
+          <svg class="arw" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu"
+          aria-label="Open menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="../index.html"><span class="num">01</span> Home</a></li>
+      <li><a href="../about.html"><span class="num">02</span> About</a></li>
+      <li><a href="../services.html"><span class="num">03</span> Services</a></li>
+      <li><a href="../engagements.html"><span class="num">04</span> Engagements</a></li>
+      <li><a href="../blogs.html"><span class="num">05</span> Blogs</a></li>
+      <li><a href="../contact.html"><span class="num">06</span> Contact</a></li>
+    </ul>
+    <a class="btn" href="../request-consultation.html">Request a consultation</a>
+  </div>
+
+  <div class="back-link-wrapper" style="background: var(--paper-2); border-bottom: 1px solid var(--line); padding: 1rem 0;">
+    <div class="container container--narrow">
+      <a class="back-link" href="../blogs.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: 600; text-decoration: none;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="transform: scaleX(-1);"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Back to Blogs
+      </a>
+    </div>
+  </div>
+
+  <main id="main">
+    <article class="article-post" style="padding: 2rem 0 4rem;">
+      <div class="container container--narrow">
+        <section class="article-hero">
+  <span class="eyebrow">Compliance &middot; 10 min read</span>
+  <h1>You didn't sell a single Bitcoin. You may still owe a report — or a &#8377;10 lakh penalty.</h1>
+  <p class="dek">A lot of Resident Indians holding Bitcoin on a foreign exchange think "buy and hold, no transactions" means nothing to report. That's only half true — and the half that's wrong is the expensive half.</p>
+</section>
+
+        <div class="article-hero-img" style="margin: 2rem 0; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-1);">
+          <img src="../images/Blogs/1 BITCOIN.jpeg" alt="Bitcoin Compliance for Resident Indians" style="width: 100%; height: auto; object-fit: cover; display: block; aspect-ratio: 16 / 9;">
+        </div>
+
+<div class="headline-stat-row">
+  <div class="stat-chip">
+    <div class="num">0%</div>
+    <div class="lbl">Tax owed on a pure hold with zero sales this year</div>
+  </div>
+  <div class="stat-chip red">
+    <div class="num">&#8377;10,00,000</div>
+    <div class="lbl">Flat penalty per year for simply forgetting to disclose it</div>
+  </div>
+  <div class="stat-chip gold">
+    <div class="num">2</div>
+    <div class="lbl">Separate laws involved — Income Tax Act &amp; Black Money Act</div>
+  </div>
+</div>
+
+<section class="article-body">
+
+  <p class="lede">Here's the mental trap: "no transfer, no gain, nothing to report." The tax part of that sentence is correct. The reporting part is not. The moment your Bitcoin sits on an offshore exchange, you are legally holding a foreign asset — and that triggers a disclosure duty that has <strong>nothing to do with</strong> whether you made money. Below is what actually applies, split into the two tracks that most people wrongly treat as one.</p>
+
+  <h2>Two separate obligations, one common mistake</h2>
+  <p>The single biggest misunderstanding is treating "tax liability" and "disclosure obligation" as the same question. They're governed by different laws, judged on different timelines, and one of them can hurt you even when your tax bill is exactly ₹0. Here's the fork:</p>
+
+  <div class="fork-wrap">
+    <svg class="fork-svg" viewBox="0 0 860 330" xmlns="http://www.w3.org/2000/svg">
+      <rect x="330" y="10" width="200" height="56" rx="8" fill="#1a5680"/>
+      <text x="430" y="34" text-anchor="middle" fill="#fff" font-size="13" font-family="Arial" font-weight="700">You hold Bitcoin on</text>
+      <text x="430" y="52" text-anchor="middle" fill="#fff" font-size="13" font-family="Arial" font-weight="700">a foreign exchange</text>
+
+      <line x1="430" y1="66" x2="430" y2="90" stroke="#b8c2cc" stroke-width="2"/>
+      <line x1="200" y1="90" x2="660" y2="90" stroke="#b8c2cc" stroke-width="2"/>
+      <line x1="200" y1="90" x2="200" y2="112" stroke="#b8c2cc" stroke-width="2"/>
+      <line x1="660" y1="90" x2="660" y2="112" stroke="#b8c2cc" stroke-width="2"/>
+
+      <rect x="70" y="112" width="260" height="60" rx="8" fill="#eef6ea" stroke="#4c9a3e" stroke-width="1.5"/>
+      <text x="200" y="136" text-anchor="middle" fill="#4c9a3e" font-size="12.5" font-family="Arial" font-weight="800">TAX LIABILITY</text>
+      <text x="200" y="155" text-anchor="middle" fill="#1c2733" font-size="12" font-family="Arial">Triggered only on SALE / SWAP</text>
+
+      <rect x="530" y="112" width="260" height="60" rx="8" fill="#fcede3" stroke="#c04a17" stroke-width="1.5"/>
+      <text x="660" y="136" text-anchor="middle" fill="#c04a17" font-size="12.5" font-family="Arial" font-weight="800">DISCLOSURE DUTY</text>
+      <text x="660" y="155" text-anchor="middle" fill="#1c2733" font-size="12" font-family="Arial">Triggered just by HOLDING it</text>
+
+      <line x1="200" y1="172" x2="200" y2="196" stroke="#4c9a3e" stroke-width="2"/>
+      <line x1="660" y1="172" x2="660" y2="196" stroke="#c04a17" stroke-width="2"/>
+
+      <rect x="70" y="196" width="260" height="58" rx="8" fill="#fff" stroke="#dfe3e6"/>
+      <text x="200" y="218" text-anchor="middle" fill="#1c2733" font-size="12" font-family="Arial" font-weight="700">No sale this year?</text>
+      <text x="200" y="236" text-anchor="middle" fill="#4c9a3e" font-size="13" font-family="Arial" font-weight="800">Tax due = ₹0</text>
+
+      <rect x="530" y="196" width="260" height="58" rx="8" fill="#fff" stroke="#dfe3e6"/>
+      <text x="660" y="218" text-anchor="middle" fill="#1c2733" font-size="12" font-family="Arial" font-weight="700">No sale this year?</text>
+      <text x="660" y="236" text-anchor="middle" fill="#c04a17" font-size="13" font-family="Arial" font-weight="800">Schedule FA still due</text>
+
+      <line x1="200" y1="254" x2="200" y2="270" stroke="#4c9a3e" stroke-width="2"/>
+      <line x1="660" y1="254" x2="660" y2="270" stroke="#c04a17" stroke-width="2"/>
+      <text x="200" y="290" text-anchor="middle" fill="#5a6b7a" font-size="11.5" font-family="Arial">Income Tax Act, Sec 115BBH</text>
+      <text x="660" y="290" text-anchor="middle" fill="#5a6b7a" font-size="11.5" font-family="Arial">Black Money Act, Sec 43</text>
+      <text x="200" y="308" text-anchor="middle" fill="#5a6b7a" font-size="11.5" font-family="Arial">Miss it: interest only, on real gains</text>
+      <text x="660" y="308" text-anchor="middle" fill="#c04a17" font-size="11.5" font-family="Arial" font-weight="700">Miss it: ₹10L flat penalty, per year</text>
+    </svg>
+  </div>
+
+  <p>That right-hand branch is the one that catches people out — and it's the one this note focuses on.</p>
+
+  <h2>Left branch: what tax law actually says during a hold</h2>
+  <div class="card-grid">
+    <div class="info-card">
+      <span class="icon">📈</span>
+      <h4>30% flat, only on transfer</h4>
+      <p>Section 115BBH taxes gains on Virtual Digital Assets at a flat 30% (plus surcharge and 4% cess) — but only when you sell, swap, or exchange. A genuine buy-and-hold position with zero transfers in the year owes zero capital gains tax for that year.</p>
+    </div>
+    <div class="info-card">
+      <span class="icon">🧾</span>
+      <h4>Almost nothing is deductible</h4>
+      <p>Platform fees, wallet storage costs, advisory fees — none of it can be set off or added to cost. Only the direct, verifiable purchase price counts as your cost basis.</p>
+    </div>
+    <div class="info-card">
+      <span class="icon">🏦</span>
+      <h4>TDS stays asleep</h4>
+      <p>Section 194S TDS applies on transfer of VDAs. With no domestic P2P clearing and no sale, it simply doesn't activate.</p>
+    </div>
+    <div class="info-card">
+      <span class="icon">🧮</span>
+      <h4>No loss set-off either</h4>
+      <p>Even in years you do transact, VDA losses can't be set off against other income or carried forward — a separate quirk worth knowing before you assume normal capital-gains rules apply.</p>
+    </div>
+  </div>
+
+  <h2>Right branch: Schedule FA — the part people skip</h2>
+  <p>An offshore exchange is a foreign custodial entity. The moment your Bitcoin sits there, you are — in the eyes of Indian tax law — holding a foreign asset located outside India. For a <strong>Resident and Ordinarily Resident (ROR)</strong> individual, that means disclosure under <strong>Schedule FA</strong> of the ITR is mandatory. Not optional, not linked to profit, not waived because you "didn't do anything" with it.</p>
+
+  <h3>The calendar trap nobody expects</h3>
+  <p>Indian income tax runs April–March. Schedule FA doesn't. It runs on the <strong>calendar year</strong> (January–December) immediately before the assessment year — a completely different clock ticking inside the same tax return.</p>
+
+  <div class="timeline-wrap">
+    <svg viewBox="0 0 860 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <text x="10" y="24" font-family="Arial" font-size="12.5" font-weight="700" fill="#1a5680">Financial Year (income tax clock)</text>
+      <rect x="10" y="34" width="500" height="26" rx="4" fill="#eef6ea" stroke="#4c9a3e"/>
+      <text x="260" y="52" text-anchor="middle" font-family="Arial" font-size="12" fill="#4c9a3e" font-weight="700">1 Apr 2025 &#8594; 31 Mar 2026</text>
+
+      <text x="10" y="94" font-family="Arial" font-size="12.5" font-weight="700" fill="#1a5680">Schedule FA disclosure window (calendar-year clock)</text>
+      <rect x="10" y="104" width="420" height="26" rx="4" fill="#fcede3" stroke="#c04a17"/>
+      <text x="220" y="122" text-anchor="middle" font-family="Arial" font-size="12" fill="#c04a17" font-weight="700">1 Jan 2025 &#8594; 31 Dec 2025</text>
+
+      <line x1="10" y1="150" x2="850" y2="150" stroke="#b8c2cc" stroke-width="1.5"/>
+      <line x1="10" y1="146" x2="10" y2="154" stroke="#b8c2cc" stroke-width="1.5"/>
+      <line x1="850" y1="146" x2="850" y2="154" stroke="#b8c2cc" stroke-width="1.5"/>
+      <text x="10" y="168" font-family="Arial" font-size="11" fill="#5a6b7a">Jan 2025</text>
+      <text x="820" y="168" font-family="Arial" font-size="11" fill="#5a6b7a" text-anchor="end">Mar 2026</text>
+      <text x="430" y="185" text-anchor="middle" font-family="Arial" font-size="11.5" fill="#5a6b7a" font-style="italic">Both windows sit inside the SAME ITR — filed with different start/end dates</text>
+    </svg>
+  </div>
+
+  <div class="callout red">
+    <span class="callout-label">Why this trips people up</span>
+    You could sell your Bitcoin in February 2026 — well before the financial year ends — and still be required to report it in Schedule FA for the calendar year it was held, even though it's already gone by the financial year-end the rest of your return is built around.
+  </div>
+
+  <div class="example-box">
+    <span class="ex-label">Worked example</span>
+    <p><strong>Priya</strong>, an ROR based in Guwahati, bought ₹8 lakh worth of Bitcoin on a foreign exchange in March 2025 and hasn't touched it since.</p>
+    <p>Her income tax computation for FY 2025-26 shows nil capital gains — correct, since she hasn't sold anything.</p>
+    <p>But because she held that Bitcoin for part of calendar year 2025, she is still required to report it under Schedule FA in her ITR for AY 2026-27 — initial value, peak balance during 2025, and closing balance as on 31 December 2025. Skipping this because "there was no gain" is exactly the assumption that costs ₹10 lakh.</p>
+  </div>
+
+  <h2>What exactly goes into the form</h2>
+  <p>Offshore crypto doesn't have its own row in the ITR's foreign-asset tables. In practice it's reported under <strong>Table A3</strong> (Foreign Equity/Debt/Financial Interest) or, more conservatively, <strong>Table D</strong> (Other Immovable Property/Assets Outside India) — converted to INR using the SBI Telegraphic Transfer Buying Rate on the relevant dates.</p>
+
+  <table>
+    <thead><tr><th>Field</th><th>What you actually enter</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Initial value</strong></td><td>Actual purchase price in INR, on the exact acquisition date</td></tr>
+      <tr><td><strong>Peak balance</strong></td><td>Highest fair market value the holding touched during the calendar year, in INR</td></tr>
+      <tr><td><strong>Closing balance</strong></td><td>Value as on the last moment of 31 December of that calendar year</td></tr>
+      <tr><td><strong>Gross proceeds / income derived</strong></td><td>Zero, for a pure hold — no staking, airdrops, or interest earned</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Black Money Act: where the real risk actually sits</h2>
+  <p>Get the tax computation wrong and you owe interest on the shortfall. Get Schedule FA wrong — miss it, misstate it, understate it — and you've stepped into the <strong>Black Money (Undisclosed Foreign Income and Assets) and Imposition of Tax Act, 2015</strong>, a far harsher regime than an ordinary tax default.</p>
+
+  <table class="penalty-table">
+    <thead><tr><th>Provision</th><th>What happens</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Section 43 penalty</strong></td>
+        <td><span class="penalty-amount">₹10,00,000 flat</span> — per fiscal year, for the omission alone. It does not matter whether the asset made money or what it's worth.</td>
+      </tr>
+      <tr>
+        <td><strong>Section 50 prosecution</strong></td>
+        <td>Willful non-disclosure can escalate to criminal prosecution under the Act, separate from the monetary penalty.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold">
+    <span class="callout-label">The one sentence to remember</span>
+    Your income tax bill can genuinely be zero. Your disclosure obligation is not linked to that number at all — and its penalty is completely separate, completely live, and completely avoidable.
+  </div>
+
+  <h2>Funding the account: FEMA and the LRS ceiling</h2>
+  <p>Getting money onto the exchange in the first place has its own rulebook. Under RBI's <strong>Liberalised Remittance Scheme (LRS)</strong>, resident individuals can send up to <strong>USD 250,000 per financial year</strong> abroad for permissible purposes. RBI has stayed visibly cautious about remittances earmarked for speculative crypto purchases, and many Authorised Dealer banks block LRS transfers flagged for offshore crypto platforms outright.</p>
+  <p>Trying to route around an AD bank's filters — indirect transfers, international card instruments — opens up a separate and material FEMA compliance problem of its own. Every permitted remittance needs clean <strong>Form A2</strong> documentation, matched to the exchange ledger.</p>
+
+  <h2>Getting it right: a practical checklist</h2>
+  <ul class="checklist">
+    <li><strong>File ITR-3.</strong> The moment a foreign asset schedule is involved, ITR-1, ITR-2 and ITR-4 are off the table entirely.</li>
+    <li><strong>Keep an unbroken paper trail.</strong> Exchange onboarding records, monthly and annual account ledgers with timestamps and execution values, and bank records matching every outbound LRS remittance to the exchange ledger.</li>
+    <li><strong>Revisit the position every year.</strong> If the exchange changes its terms, adds India-specific reporting, or tax authorities widen how they cross-check offshore financial data, your reporting approach needs a fresh look — this isn't a set-once decision.</li>
+    <li><strong>Report even in a "quiet" year.</strong> No sale, no swap, no income — Schedule FA disclosure still applies if the asset was held during the relevant calendar year.</li>
+  </ul>
+
+  <div class="divider"></div>
+  <p style="font-size:14.5px;color:var(--slate);">This note is a general guide for Resident and Ordinarily Resident individuals holding Bitcoin directly on offshore exchanges. It does not cover NRIs, RNORs, entities, or DeFi/staking arrangements, and rates, thresholds, and forms are subject to change by the CBDT and RBI. Speak to us before you file if any of this applies to you.</p>
+</section>
+        
+        <div class="author mt-3" data-reveal>
+          <div class="author__avatar" style="background:var(--emerald); display:grid; place-items:center;">
+            <span
+              style="font-family:var(--sans); font-weight:700; color:#fff; font-size:1.3rem; letter-spacing:.02em;">MP</span>
+          </div>
+          <div>
+            <p class="author__role">Written by</p>
+            <h3 class="author__name">CA Mrinmoy Pathak</h3>
+            <p>Chartered Accountant and principal of Mrinmoy &amp; Co., writing on tax, compliance and business finance
+              for founders and MSMEs across Northeast India. <a href="../about.html">More about the practice →</a></p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-band" data-reveal>
+        <div class="cta-band__inner">
+          <div>
+            <p class="eyebrow" style="color:#7EC4EC">Get in touch</p>
+            <h2>Have a question a post didn't answer?</h2>
+            <p>Send it across — we're happy to point you in the right direction.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--light" href="../request-consultation.html">Request a consultation</a>
+            <a class="btn btn--outline-light" href="../blogs.html">Read the blogs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="wordmark" style="display: inline-flex; align-items: center; gap: 10px;" href="../index.html"
+            aria-label="Mrinmoy and Co. — home">
+            <img src="../assets/img/ca_logo.png" alt="CA India Logo"
+              style="height: 32px; width: auto; object-fit: contain; transform: translateY(-1px);">
+            <span class="wordmark__name">Mrinmoy&nbsp;&amp;&nbsp;Co.</span>
+            <span class="wordmark__rule">Chartered Accountants</span>
+          </a>
+          <p class="footer-intro">Accounting, tax, compliance and financial advisory for founders, MSMEs and
+            institutions across Northeast India.</p>
+          <div class="social">
+            <a href="https://wa.me/918811886677" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"
+                fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.19-1.19-1.58-1.19-3.01 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36l.56.01c.18.01.42-.07.66.5.24.58.82 2.01.9 2.16.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.16-.19.69-.8.87-1.08.18-.28.36-.23.6-.14.24.09 1.55.73 1.81.86.27.14.44.21.51.32.07.12.07.66-.17 1.35Z" />
+              </svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21H9V9Z" />
+              </svg></a>
+            <a href="mailto:contact@camrinmoy.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg></a>
+          </div>
+        </div>
+        <nav class="footer-col" aria-label="Footer">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../services.html">Services</a></li>
+            <li><a href="../engagements.html">Engagements</a></li>
+            <li><a href="../blogs.html">Blogs</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="../services.html#accounting">Accounting &amp; Assurance</a></li>
+            <li><a href="../services.html#taxation">Taxation</a></li>
+            <li><a href="../services.html#corporate">Corporate &amp; Compliance</a></li>
+            <li><a href="../services.html#digital">Digital Transformation</a></li>
+            <li><a href="../services.html#bi">Business Intelligence</a></li>
+            <li><a href="../services.html#advisory">Financial Advisory</a></li>
+            <li><a href="../services.html#cfo">Virtual CFO Services</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-contact">
+          <h4>Office</h4>
+          <p><strong>Mrinmoy &amp; Co.</strong><br>58, Jayanagar, Sixmile<br>Guwahati, Assam 781022</p>
+          <p><strong>Phone / WhatsApp</strong><br><a href="tel:+918811886677">+91 88118 86677</a></p>
+          <p><strong>Email</strong><br><a href="mailto:contact@camrinmoy.com">contact@camrinmoy.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> Mrinmoy &amp; Co. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="../privacy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms &amp; Conditions</a>
+          <span class="footer-updated">Updated Jul 2026</span>
+        </div>
+      </div>
+      <p class="footer-disclaimer">This website is intended solely to provide general information about Mrinmoy &amp;
+        Co. It is not an advertisement, nor a solicitation or invitation of professional work. The information here does
+        not constitute professional advice and should not be relied upon as such. By accessing this website, you
+        acknowledge that there has been no inducement or solicitation of any kind by the firm, and that any information
+        is accessed at your own initiative.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg></button>
+  <script src="../assets/js/main.js" defer></script>
+</body>
+
+</html>
