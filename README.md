@@ -41,7 +41,7 @@ Search the project for the word `TODO` and these placeholders:
 
 | Placeholder | Where | Replace with |
 |---|---|---|
-| `contact@camrinmoy.com` | every page footer, contact page, `main.js` | the firm's **real email** |
+| `mrinmoy@camrinmoy.com` | every page footer, contact page, `main.js` | the firm's **real email** |
 | LinkedIn `href="#"` | every footer + contact page | the firm's **LinkedIn URL** (or delete the icon) |
 | Map `iframe` query | `contact.html` | an exact Google Maps pin / embed for the office |
 | Portrait image slots | `index.html`, `about.html`, `blogs.html` (author) | a **professional portrait** of CA Mrinmoy Pathak (see §3) |

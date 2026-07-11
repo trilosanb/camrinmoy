@@ -191,11 +191,11 @@
         "\n" + message.value.trim()
       );
       // TODO: replace with the firm's real address before go-live.
-      window.location.href = "mailto:contact@camrinmoy.com?subject=" + subject + "&body=" + body;
+      window.location.href = "mailto:mrinmoy@camrinmoy.com?subject=" + subject + "&body=" + body;
 
       if (status) {
         status.classList.add("ok");
-        status.textContent = "Thanks — your email client should open with the message ready to send. If it doesn't, write to contact@camrinmoy.com or message +91 88118 86677 on WhatsApp.";
+        status.textContent = "Thanks — your email client should open with the message ready to send. If it doesn't, write to mrinmoy@camrinmoy.com or message +91 88118 86677 on WhatsApp.";
       }
       form.reset();
     });
