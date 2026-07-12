@@ -535,10 +535,7 @@ function submitForm(){
   };
 
   // Resolve URL (check localStorage if not hardcoded in the file)
-  let targetUrl = SCRIPT_URL;
-  if (!targetUrl || targetUrl.includes("PASTE_YOUR")) {
-    targetUrl = localStorage.getItem("SCRIPT_URL") || "";
-  }
+  let targetUrl = localStorage.getItem("LEADS_SCRIPT_URL") || localStorage.getItem("SCRIPT_URL") || SCRIPT_URL;
 
   if (targetUrl) {
     fetch(targetUrl, {

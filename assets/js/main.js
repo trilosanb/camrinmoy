@@ -200,4 +200,105 @@
       form.reset();
     });
   }
+
+  /* -------- Blog list PDF download (Iframe method) -------- */
+  d.querySelectorAll(".download-pdf-btn").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var url = btn.getAttribute("data-url");
+      if (!url) return;
+
+      var printUrl = url + (url.indexOf("?") !== -1 ? "&" : "?") + "print=true";
+      
+      // Remove any existing print iframe
+      var oldIframe = d.getElementById("pdf-print-iframe");
+      if (oldIframe) {
+        oldIframe.parentNode.removeChild(oldIframe);
+      }
+
+      var iframe = d.createElement("iframe");
+      iframe.id = "pdf-print-iframe";
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "0";
+      iframe.style.visibility = "hidden";
+      iframe.src = printUrl;
+      d.body.appendChild(iframe);
+
+      // Cleanup iframe after some time (15 seconds) to allow printing to complete
+      setTimeout(function () {
+        if (iframe.parentNode) {
+          iframe.parentNode.removeChild(iframe);
+        }
+      }, 15000);
+    });
+  });
+
+  /* -------- Article actions (PDF / Share) -------- */
+  var printBtn = d.querySelector(".print-article-btn");
+  if (printBtn) {
+    printBtn.addEventListener("click", function () {
+      window.print();
+    });
+  }
+
+  var shareBtn = d.querySelector(".share-article-btn");
+  if (shareBtn) {
+    shareBtn.addEventListener("click", function () {
+      var shareData = {
+        title: d.title,
+        text: d.querySelector(".dek") ? d.querySelector(".dek").textContent : "",
+        url: window.location.href
+      };
+
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        navigator.share(shareData).catch(function (err) {
+          console.log("Error sharing", err);
+        });
+      } else {
+        // Fallback: Copy to clipboard
+        navigator.clipboard.writeText(window.location.href).then(function () {
+          showToast("Link copied to clipboard!");
+        }).catch(function () {
+          var input = d.createElement("input");
+          input.value = window.location.href;
+          d.body.appendChild(input);
+          input.select();
+          d.execCommand("copy");
+          d.body.removeChild(input);
+          showToast("Link copied to clipboard!");
+        });
+      }
+    });
+  }
+
+  // Toast helper
+  function showToast(msg) {
+    var toast = d.createElement("div");
+    toast.className = "toast-notification";
+    toast.textContent = msg;
+    d.body.appendChild(toast);
+
+    setTimeout(function () {
+      toast.classList.add("show");
+    }, 100);
+
+    setTimeout(function () {
+      toast.classList.remove("show");
+      setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, 2500);
+  }
+
+  /* -------- Check for auto-print parameter -------- */
+  if (window.location.search.indexOf("print=true") !== -1) {
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        window.print();
+      }, 600);
+    });
+  }
 })();

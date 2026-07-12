@@ -367,23 +367,24 @@
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 14px;
+      font-size: 13.5px;
+      border: 1px solid var(--border-color);
     }
 
     th {
-      background: #F4F2EB;
+      background: #ECEAE1;
       color: var(--text-main);
       font-weight: 600;
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border-color);
+      letter-spacing: 0.04em;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
     }
 
     td {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border-color);
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
       color: var(--text-main);
       white-space: nowrap;
       max-width: 250px;
@@ -391,12 +392,12 @@
       text-overflow: ellipsis;
     }
 
-    tr:last-child td {
-      border-bottom: none;
+    tr:nth-child(even) td {
+      background: #FAF9F5;
     }
 
     tr:hover td {
-      background: #FAF9F6;
+      background: #ECEAE1 !important;
       cursor: pointer;
     }
 
@@ -730,9 +731,200 @@
         margin: 10px;
       }
     }
+
+    /* Tabs styling */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 0px;
+      margin-bottom: 12px;
+      margin-top: 8px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 12px 20px;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+    }    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* Dashboard Login Gate Styles */
+    .login-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 14, 23, 0.98);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      opacity: 1;
+      visibility: visible;
+      padding: 20px;
+    }
+    
+    .login-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .login-card {
+      background: #FAF8F2;
+      border: 1px solid #C4A46A;
+      border-radius: 12px;
+      padding: clamp(24px, 5vw, 40px);
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      animation: loginFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    
+    @keyframes loginFadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .login-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0A2E4D;
+      text-decoration: none;
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+    
+    .login-logo span {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #B8863B;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    
+    .login-title {
+      font-size: 17px;
+      color: #14213D;
+      margin-bottom: 24px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    
+    .login-field {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+    
+    .login-field label {
+      display: block;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6B7280;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    
+    .login-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #DCE3E9;
+      border-radius: 6px;
+      background: #FFFFFF;
+      color: #14213D;
+      font-size: 14px;
+      transition: border-color 0.15s;
+    }
+    
+    .login-input:focus {
+      outline: none;
+      border-color: #B8863B;
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: #0A2E4D;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: background 0.15s;
+    }
+    
+    .login-btn:hover {
+      background: #143F64;
+    }
+    
+    .login-error {
+      color: #b3261e;
+      font-size: 12.5px;
+      margin-top: 16px;
+      display: none;
+      background: #fde8e8;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #f8b4b4;
+      text-align: left;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
   </style>
 </head>
 <body>
+
+<!-- Login Gate Overlay -->
+<div id="loginOverlay" class="login-overlay">
+  <div class="login-card">
+    <div class="login-logo">
+      Mrinmoy & Co.
+      <span>Chartered Accountants</span>
+    </div>
+    <h2 class="login-title">Dashboard Login Gate</h2>
+    <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+      <div class="login-field">
+        <label for="loginUsername">Username</label>
+        <input type="text" id="loginUsername" class="login-input" required placeholder="Enter username...">
+      </div>
+      <div class="login-field" style="margin-bottom: 20px;">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" class="login-input" required placeholder="Enter password...">
+      </div>
+      <button type="submit" class="login-btn">Sign In to Dashboard</button>
+      <div id="loginError" class="login-error"></div>
+    </form>
+  </div>
+</div>
 
 <div class="container">
   
@@ -765,110 +957,205 @@
         <svg class="icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         API Settings
       </button>
+
+      <!-- Logout Button -->
+      <button class="btn btn-secondary" onclick="handleLogout()" title="Log out from dashboard" style="border-color: #F8B4B4; color: #b3261e;">
+        <svg class="icon" style="stroke: #b3261e;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Sign Out
+      </button>
     </div>
   </header>
 
-  <!-- KPI Stats Bar -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <span class="label">Total Check-Ins</span>
-      <span class="value" id="statTotal">0</span>
-      <span class="subtext"><span class="trend-up">↑ 100%</span> all-time checkins</span>
-      <span class="icon-holder">📋</span>
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 0px; margin-bottom: 12px; margin-top: 8px;">
+    <div style="display: flex; gap: 8px;">
+      <button class="tab-btn active" id="btnTabLeads" onclick="switchDashboardMode('leads')">Client Check-Ins</button>
+      <button class="tab-btn" id="btnTabCareers" onclick="switchDashboardMode('careers')">Job Applications</button>
     </div>
-    <div class="stat-card">
-      <span class="label">Portfolio Reviews</span>
-      <span class="value" id="statReviews">0</span>
-      <span class="subtext">Wants free audit review</span>
-      <span class="icon-holder">📊</span>
-    </div>
-    <div class="stat-card">
-      <span class="label">Onboarding Leads</span>
-      <span class="value" id="statOnboard">0</span>
-      <span class="subtext">Wants to start investing</span>
-      <span class="icon-holder">🚀</span>
-    </div>
-    <div class="stat-card">
-      <span class="label">Active Investors</span>
-      <span class="value" id="statInvesting">0</span>
-      <span class="subtext" id="statInvestingPct">0% currently invest</span>
-      <span class="icon-holder">💰</span>
-    </div>
+    <button class="btn btn-secondary" id="btnToggleAnalytics" onclick="toggleAnalytics()" title="Toggle Charts Panel" style="padding: 6px 14px; font-size: 13px;">
+      <svg class="icon" style="width: 15px; height: 15px; margin-right: 4px;"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      Show Analytics
+    </button>
   </div>
 
-  <!-- Analytics Row -->
-  <div class="analytics-row">
-    <!-- Investment Status breakdown -->
-    <div class="analytics-card">
-      <h2>Investment Portfolio Status</h2>
-      <div class="chart-container">
-        <canvas id="investingChart"></canvas>
+  <!-- LEADS VIEW CONTAINER -->
+  <div id="leadsDashboardView">
+    <!-- KPI Stats Bar -->
+    <div class="stats-grid" id="leadsStats">
+      <div class="stat-card">
+        <span class="label">Total Check-Ins</span>
+        <span class="value" id="statTotal">0</span>
+        <span class="subtext"><span class="trend-up">↑ 100%</span> all-time checkins</span>
+        <span class="icon-holder">📋</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Portfolio Reviews</span>
+        <span class="value" id="statReviews">0</span>
+        <span class="subtext">Wants free audit review</span>
+        <span class="icon-holder">📊</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Onboarding Leads</span>
+        <span class="value" id="statOnboard">0</span>
+        <span class="subtext">Wants to start investing</span>
+        <span class="icon-holder">🚀</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Active Investors</span>
+        <span class="value" id="statInvesting">0</span>
+        <span class="subtext" id="statInvestingPct">0% currently invest</span>
+        <span class="icon-holder">💰</span>
       </div>
     </div>
-    <!-- Financial assets distribution breakdown -->
-    <div class="analytics-card">
-      <h2>Financial Asset Holdings</h2>
-      <div class="chart-container">
-        <canvas id="assetsChart"></canvas>
-      </div>
-    </div>
-  </div>
 
-  <!-- Leads Database Section -->
-  <div class="leads-section">
-    <div class="controls-row">
-      <div class="search-filter-group">
-        <!-- Search bar -->
-        <div class="search-wrapper">
-          <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="text" id="searchInput" class="search-input" placeholder="Search by name, email..." oninput="handleSearchFilter()">
+    <!-- Analytics Row -->
+    <div class="analytics-row" id="leadsAnalytics" style="display: none; margin-top: 24px; margin-bottom: 24px;">
+      <!-- Investment Status breakdown -->
+      <div class="analytics-card">
+        <h2>Investment Portfolio Status</h2>
+        <div class="chart-container">
+          <canvas id="investingChart"></canvas>
+        </div>
+      </div>
+      <!-- Financial assets distribution breakdown -->
+      <div class="analytics-card">
+        <h2>Financial Asset Holdings</h2>
+        <div class="chart-container">
+          <canvas id="assetsChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leads Database Section -->
+    <div class="leads-section" style="margin-top: 24px;">
+      <div class="controls-row">
+        <div class="search-filter-group">
+          <!-- Search bar -->
+          <div class="search-wrapper">
+            <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by name, email..." oninput="handleSearchFilter()">
+          </div>
+          
+          <!-- Filter dropdowns -->
+          <select id="filterInvesting" class="select-filter" onchange="handleSearchFilter()">
+            <option value="ALL">Currently Investing: All</option>
+            <option value="Yes">Investing: Yes</option>
+            <option value="No">Investing: No</option>
+          </select>
+          
+          <select id="filterReview" class="select-filter" onchange="handleSearchFilter()">
+            <option value="ALL">Portfolio Review: All</option>
+            <option value="Yes">Needs Review</option>
+            <option value="No">No Review Needed</option>
+          </select>
+          
+          <select id="filterStart" class="select-filter" onchange="handleSearchFilter()">
+            <option value="ALL">Onboarding Flow: All</option>
+            <option value="Yes">Ready to Start</option>
+            <option value="No">Not Starting</option>
+          </select>
         </div>
         
-        <!-- Filter dropdowns -->
-        <select id="filterInvesting" class="select-filter" onchange="handleSearchFilter()">
-          <option value="ALL">Currently Investing: All</option>
-          <option value="Yes">Investing: Yes</option>
-          <option value="No">Investing: No</option>
-        </select>
-        
-        <select id="filterReview" class="select-filter" onchange="handleSearchFilter()">
-          <option value="ALL">Portfolio Review: All</option>
-          <option value="Yes">Needs Review</option>
-          <option value="No">No Review Needed</option>
-        </select>
-        
-        <select id="filterStart" class="select-filter" onchange="handleSearchFilter()">
-          <option value="ALL">Onboarding Flow: All</option>
-          <option value="Yes">Ready to Start</option>
-          <option value="No">Not Starting</option>
-        </select>
+        <button class="btn btn-primary" onclick="exportFilteredCSV()">
+          <svg class="icon" style="stroke: var(--bg-base);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export CSV
+        </button>
       </div>
-      
-      <button class="btn btn-primary" onclick="exportFilteredCSV()">
-        <svg class="icon" style="stroke: var(--bg-base);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        Export CSV
-      </button>
+
+      <!-- Leads Table Grid -->
+      <div class="table-container" id="leadsTableContainer">
+        <table id="leadsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>WhatsApp</th>
+              <th>Investing</th>
+              <th>Review Requested</th>
+              <th>Wants to Start</th>
+              <th>Preferred Follow-Up</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAREERS VIEW CONTAINER -->
+  <div id="careersDashboardView" style="display: none;">
+    <!-- KPI Stats Bar -->
+    <div class="stats-grid" id="careersStats">
+      <div class="stat-card">
+        <span class="label">Total Applications</span>
+        <span class="value" id="statCareersTotal">0</span>
+        <span class="subtext"><span class="trend-up">↑ 100%</span> candidates applied</span>
+        <span class="icon-holder">👥</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">New This Week</span>
+        <span class="value" id="statCareersThisWeek">0</span>
+        <span class="subtext">Received in past 7 days</span>
+        <span class="icon-holder">📈</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">New Today</span>
+        <span class="value" id="statCareersNewToday">0</span>
+        <span class="subtext">Received in past 24h</span>
+        <span class="icon-holder">⚡</span>
+      </div>
     </div>
 
-    <!-- Leads Table Grid -->
-    <div class="table-container">
-      <table id="leadsTable">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>WhatsApp</th>
-            <th>Investing</th>
-            <th>Review Requested</th>
-            <th>Wants to Start</th>
-            <th>Preferred Follow-Up</th>
-          </tr>
-        </thead>
-        <tbody id="leadsTableBody">
-          <!-- Populated dynamically -->
-        </tbody>
-      </table>
+    <!-- Analytics Row -->
+    <div class="analytics-row" id="careersAnalytics" style="display: none; grid-template-columns: 1fr; margin-top: 24px; margin-bottom: 24px;">
+      <!-- Timeline breakdown -->
+      <div class="analytics-card" style="width: 100%;">
+        <h2>Application Receipt Timeline</h2>
+        <div class="chart-container">
+          <canvas id="timelineChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Careers Database Section -->
+    <div class="leads-section" style="margin-top: 24px;">
+      <div class="controls-row">
+        <div class="search-filter-group">
+          <!-- Search bar -->
+          <div class="search-wrapper">
+            <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="careersSearchInput" class="search-input" placeholder="Search candidates..." oninput="handleCareersSearchFilter()">
+          </div>
+        </div>
+        
+        <button class="btn btn-primary" onclick="exportCareersCSV()">
+          <svg class="icon" style="stroke: var(--bg-base);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export CSV
+        </button>
+      </div>
+
+      <!-- Careers Table Grid -->
+      <div class="table-container" id="careersTableContainer">
+        <table id="careersTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Candidate Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Cover Message</th>
+              <th>Resume</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="careersTableBody">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -909,12 +1196,22 @@
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label for="scriptUrlInput">Google Apps Script Web App URL</label>
-        <input type="text" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
+        <label for="leadsScriptUrlInput">Client Leads Web App URL</label>
+        <input type="text" id="leadsScriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
         <p class="form-help">
-          Paste the web app URL generated after deploying your Google Apps Script workspace project. Leave it empty to return to the interactive simulation mode. Need help setting it up? Refer to the <a href="file:///C:/Users/TRILOSAN%20%20BORO/.gemini/antigravity-ide/brain/b50eeb24-2929-4801-9cdc-920d00b00ceb/scratch/apps-script-source.js" target="_blank">setup instructions script file</a>.
+          Paste the web app URL generated after deploying your Google Apps Script for the Client Leads sheet.
         </p>
       </div>
+      <div class="form-group" style="margin-top: 16px;">
+        <label for="careersScriptUrlInput">Job Applications Web App URL</label>
+        <input type="text" id="careersScriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
+        <p class="form-help">
+          Paste the web app URL generated after deploying your Google Apps Script for the Job Applications sheet.
+        </p>
+      </div>
+      <p class="form-help" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px;">
+        Leave fields empty to run in simulated mode. Need backend code? Refer to the <a href="file:///c:/Users/TRILOSAN%20%20BORO/Desktop/Ampire/BigMind/camrinmoy-website/apps-script-source.js" target="_blank">setup instructions script file</a> in the project directory.
+      </p>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('configModal')">Cancel</button>
@@ -1012,74 +1309,262 @@
     }
   ];
 
+  const MOCK_APPLICATIONS = [
+    {
+      timestamp: "2026-07-11T10:15:30.000Z",
+      fullName: "Debashish Sarma",
+      email: "debashish.s@outlook.com",
+      phone: "+91 94350 22341",
+      position: "Financial Analyst",
+      message: "I am a qualified Chartered Accountant with 3 years of experience in valuation and project report modeling. I have worked on CMA data and investment banking proposals in Guwahati. My experience aligns closely with your advisory practice.",
+      resumeName: "Debashish_Sarma_CV.pdf",
+      resumeUrl: "https://drive.google.com/file/d/18iR2x8VJBbUOcKrQQVLBSs6UiAcqdrHs_debashish/view"
+    },
+    {
+      timestamp: "2026-07-10T14:30:22.000Z",
+      fullName: "Nandini Das",
+      email: "nandini.das.ca@gmail.com",
+      phone: "+91 88110 54321",
+      position: "Accountant",
+      message: "Applying for the Accountant position. I have 2 years of experience in statutory audit, TDS compliance, and GST filings under CA firms. Highly proficient in Tally Prime, Zoho Books, and advanced MS Excel. Looking forward to professional growth in your esteemed firm.",
+      resumeName: "Nandini_Das_CA_Resume.pdf",
+      resumeUrl: "https://drive.google.com/file/d/18iR2x8VJBbUOcKrQQVLBSs6UiAcqdrHs_nandini/view"
+    },
+    {
+      timestamp: "2026-07-09T09:12:05.000Z",
+      fullName: "Rohan Baruah",
+      email: "rohan.baruah99@yahoo.com",
+      phone: "+91 70021 98765",
+      position: "Financial Analyst",
+      message: "Highly analytical and detail-oriented finance graduate. Eager to work as a Financial Analyst. Proficient in financial forecasting, dashboard creation in Power BI, and industry research. Seeking articleship or junior analyst positions.",
+      resumeName: "Rohan_Baruah_Finance_Resume.docx",
+      resumeUrl: "https://drive.google.com/file/d/18iR2x8VJBbUOcKrQQVLBSs6UiAcqdrHs_rohan/view"
+    },
+    {
+      timestamp: "2026-07-08T11:45:10.000Z",
+      fullName: "Jahnavi Deka",
+      email: "jahnavi.deka@gmail.com",
+      phone: "+91 94350 11223",
+      position: "Accountant",
+      message: "M.Com graduate from Gauhati University with experience in bookkeeping, payroll accounting, and tax computations. Dedicated team worker with strong attention to details.",
+      resumeName: "Jahnavi_Deka_Resume.pdf",
+      resumeUrl: "https://drive.google.com/file/d/18iR2x8VJBbUOcKrQQVLBSs6UiAcqdrHs_jahnavi/view"
+    }
+  ];
+
   let rawLeads = [];
   let filteredLeads = [];
+  let rawApplications = [];
+  let filteredApplications = [];
+  let currentDashboardMode = "leads"; // "leads" or "careers"
+  let showAnalyticsPanel = false; // Hidden by default
+
   let investingChartInstance = null;
   let assetsChartInstance = null;
+  let timelineChartInstance = null;
 
   // Initial load
   document.addEventListener("DOMContentLoaded", () => {
-    initApp();
+    checkAuthentication();
   });
 
-  // Default production script URL fallback
-  const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLgAOtpmYwrgnbpfBQRLIsQg2I6WGp-O7ybOzKb-pKmvEu7Xtqhx1hJD1VzfhmUWfB/exec";
-
-  function initApp() {
-    const savedUrl = localStorage.getItem("SCRIPT_URL") || DEFAULT_SCRIPT_URL;
-    const statusBadge = document.getElementById("connStatus");
-    
-    if (savedUrl && savedUrl.trim().length > 0) {
-      statusBadge.className = "status-badge live";
-      statusBadge.querySelector(".status-text").textContent = "Live Connect";
-      fetchLiveLeads(savedUrl);
+  function checkAuthentication() {
+    const isAuth = sessionStorage.getItem("DASHBOARD_AUTH") === "true";
+    const overlay = document.getElementById("loginOverlay");
+    if (isAuth) {
+      overlay.classList.add("hidden");
+      initApp();
     } else {
-      statusBadge.className = "status-badge simulated";
-      statusBadge.querySelector(".status-text").textContent = "Simulated Data";
-      loadDemoData();
+      overlay.classList.remove("hidden");
     }
   }
 
-  function loadDemoData() {
+  function handleLoginSubmit(event) {
+    event.preventDefault();
+    const user = document.getElementById("loginUsername").value.trim();
+    const pass = document.getElementById("loginPassword").value;
+    const errorEl = document.getElementById("loginError");
+    
+    // Credentials
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "mrinmoyadmin";
+    
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
+      sessionStorage.setItem("DASHBOARD_AUTH", "true");
+      errorEl.style.display = "none";
+      
+      const overlay = document.getElementById("loginOverlay");
+      overlay.classList.add("hidden");
+      
+      showToast("Access Granted. Welcome, Administrator.", "success");
+      initApp();
+    } else {
+      errorEl.textContent = "Invalid username or password. Please try again.";
+      errorEl.style.display = "block";
+      
+      // Shake animation
+      const card = document.querySelector(".login-card");
+      card.style.animation = "none";
+      card.offsetHeight; // trigger reflow
+      card.style.animation = "shake 0.35s ease-in-out";
+    }
+  }
+
+  function handleLogout() {
+    sessionStorage.removeItem("DASHBOARD_AUTH");
+    
+    // Reset form inputs
+    document.getElementById("loginUsername").value = "";
+    document.getElementById("loginPassword").value = "";
+    document.getElementById("loginError").style.display = "none";
+    
+    checkAuthentication();
+    showToast("You have been signed out.", "success");
+  }
+
+  // Default production script URLs fallbacks
+  const DEFAULT_LEADS_URL = "https://script.google.com/macros/s/AKfycbxLgAOtpmYwrgnbpfBQRLIsQg2I6WGp-O7ybOzKb-pKmvEu7Xtqhx1hJD1VzfhmUWfB/exec";
+  const DEFAULT_CAREERS_URL = ""; // Empty by default
+
+  function initApp() {
+    // Delete obsolete key to prevent endpoint cross-contamination
+    localStorage.removeItem("SCRIPT_URL");
+
+    const leadsUrl = localStorage.getItem("LEADS_SCRIPT_URL") || DEFAULT_LEADS_URL;
+    const careersUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_CAREERS_URL;
+
+    updateConnectionStatusDisplay();
+
+    // Fetch leads
+    if (leadsUrl && leadsUrl.trim().length > 0) {
+      fetchLiveLeads(leadsUrl);
+    } else {
+      loadLeadsDemo();
+    }
+
+    // Fetch careers
+    if (careersUrl && careersUrl.trim().length > 0) {
+      fetchLiveApplications(careersUrl);
+    } else {
+      loadCareersDemo();
+    }
+  }
+
+  function updateConnectionStatusDisplay() {
+    const statusBadge = document.getElementById("connStatus");
+    const textNode = statusBadge.querySelector(".status-text");
+
+    if (currentDashboardMode === "leads") {
+      const leadsUrl = localStorage.getItem("LEADS_SCRIPT_URL") || DEFAULT_LEADS_URL;
+      if (leadsUrl && leadsUrl.trim().length > 0) {
+        statusBadge.className = "status-badge live";
+        textNode.textContent = "Live Connect (Leads)";
+      } else {
+        statusBadge.className = "status-badge simulated";
+        textNode.textContent = "Simulated (Leads)";
+      }
+    } else {
+      const careersUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_CAREERS_URL;
+      if (careersUrl && careersUrl.trim().length > 0) {
+        statusBadge.className = "status-badge live";
+        textNode.textContent = "Live Connect (Careers)";
+      } else {
+        statusBadge.className = "status-badge simulated";
+        textNode.textContent = "Simulated (Careers)";
+      }
+    }
+  }
+
+  function loadLeadsDemo() {
     rawLeads = [...MOCK_LEADS];
     filteredLeads = [...rawLeads];
-    updateDashboardUI();
-    showToast("Loaded demo lead dataset", "success");
+    if (currentDashboardMode === "leads") {
+      updateDashboardUI();
+    }
+  }
+
+  function loadCareersDemo() {
+    // Load local submissions + mock apps
+    let localApps = [];
+    try {
+      localApps = JSON.parse(localStorage.getItem("LOCAL_APPLICATIONS") || "[]");
+    } catch(e){}
+    rawApplications = [...localApps, ...MOCK_APPLICATIONS];
+    filteredApplications = [...rawApplications];
+    if (currentDashboardMode === "careers") {
+      updateCareersUI();
+    }
   }
 
   function fetchLiveLeads(url) {
     const statusBadge = document.getElementById("connStatus");
     const textNode = statusBadge.querySelector(".status-text");
-    textNode.innerHTML = '<span class="spinner" style="width: 12px; height: 12px; border-width: 2px; margin-right: 6px;"></span> Fetching...';
     
-    // We append a random parameter to avoid aggressive browser caching
+    if (currentDashboardMode === "leads") {
+      textNode.innerHTML = '<span class="spinner" style="width: 12px; height: 12px; border-width: 2px; margin-right: 6px;"></span> Syncing...';
+    }
+    
     const requestUrl = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
 
     fetch(requestUrl)
       .then(response => {
-        if (!response.ok) {
-          throw new Error("HTTP error " + response.status);
-        }
+        if (!response.ok) throw new Error("HTTP " + response.status);
         return response.json();
       })
       .then(data => {
-        textNode.textContent = "Live Connect";
+        updateConnectionStatusDisplay();
         if (Array.isArray(data)) {
           rawLeads = data;
           filteredLeads = [...rawLeads];
-          updateDashboardUI();
-          showToast(`Successfully synced ${data.length} live entries`, "success");
+          if (currentDashboardMode === "leads") {
+            updateDashboardUI();
+          }
+          showToast(`Synced ${data.length} client check-ins`, "success");
         } else {
-          console.error("Format error: script returned non-array body", data);
-          throw new Error("Invalid response format (expected JSON array)");
+          throw new Error("Response was not a JSON array");
         }
       })
       .catch(err => {
-        console.error("Fetch failed", err);
-        statusBadge.className = "status-badge simulated";
-        textNode.textContent = "Sync Failed (Demo Mode)";
-        showToast("Unable to sync from Apps Script. Loading simulation backup...", "error");
-        loadDemoData();
+        console.error("Fetch leads failed", err);
+        updateConnectionStatusDisplay();
+        showToast("Leads sync failed. Loading simulated database...", "error");
+        loadLeadsDemo();
+      });
+  }
+
+  function fetchLiveApplications(url) {
+    const statusBadge = document.getElementById("connStatus");
+    const textNode = statusBadge.querySelector(".status-text");
+
+    if (currentDashboardMode === "careers") {
+      textNode.innerHTML = '<span class="spinner" style="width: 12px; height: 12px; border-width: 2px; margin-right: 6px;"></span> Syncing...';
+    }
+
+    const requestUrl = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+
+    fetch(requestUrl)
+      .then(response => {
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        return response.json();
+      })
+      .then(data => {
+        updateConnectionStatusDisplay();
+        if (Array.isArray(data)) {
+          rawApplications = data;
+          filteredApplications = [...rawApplications];
+          if (currentDashboardMode === "careers") {
+            updateCareersUI();
+          }
+          showToast(`Synced ${data.length} job applications`, "success");
+        } else {
+          throw new Error("Response was not a JSON array");
+        }
+      })
+      .catch(err => {
+        console.error("Fetch applications failed", err);
+        updateConnectionStatusDisplay();
+        showToast("Careers sync failed. Loading simulated database...", "error");
+        loadCareersDemo();
       });
   }
 
@@ -1087,8 +1572,58 @@
     initApp();
   }
 
+  // Toggle Tab view
+  function switchDashboardMode(mode) {
+    currentDashboardMode = mode;
+    
+    // Tab toggling
+    document.getElementById("btnTabLeads").classList.toggle("active", mode === "leads");
+    document.getElementById("btnTabCareers").classList.toggle("active", mode === "careers");
+    
+    // Layout toggling
+    document.getElementById("leadsDashboardView").style.display = mode === "leads" ? "block" : "none";
+    document.getElementById("careersDashboardView").style.display = mode === "careers" ? "block" : "none";
+    
+    updateConnectionStatusDisplay();
+    updateAnalyticsDisplay();
+
+    if (mode === "leads") {
+      updateDashboardUI();
+    } else {
+      updateCareersUI();
+    }
+  }
+
+  // Toggle Analytics Charts
+  function toggleAnalytics() {
+    showAnalyticsPanel = !showAnalyticsPanel;
+    const btn = document.getElementById("btnToggleAnalytics");
+    
+    if (showAnalyticsPanel) {
+      btn.innerHTML = `<svg class="icon" style="width: 15px; height: 15px; margin-right: 4px;"><path d="M18 20V10M12 20V4M6 20v-6"/></svg> Hide Analytics`;
+      btn.classList.add("btn-primary");
+      btn.classList.remove("btn-secondary");
+    } else {
+      btn.innerHTML = `<svg class="icon" style="width: 15px; height: 15px; margin-right: 4px;"><path d="M18 20V10M12 20V4M6 20v-6"/></svg> Show Analytics`;
+      btn.classList.add("btn-secondary");
+      btn.classList.remove("btn-primary");
+    }
+    updateAnalyticsDisplay();
+  }
+
+  function updateAnalyticsDisplay() {
+    const displayStyle = showAnalyticsPanel ? "grid" : "none";
+    if (currentDashboardMode === "leads") {
+      document.getElementById("leadsAnalytics").style.display = displayStyle;
+      document.getElementById("careersAnalytics").style.display = "none";
+    } else {
+      document.getElementById("leadsAnalytics").style.display = "none";
+      document.getElementById("careersAnalytics").style.display = displayStyle;
+    }
+  }
+
+  // --- LEADS DASHBOARD FUNCTIONS ---
   function updateDashboardUI() {
-    // 1. Calculate and update KPI values
     const total = rawLeads.length;
     const reviews = rawLeads.filter(l => l.portfolioReview === "Yes").length;
     const onboarding = rawLeads.filter(l => l.wantToStart === "Yes").length;
@@ -1101,10 +1636,8 @@
     document.getElementById("statInvesting").textContent = investing;
     document.getElementById("statInvestingPct").textContent = `${investPct}% currently invest`;
 
-    // 2. Refresh Table Content
     handleSearchFilter();
 
-    // 3. Render charts
     setTimeout(() => {
       renderCharts(investing, total - investing);
     }, 100);
@@ -1112,11 +1645,10 @@
 
   function renderCharts(investingCount, nonInvestingCount) {
     if (typeof Chart === 'undefined') {
-      console.warn("Chart.js library is not yet loaded");
+      console.warn("Chart.js library is not loaded");
       return;
     }
 
-    // Asset distribution counter
     const assetCounts = {
       "Fixed Deposit": 0,
       "Mutual Funds": 0,
@@ -1125,7 +1657,6 @@
       "Crypto Currency": 0
     };
 
-    // Insurance Held counter
     const insuranceCounts = {
       "Term Plan": 0,
       "Health Insurance": 0,
@@ -1135,26 +1666,20 @@
     rawLeads.forEach(l => {
       if (Array.isArray(l.whereInvested)) {
         l.whereInvested.forEach(asset => {
-          if (assetCounts[asset] !== undefined) {
-            assetCounts[asset]++;
-          }
+          if (assetCounts[asset] !== undefined) assetCounts[asset]++;
         });
       }
       if (Array.isArray(l.insuranceHeld)) {
         l.insuranceHeld.forEach(ins => {
-          // Normalize names
           let normalized = ins;
           if (ins === "Life Policy Plan - Guaranteed Return" || ins === "Guaranteed Return Policy") {
             normalized = "Guaranteed Savings Plan";
           }
-          if (insuranceCounts[normalized] !== undefined) {
-            insuranceCounts[normalized]++;
-          }
+          if (insuranceCounts[normalized] !== undefined) insuranceCounts[normalized]++;
         });
       }
     });
 
-    // Chart 1: Donut for Investing Yes/No
     const ctxInvesting = document.getElementById("investingChart").getContext("2d");
     if (investingChartInstance) investingChartInstance.destroy();
     investingChartInstance = new Chart(ctxInvesting, {
@@ -1180,42 +1705,26 @@
       }
     });
 
-    // Chart 2: Horizontal Bar for Assets
     const ctxAssets = document.getElementById("assetsChart").getContext("2d");
     if (assetsChartInstance) assetsChartInstance.destroy();
-    
-    const assetLabels = Object.keys(assetCounts);
-    const assetValues = Object.values(assetCounts);
-
     assetsChartInstance = new Chart(ctxAssets, {
       type: "bar",
       data: {
-        labels: assetLabels,
+        labels: Object.keys(assetCounts),
         datasets: [{
-          label: "Leads Holding Asset",
-          data: assetValues,
-          backgroundColor: "#1F7A5C",
-          borderColor: "#FFFFFF",
-          borderWidth: 1,
+          label: "Asset Ownership",
+          data: Object.values(assetCounts),
+          backgroundColor: "#2A5A7A",
           borderRadius: 4
         }]
       },
       options: {
-        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
+        plugins: { legend: { display: false } },
         scales: {
-          x: {
-            grid: { color: "#E4E1D8" },
-            ticks: { color: "#6B7280", stepSize: 1 }
-          },
-          y: {
-            grid: { display: false },
-            ticks: { color: "#6B7280", font: { family: "Inter" } }
-          }
+          x: { grid: { display: false }, ticks: { color: "#6B7280" } },
+          y: { grid: { color: "#E4E1D8" }, ticks: { color: "#6B7280", stepSize: 1 } }
         }
       }
     });
@@ -1228,25 +1737,22 @@
     const startFilter = document.getElementById("filterStart").value;
 
     filteredLeads = rawLeads.filter(lead => {
-      // 1. Text Search matches
-      const textMatch = 
-        (lead.fullName && lead.fullName.toLowerCase().includes(query)) ||
-        (lead.email && lead.email.toLowerCase().includes(query)) ||
-        (lead.whatsapp && lead.whatsapp.includes(query));
+      const name = (lead.fullName || "").toLowerCase();
+      const email = (lead.email || "").toLowerCase();
+      const whatsapp = (lead.whatsapp || "");
+      
+      const textMatch = name.includes(query) || email.includes(query) || whatsapp.includes(query);
 
-      // 2. Investing Status matches
       let investingMatch = true;
       if (investingFilter !== "ALL") {
         investingMatch = lead.investingNow === investingFilter;
       }
 
-      // 3. Portfolio Review matches
       let reviewMatch = true;
       if (reviewFilter !== "ALL") {
         reviewMatch = lead.portfolioReview === reviewFilter;
       }
 
-      // 4. Onboarding matches
       let startMatch = true;
       if (startFilter !== "ALL") {
         startMatch = lead.wantToStart === startFilter;
@@ -1293,7 +1799,7 @@
 
       tr.innerHTML = `
         <td>${dateStr}</td>
-        <td style="font-weight: 600; color: #FFF;">${escapeHtml(lead.fullName || "")}</td>
+        <td style="font-weight: 600; color: var(--text-main);">${escapeHtml(lead.fullName || "")}</td>
         <td>${escapeHtml(lead.email || "")}</td>
         <td>${escapeHtml(lead.whatsapp || "")}</td>
         <td>${investBadge}</td>
@@ -1375,16 +1881,13 @@
     const emailLink = document.getElementById("btnEmail");
     const waLink = document.getElementById("btnWhatsApp");
     
-    // Email body prefill
     const emailSubject = encodeURIComponent("CA Mrinmoy & Co. — Financial Portfolio Follow-Up");
     const emailBody = encodeURIComponent(`Hi ${lead.fullName || ""},\n\nThank you for checking in with Mrinmoy & Co. We received your financial survey details. We'd love to schedule a quick 10-minute call on your preferred date (${lead.followUpDate || "as soon as possible"}) to discuss your portfolio review.\n\nWarm regards,\nCA Mrinmoy & Co. Team`);
     emailLink.href = `mailto:${lead.email || ""}?subject=${emailSubject}&body=${emailBody}`;
 
-    // WhatsApp prefill message
     let phone = lead.whatsapp ? String(lead.whatsapp) : "";
-    // Clean up typical Indian phone prefixes if present
     phone = phone.replace(/[^0-9]/g, "");
-    if (phone.length === 10) phone = "91" + phone; // Add country code by default for India
+    if (phone.length === 10) phone = "91" + phone;
     
     const waMsg = encodeURIComponent(`Hi ${lead.fullName || ""}, this is the team at Mrinmoy & Co. We have received your financial check-in details. We would like to follow up with you on the date you specified (${lead.followUpDate || "as soon as possible"}). Let us know if you are free for a brief call!`);
     waLink.href = `https://api.whatsapp.com/send?phone=${phone}&text=${waMsg}`;
@@ -1392,67 +1895,270 @@
     openModal("detailModal");
   }
 
-  function openConfigModal() {
-    const savedUrl = localStorage.getItem("SCRIPT_URL") || "";
-    document.getElementById("scriptUrlInput").value = savedUrl;
-    openModal("configModal");
+  // --- CAREERS DASHBOARD FUNCTIONS ---
+  function updateCareersUI() {
+    // Normalize data structure for all candidates
+    rawApplications.forEach(a => {
+      a.fullName = a.fullName || a.name || a.Name || "";
+      a.email = a.email || a.Email || "";
+      a.phone = a.phone || a.Phone || a.phoneNumber || a.PhoneNumber || a.whatsapp || a.Whatsapp || "";
+      a.message = a.message || a.Message || a.coverLetter || a.CoverLetter || "";
+      a.resumeName = a.resumeName || a.resumeFileName || a.ResumeFileName || "resume.pdf";
+      a.resumeUrl = a.resumeUrl || a.resumeLink || a.ResumeLink || "#";
+    });
+
+    const total = rawApplications.length;
+    
+    // Calculate new this week (past 7 days)
+    const past7days = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const thisWeekCount = rawApplications.filter(a => a.timestamp && new Date(a.timestamp) >= past7days).length;
+    
+    // Calculate new today (past 24h)
+    const past24h = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const newToday = rawApplications.filter(a => a.timestamp && new Date(a.timestamp) >= past24h).length;
+
+    document.getElementById("statCareersTotal").textContent = total;
+    document.getElementById("statCareersThisWeek").textContent = thisWeekCount;
+    document.getElementById("statCareersNewToday").textContent = newToday;
+
+    handleCareersSearchFilter();
+
+    setTimeout(() => {
+      renderCareersCharts();
+    }, 100);
   }
 
-  function saveConfig() {
-    const inputUrl = document.getElementById("scriptUrlInput").value.trim();
-    if (inputUrl.length > 0 && !inputUrl.startsWith("https://script.google.com/")) {
-      showToast("URL should be a Google Script endpoint (starts with https://script.google.com/)", "error");
+  function handleCareersSearchFilter() {
+    const query = document.getElementById("careersSearchInput").value.toLowerCase();
+
+    filteredApplications = rawApplications.filter(app => {
+      const name = (app.fullName || "").toLowerCase();
+      const email = (app.email || "").toLowerCase();
+      const phone = (app.phone || "");
+      const msg = (app.message || "").toLowerCase();
+
+      return name.includes(query) || email.includes(query) || phone.includes(query) || msg.includes(query);
+    });
+
+    renderCareersTableRows();
+  }
+
+  function renderCareersTableRows() {
+    const tbody = document.getElementById("careersTableBody");
+    tbody.innerHTML = "";
+
+    if (filteredApplications.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state">No candidates match the active filters or dataset is empty.</div></td></tr>`;
       return;
     }
+
+    filteredApplications.forEach((app) => {
+      const tr = document.createElement("tr");
+      tr.style.cursor = "pointer";
+      
+      tr.onclick = (e) => {
+        if (!e.target.closest(".action-cell-btn") && !e.target.closest("a")) {
+          openApplicationDetails(app);
+        }
+      };
+
+      let dateStr = "N/A";
+      if (app.timestamp) {
+        const d = new Date(app.timestamp);
+        dateStr = d.toLocaleDateString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+      }
+
+      let msg = app.message || "";
+      if (msg.length > 50) {
+        msg = msg.substring(0, 47) + "...";
+      }
+
+      const resumeUrl = app.resumeUrl || app.resumeLink || app.ResumeFileLink || app["Resume File Link"] || app.resumeFileLink || app.resumelink || "#";
+      let resumeColContent = "";
+      if (resumeUrl && resumeUrl !== "#" && resumeUrl.startsWith("http")) {
+        resumeColContent = `<a href="${resumeUrl}" target="_blank" class="btn btn-secondary" style="padding: 4px 8px; font-size: 11.5px; display: inline-flex; gap: 4px; align-items: center;" title="View Uploaded Resume in Google Drive">
+          <svg class="icon" style="width: 12px; height: 12px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          View
+        </a>`;
+      } else if (app.resumeBase64) {
+        resumeColContent = `<a href="data:${app.resumeMimeType || 'application/pdf'};base64,${app.resumeBase64}" download="${app.resumeName || 'resume.pdf'}" class="btn btn-secondary" style="padding: 4px 8px; font-size: 11.5px; display: inline-flex; gap: 4px; align-items: center;" title="Download Attached Resume">
+          <svg class="icon" style="width: 12px; height: 12px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          PDF
+        </a>`;
+      } else {
+        resumeColContent = `<span style="font-size: 12px; color: var(--text-muted); font-style: italic;">Simulated</span>`;
+      }
+
+      const emailSubject = encodeURIComponent("Job application follow-up — Mrinmoy & Co.");
+      const emailBody = encodeURIComponent(`Hi ${app.fullName || ""},\n\nThank you for applying to Mrinmoy & Co. We received your resume and would like to schedule a quick screening call. Please share your availability.\n\nWarm regards,\nCA Mrinmoy Pathak`);
+      const emailMailto = `mailto:${app.email}?subject=${emailSubject}&body=${emailBody}`;
+
+      let cleanPhone = (app.phone || "").replace(/[^0-9]/g, "");
+      if (cleanPhone.length === 10) cleanPhone = "91" + cleanPhone;
+      const waMsg = encodeURIComponent(`Hi ${app.fullName}, this is the team at Mrinmoy & Co. We received your resume. Let us know when you're free for a brief call!`);
+      const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${waMsg}`;
+
+      tr.innerHTML = `
+        <td>${dateStr}</td>
+        <td style="font-weight: 600; color: var(--text-main);">${escapeHtml(app.fullName || "")}</td>
+        <td>${escapeHtml(app.email || "")}</td>
+        <td>${escapeHtml(app.phone || "")}</td>
+        <td style="font-size:12.5px; color: var(--text-muted);" title="${escapeHtml(app.message || "")}">${escapeHtml(msg)}</td>
+        <td>${resumeColContent}</td>
+        <td class="action-cell-btn">
+          <div style="display:flex; gap:6px;">
+            <a href="${emailMailto}" class="btn btn-secondary" style="padding: 4px 8px; font-size:11px;" title="Send Email">Email</a>
+            <a href="${waUrl}" target="_blank" class="btn btn-primary" style="padding: 4px 8px; font-size:11px;" title="Message on WhatsApp">WhatsApp</a>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function openApplicationDetails(app) {
+    document.getElementById("modalName").textContent = app.fullName || "Candidate Details";
+    const detailsContainer = document.getElementById("modalDetailsContent");
     
-    if (inputUrl.length > 0) {
-      localStorage.setItem("SCRIPT_URL", inputUrl);
-      showToast("Saved script connection settings", "success");
-    } else {
-      localStorage.removeItem("SCRIPT_URL");
-      showToast("Returned to Interactive Simulated Data Mode", "success");
+    let submittedAt = "N/A";
+    if (app.timestamp) {
+      submittedAt = new Date(app.timestamp).toLocaleString("en-IN", { dateStyle: "long", timeStyle: "medium" });
     }
+
+    detailsContainer.innerHTML = `
+      <div class="detail-item">
+        <span class="label">Submitted Time</span>
+        <span class="value">${submittedAt}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Full Name</span>
+        <span class="value" style="color: var(--gold);">${escapeHtml(app.fullName || "N/A")}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Email Address</span>
+        <span class="value">${escapeHtml(app.email || "N/A")}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Phone Number</span>
+        <span class="value">${escapeHtml(app.phone || "N/A")}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Message / Cover Letter</span>
+        <span class="value" style="white-space: pre-wrap; font-weight: normal; line-height: 1.5; color: var(--text-main); font-size: 13.5px;">${escapeHtml(app.message || "No cover letter message provided.")}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Resume Attachment</span>
+        <span class="value">
+          ${(() => {
+            const resumeUrl = app.resumeUrl || app.resumeLink || app.ResumeFileLink || app["Resume File Link"] || app.resumeFileLink || app.resumelink || "#";
+            if (resumeUrl && resumeUrl !== "#" && resumeUrl.startsWith("http")) {
+              return `<a href="${resumeUrl}" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; margin-top: 4px; display: inline-flex; align-items: center; gap: 6px;">
+                <svg class="icon" style="width: 14px; height: 14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                View Uploaded Resume (${escapeHtml(app.resumeName || "resume")})
+               </a>`;
+            } else if (app.resumeBase64) {
+              return `<a href="data:${app.resumeMimeType || 'application/pdf'};base64,${app.resumeBase64}" download="${app.resumeName}" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; margin-top: 4px; display: inline-flex; align-items: center; gap: 6px;">
+                  <svg class="icon" style="width: 14px; height: 14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                  Download Attached Resume (${escapeHtml(app.resumeName)})
+                 </a>`;
+            } else {
+              return `<span style="font-family: var(--mono); font-size: 12px; color: var(--text-muted);">Simulated Resume Document (No file uploaded)</span>`;
+            }
+          })()}
+        </span>
+      </div>
+    `;
+
+    const emailLink = document.getElementById("btnEmail");
+    const waLink = document.getElementById("btnWhatsApp");
     
-    closeModal("configModal");
-    initApp();
+    const emailSubject = encodeURIComponent("Job application follow-up — Mrinmoy & Co.");
+    const emailBody = encodeURIComponent(`Hi ${app.fullName || ""},\n\nThank you for applying to Mrinmoy & Co. We received your resume and would like to invite you for a brief screening call.\n\nPlease let us know your availability over the next few days.\n\nWarm regards,\nCA Mrinmoy Pathak\nMrinmoy & Co. Guwahati`);
+    emailLink.href = `mailto:${app.email || ""}?subject=${emailSubject}&body=${emailBody}`;
+
+    let phoneNum = app.phone ? String(app.phone) : "";
+    phoneNum = phoneNum.replace(/[^0-9]/g, "");
+    if (phoneNum.length === 10) phoneNum = "91" + phoneNum;
+    
+    const waMsg = encodeURIComponent(`Hi ${app.fullName || ""}, this is the team at Mrinmoy & Co. We received your application. Let us know if you're free for a brief call to discuss your profile!`);
+    waLink.href = `https://api.whatsapp.com/send?phone=${phoneNum}&text=${waMsg}`;
+
+    openModal("detailModal");
   }
 
-  function clearConfig() {
-    localStorage.removeItem("SCRIPT_URL");
-    document.getElementById("scriptUrlInput").value = "";
-    closeModal("configModal");
-    showToast("Reset configurations to simulation default", "success");
-    initApp();
+  function renderCareersCharts() {
+    if (typeof Chart === 'undefined') {
+      console.warn("Chart.js library is not loaded");
+      return;
+    }
+
+    // Timeline submissions
+    const dateCounts = {};
+    rawApplications.forEach(app => {
+      if (app.timestamp) {
+        const d = new Date(app.timestamp);
+        const dayStr = d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+        dateCounts[dayStr] = (dateCounts[dayStr] || 0) + 1;
+      }
+    });
+
+    const dateLabels = Object.keys(dateCounts).reverse();
+    const dateValues = Object.values(dateCounts).reverse();
+
+    const ctxTimeline = document.getElementById("timelineChart").getContext("2d");
+    if (timelineChartInstance) timelineChartInstance.destroy();
+    timelineChartInstance = new Chart(ctxTimeline, {
+      type: "bar",
+      data: {
+        labels: dateLabels.length > 0 ? dateLabels : ["No Entries"],
+        datasets: [{
+          label: "Applications Received",
+          data: dateValues.length > 0 ? dateValues : [0],
+          backgroundColor: "#0A2E4D",
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: "#6B7280" }
+          },
+          y: {
+            grid: { color: "#E4E1D8" },
+            ticks: { color: "#6B7280", stepSize: 1 }
+          }
+        }
+      }
+    });
   }
 
-  function exportFilteredCSV() {
-    if (filteredLeads.length === 0) {
+  function exportCareersCSV() {
+    if (filteredApplications.length === 0) {
       showToast("No data entries to export", "error");
       return;
     }
 
     const headers = [
-      "Timestamp", "Full Name", "Email Address", "WhatsApp Number", 
-      "Currently Investing", "Existing Assets", "Avails Professional Help", 
-      "Wants Portfolio Review", "Wants to Start", "Insurance Held", "Preferred Follow Up"
+      "Timestamp", "Full Name", "Email Address", "Phone Number", "Message / Cover Letter", "Resume File"
     ];
 
     let csvContent = "data:text/csv;charset=utf-8,";
     csvContent += headers.map(h => `"${h}"`).join(",") + "\n";
 
-    filteredLeads.forEach(lead => {
+    filteredApplications.forEach(app => {
       const row = [
-        lead.timestamp || "",
-        lead.fullName || "",
-        lead.email || "",
-        lead.whatsapp || "",
-        lead.investingNow || "",
-        Array.isArray(lead.whereInvested) ? lead.whereInvested.join("; ") : "",
-        lead.professionalHelp || "",
-        lead.portfolioReview || "",
-        lead.wantToStart || "",
-        Array.isArray(lead.insuranceHeld) ? lead.insuranceHeld.join("; ") : "",
-        lead.followUpDate || ""
+        app.timestamp || "",
+        app.fullName || "",
+        app.email || "",
+        app.phone || "",
+        app.message || "",
+        app.resumeName || ""
       ];
       csvContent += row.map(val => `"${val.toString().replace(/"/g, '""')}"`).join(",") + "\n";
     });
@@ -1460,11 +2166,66 @@
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `mrinmoy_co_leads_export_${new Date().toISOString().slice(0,10)}.csv`);
+    link.setAttribute("download", `mrinmoy_co_candidates_export_${new Date().toISOString().slice(0,10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    showToast("Downloaded CSV file successfully", "success");
+    showToast("Downloaded candidates CSV file successfully", "success");
+  }
+
+  // --- COMMON CONFIG FUNCTIONS ---
+  function openConfigModal() {
+    const leadsUrl = localStorage.getItem("LEADS_SCRIPT_URL") || DEFAULT_LEADS_URL;
+    const careersUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_CAREERS_URL;
+
+    document.getElementById("leadsScriptUrlInput").value = leadsUrl;
+    document.getElementById("careersScriptUrlInput").value = careersUrl;
+    openModal("configModal");
+  }
+
+  function saveConfig() {
+    const leadsVal = document.getElementById("leadsScriptUrlInput").value.trim();
+    const careersVal = document.getElementById("careersScriptUrlInput").value.trim();
+    
+    if (leadsVal.length > 0 && !leadsVal.startsWith("https://script.google.com/")) {
+      showToast("Leads URL must start with https://script.google.com/", "error");
+      return;
+    }
+    if (careersVal.length > 0 && !careersVal.startsWith("https://script.google.com/")) {
+      showToast("Careers URL must start with https://script.google.com/", "error");
+      return;
+    }
+    
+    if (leadsVal.length > 0) {
+      localStorage.setItem("LEADS_SCRIPT_URL", leadsVal);
+      localStorage.removeItem("SCRIPT_URL"); // clean old key
+    } else {
+      localStorage.removeItem("LEADS_SCRIPT_URL");
+      localStorage.removeItem("SCRIPT_URL");
+    }
+    
+    if (careersVal.length > 0) {
+      localStorage.setItem("CAREERS_SCRIPT_URL", careersVal);
+    } else {
+      localStorage.removeItem("CAREERS_SCRIPT_URL");
+    }
+    
+    showToast("Saved connection configurations", "success");
+    closeModal("configModal");
+    initApp();
+  }
+
+  function clearConfig() {
+    localStorage.removeItem("LEADS_SCRIPT_URL");
+    localStorage.removeItem("SCRIPT_URL");
+    localStorage.removeItem("CAREERS_SCRIPT_URL");
+    
+    document.getElementById("leadsScriptUrlInput").value = "";
+    document.getElementById("careersScriptUrlInput").value = "";
+    
+    closeModal("configModal");
+    showToast("Reset connection configurations to simulation mode", "success");
+    initApp();
   }
 
   // Modal handlers
@@ -1472,6 +2233,7 @@
     document.getElementById(id).classList.add("active");
   }
 
+  // Close modals
   function closeModal(id) {
     document.getElementById(id).classList.remove("active");
   }

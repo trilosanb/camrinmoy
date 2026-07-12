@@ -183,10 +183,7 @@
     };
 
     // Resolve URL (check localStorage if not hardcoded in the file)
-    var targetUrl = SCRIPT_URL;
-    if (!targetUrl || targetUrl.indexOf("PASTE_YOUR") !== -1) {
-      targetUrl = localStorage.getItem("SCRIPT_URL") || "";
-    }
+    var targetUrl = localStorage.getItem("LEADS_SCRIPT_URL") || localStorage.getItem("SCRIPT_URL") || SCRIPT_URL;
 
     if (targetUrl) {
       fetch(targetUrl, {
