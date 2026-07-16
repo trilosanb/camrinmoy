@@ -185,6 +185,18 @@
     // Resolve URL (check localStorage if not hardcoded in the file)
     var targetUrl = localStorage.getItem("LEADS_SCRIPT_URL") || localStorage.getItem("SCRIPT_URL") || SCRIPT_URL;
 
+    function saveLeadLocally(lead) {
+      var localLeads = [];
+      try {
+        localLeads = JSON.parse(localStorage.getItem("LOCAL_LEADS") || "[]");
+      } catch (e) {
+        localLeads = [];
+      }
+      lead.timestamp = new Date().toISOString();
+      localLeads.unshift(lead);
+      localStorage.setItem("LOCAL_LEADS", JSON.stringify(localLeads));
+    }
+
     if (targetUrl) {
       fetch(targetUrl, {
         method: "POST",
@@ -192,14 +204,17 @@
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
       }).then(function () {
+        saveLeadLocally(payload);
         stepIndex++;
         showStep("done");
       }).catch(function () {
+        saveLeadLocally(payload);
         stepIndex++;
         showStep("done"); // fallback to success message
       });
     } else {
       console.warn("Google Apps Script URL is not configured. Submission simulated.");
+      saveLeadLocally(payload);
       setTimeout(function () {
         stepIndex++;
         showStep("done");

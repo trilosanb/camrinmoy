@@ -1476,7 +1476,11 @@
   }
 
   function loadLeadsDemo() {
-    rawLeads = [...MOCK_LEADS];
+    let localLeads = [];
+    try {
+      localLeads = JSON.parse(localStorage.getItem("LOCAL_LEADS") || "[]");
+    } catch(e){}
+    rawLeads = [...localLeads, ...MOCK_LEADS];
     filteredLeads = [...rawLeads];
     if (currentDashboardMode === "leads") {
       updateDashboardUI();
