@@ -115,222 +115,287 @@
           </ol>
         </nav>
         <p class="eyebrow">Consultation</p>
-        <h1>Let’s Plan Your Wealth & Finances – Investments & Savings</h1>
-        <p class="page-hero__intro">Complete our quick 5-step check-in. Share your goals and preferred time, and we’ll
-          get back to you soon.</p>
+        <h1>Request a Consultation</h1>
+        <p class="page-hero__intro">Send us an enquiry using the form below, or use our specialized Personal Finance planner for a structured wealth check-in.</p>
       </div>
     </section>
 
-    <!-- INTRO SECTION (visible initially) -->
-    <section class="section section--paper2" id="consultationIntro">
-      <div class="container center">
-        <p class="eyebrow" style="justify-content: center;">Start your check-in</p>
-        <h2 style="font-size: var(--fs-h2); margin: 1rem auto 1.5rem; max-width: 22ch;">Let's prepare for our
-          consultation.</h2>
-        <p class="lede" style="margin-bottom: 2.5rem;">To make our call as productive as possible, please share a few
-          details about your business, investments, and goals beforehand. It takes less than 2 minutes.</p>
-        <button type="button" class="btn" onclick="startConsultation()">Start Consultation
-          <svg class="arw" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
-            aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
-    </section>
-
-    <!-- FORM SECTION (hidden initially) -->
-    <section class="section section--paper2" id="consultationFormSection" style="display: none; padding-top: 0;">
+    <!-- GENERAL ENQUIRY FORM SECTION -->
+    <section class="section section--tight">
       <div class="container">
-        <div class="consultation-wrap">
+        <div style="max-width: 560px; margin: 0 auto;" data-reveal>
+          <h2>Send an enquiry</h2>
+          <p class="lede mt-1">Fields marked <span style="color:var(--emerald)">*</span> are required.</p>
 
-          <div class="progress-track">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
+          <form class="mt-2" data-contact-form novalidate>
+            <div class="field">
+              <label for="name">Name <span class="req">*</span></label>
+              <input type="text" id="name" name="name" autocomplete="name" required>
+              <span class="field__msg" aria-live="polite"></span>
+            </div>
 
-          <div class="consultation-card">
-            <form id="checkinForm" onsubmit="event.preventDefault();">
+            <div class="field">
+              <label for="contactEmail">Email <span class="req">*</span></label>
+              <input type="email" id="contactEmail" name="email" autocomplete="email" required>
+              <span class="field__msg" aria-live="polite"></span>
+            </div>
 
-              <!-- Step: fullName -->
-              <div class="step active" data-step="fullName">
-                <div class="eyebrow">Let's start</div>
-                <h2 class="question">What's your full name?</h2>
-                <div class="field" style="margin-bottom: 0;">
-                  <input type="text" id="fullName" autocomplete="name" placeholder="e.g. Rakesh Sharma">
-                </div>
-                <div class="err">Please enter your name.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="resetIntro()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel">
+              <span class="field__msg" aria-live="polite"></span>
+            </div>
 
-              <!-- Step: email -->
-              <div class="step" data-step="email">
-                <div class="eyebrow">Contact</div>
-                <h2 class="question">And your email address?</h2>
-                <div class="field" style="margin-bottom: 0;">
-                  <input type="email" id="email" autocomplete="email" placeholder="you@example.com">
-                </div>
-                <div class="err">Please enter a valid email.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
+            <div class="field">
+              <label for="service">What can we help with?</label>
+              <select id="service" name="service">
+                <option value="">Select an area (optional)</option>
+                <option>Accounting &amp; Assurance</option>
+                <option>Taxation (GST / Income Tax / TDS)</option>
+                <option>Corporate &amp; Compliance</option>
+                <option>Digital Transformation</option>
+                <option>Business Intelligence</option>
+                <option>Financial Advisory (DPR / CMA / Diligence)</option>
+                <option>Something else</option>
+              </select>
+              <span class="field__msg" aria-live="polite"></span>
+            </div>
 
-              <!-- Step: whatsapp -->
-              <div class="step" data-step="whatsapp">
-                <div class="eyebrow">Contact</div>
-                <h2 class="question">WhatsApp number for follow-up?</h2>
-                <div class="field" style="margin-bottom: 0;">
-                  <input type="tel" id="whatsapp" autocomplete="tel" placeholder="98xxxxxxxx">
-                </div>
-                <div class="err">Please enter a valid number.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
+            <div class="field">
+              <label for="message">Message <span class="req">*</span></label>
+              <textarea id="message" name="message" required
+                placeholder="A few lines about your business and what you're looking for."></textarea>
+              <span class="field__msg" aria-live="polite"></span>
+            </div>
 
-              <!-- Step: investingNow -->
-              <div class="step" data-step="investingNow">
-                <div class="eyebrow">Your investments</div>
-                <h2 class="question">Are you currently investing anywhere?</h2>
-                <p class="hint">Mutual Funds, Stocks, FDs, Insurance, Crypto Currency etc.</p>
-                <div class="yn-row">
-                  <button type="button" class="yn-btn" onclick="selectYN('investingNow','Yes',this)">Yes</button>
-                  <button type="button" class="yn-btn" onclick="selectYN('investingNow','No',this)">No</button>
-                </div>
-                <div class="err">Please select an option.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
+            <button type="submit" class="btn">Send enquiry
+              <svg class="arw" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                stroke-width="2" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </button>
 
-              <!-- Step: whereInvested -->
-              <div class="step" data-step="whereInvested">
-                <div class="eyebrow">Your investments</div>
-                <h2 class="question">Where have you invested?</h2>
-                <p class="hint">Select all that apply.</p>
-                <div class="chip-grid">
-                  <button type="button" class="chip" onclick="toggleChip('whereInvested','Fixed Deposit',this)">Fixed
-                    Deposit</button>
-                  <button type="button" class="chip" onclick="toggleChip('whereInvested','Mutual Funds',this)">Mutual
-                    Funds</button>
-                  <button type="button" class="chip" onclick="toggleChip('whereInvested','Shares',this)">Shares</button>
-                  <button type="button" class="chip"
-                    onclick="toggleChip('whereInvested','Insurance-Backed Plans',this)">Insurance-Backed Plans</button>
-                  <button type="button" class="chip" onclick="toggleChip('whereInvested','Crypto Currency',this)">Crypto
-                    Currency</button>
-                </div>
-                <div class="err">Please select at least one.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
-
-              <!-- Step: professionalHelp -->
-              <div class="step" data-step="professionalHelp">
-                <div class="eyebrow">Your investments</div>
-                <h2 class="question">Do you avail professional help while investing?</h2>
-                <div class="yn-row">
-                  <button type="button" class="yn-btn" onclick="selectYN('professionalHelp','Yes',this)">Yes</button>
-                  <button type="button" class="yn-btn" onclick="selectYN('professionalHelp','No',this)">No</button>
-                </div>
-                <div class="err">Please select an option.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
-
-              <!-- Step: portfolioReview -->
-              <div class="step" data-step="portfolioReview">
-                <div class="eyebrow">Portfolio review</div>
-                <h2 class="question">Would you like a free review of your existing investment portfolio?</h2>
-                <div class="yn-row">
-                  <button type="button" class="yn-btn" onclick="selectYN('portfolioReview','Yes',this)">Yes</button>
-                  <button type="button" class="yn-btn" onclick="selectYN('portfolioReview','No',this)">No</button>
-                </div>
-                <div class="err">Please select an option.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
-
-              <!-- Step: wantToStart -->
-              <div class="step" data-step="wantToStart">
-                <div class="eyebrow">Getting started</div>
-                <h2 class="question">Would you like to start?</h2>
-                <p class="hint"><b>Yes</b> means we'll guide you through: Understanding options → Building a plan →
-                  Opening an account → Starting to invest.</p>
-                <div class="yn-row">
-                  <button type="button" class="yn-btn" onclick="selectYN('wantToStart','Yes',this)">Yes</button>
-                  <button type="button" class="yn-btn" onclick="selectYN('wantToStart','No',this)">No</button>
-                </div>
-                <div class="err">Please select an option.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
-
-              <!-- Step: insuranceHeld -->
-              <div class="step" data-step="insuranceHeld">
-                <div class="eyebrow">Insurance</div>
-                <h2 class="question">Do you currently have:</h2>
-                <p class="hint">Select all that apply.</p>
-                <div class="chip-grid">
-                  <button type="button" class="chip" onclick="toggleChip('insuranceHeld','Term Plan',this)">Term
-                    Plan</button>
-                  <button type="button" class="chip"
-                    onclick="toggleChip('insuranceHeld','Health Insurance',this)">Health Insurance</button>
-                  <button type="button" class="chip"
-                    onclick="toggleChip('insuranceHeld','Life Policy Plan - Guaranteed Return',this)">Guaranteed Savings
-                    Plan</button>
-                  <button type="button" class="chip" onclick="toggleChip('insuranceHeld','None of the Above',this)">None
-                    of the above</button>
-                </div>
-                <div class="err">Please select at least one.</div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" onclick="next()">Continue</button>
-                </div>
-              </div>
-
-              <!-- Step: followUpDate -->
-              <div class="step" data-step="followUpDate">
-                <div class="eyebrow">Almost done</div>
-                <h2 class="question">Preferred date for a follow-up call?</h2>
-                <p class="hint">Optional — our team will confirm a time with you.</p>
-                <div class="field" style="margin-bottom: 0;">
-                  <input type="date" id="followUpDate">
-                </div>
-                <div class="nav-row">
-                  <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
-                  <button type="button" class="btn" id="submitBtn" onclick="submitForm()">Submit</button>
-                </div>
-              </div>
-
-              <!-- Step: done -->
-              <div class="step" data-step="done">
-                <div class="final">
-                  <div class="mark">✓</div>
-                  <h2>Thank you</h2>
-                  <p>We've received your responses. Our team will call you at your preferred time to walk through the
-                    next steps.</p>
-                </div>
-              </div>
-
-            </form>
-          </div>
-          <p class="footer-note">Your responses are shared only with CA Mrinmoy &amp; Co. / BigMind Consulting.</p>
+            <div class="form-status" data-form-status role="status" aria-live="polite"></div>
+            <p class="form-note">Prefer to write directly? Email <a
+                href="mailto:mrinmoy@camrinmoy.com">mrinmoy@camrinmoy.com</a> or message <a
+                href="https://wa.me/918811886677" rel="noopener">+91 88118 86677</a> on WhatsApp.</p>
+          </form>
         </div>
       </div>
     </section>
+
+    <!-- ============ PERSONAL FINANCE SECTION ============ -->
+    <section class="section section--paper2" style="border-top: 1px solid var(--line);">
+      <div class="container">
+        <div class="center" style="margin-bottom: 2rem;" data-reveal>
+          <p class="eyebrow" style="justify-content: center;">Personal Finance</p>
+          <h2 style="font-size: var(--fs-h3); margin: 1rem auto 1.5rem; max-width: 32ch;">Let’s Plan Your Wealth & Finances – Investments & Savings</h2>
+          <p class="lede" style="max-width: 68ch; margin: 0 auto;">To make our call as productive as possible, please share a few details about your wealth, investments, and insurance goals beforehand. It takes less than 2 minutes.</p>
+        </div>
+
+        <!-- INTRO SECTION (visible initially) -->
+        <div class="center" id="consultationIntro" data-reveal style="margin-bottom: 2.5rem;">
+          <button type="button" class="btn" onclick="startConsultation()">Start Check-in Form
+            <svg class="arw" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- FORM SECTION (hidden initially) -->
+        <div id="consultationFormSection" style="display: none; padding-top: 0;">
+          <div class="consultation-wrap">
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="consultation-card">
+              <form id="checkinForm" onsubmit="event.preventDefault();">
+
+                <!-- Step: fullName -->
+                <div class="step active" data-step="fullName">
+                  <div class="eyebrow">Let's start</div>
+                  <h2 class="question">What's your full name?</h2>
+                  <div class="field" style="margin-bottom: 0;">
+                    <input type="text" id="fullName" autocomplete="name" placeholder="e.g. Rakesh Sharma">
+                  </div>
+                  <div class="err">Please enter your name.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="resetIntro()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: email -->
+                <div class="step" data-step="email">
+                  <div class="eyebrow">Contact</div>
+                  <h2 class="question">And your email address?</h2>
+                  <div class="field" style="margin-bottom: 0;">
+                    <input type="email" id="email" autocomplete="email" placeholder="you@example.com">
+                  </div>
+                  <div class="err">Please enter a valid email.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: whatsapp -->
+                <div class="step" data-step="whatsapp">
+                  <div class="eyebrow">Contact</div>
+                  <h2 class="question">WhatsApp number for follow-up?</h2>
+                  <div class="field" style="margin-bottom: 0;">
+                    <input type="tel" id="whatsapp" autocomplete="tel" placeholder="98xxxxxxxx">
+                  </div>
+                  <div class="err">Please enter a valid number.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: investingNow -->
+                <div class="step" data-step="investingNow">
+                  <div class="eyebrow">Your investments</div>
+                  <h2 class="question">Are you currently investing anywhere?</h2>
+                  <p class="hint">Mutual Funds, Stocks, FDs, Insurance, Crypto Currency etc.</p>
+                  <div class="yn-row">
+                    <button type="button" class="yn-btn" onclick="selectYN('investingNow','Yes',this)">Yes</button>
+                    <button type="button" class="yn-btn" onclick="selectYN('investingNow','No',this)">No</button>
+                  </div>
+                  <div class="err">Please select an option.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: whereInvested -->
+                <div class="step" data-step="whereInvested">
+                  <div class="eyebrow">Your investments</div>
+                  <h2 class="question">Where have you invested?</h2>
+                  <p class="hint">Select all that apply.</p>
+                  <div class="chip-grid">
+                    <button type="button" class="chip" onclick="toggleChip('whereInvested','Fixed Deposit',this)">Fixed
+                      Deposit</button>
+                    <button type="button" class="chip" onclick="toggleChip('whereInvested','Mutual Funds',this)">Mutual
+                      Funds</button>
+                    <button type="button" class="chip" onclick="toggleChip('whereInvested','Shares',this)">Shares</button>
+                    <button type="button" class="chip"
+                      onclick="toggleChip('whereInvested','Insurance-Backed Plans',this)">Insurance-Backed Plans</button>
+                    <button type="button" class="chip" onclick="toggleChip('whereInvested','Crypto Currency',this)">Crypto
+                      Currency</button>
+                  </div>
+                  <div class="err">Please select at least one.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: professionalHelp -->
+                <div class="step" data-step="professionalHelp">
+                  <div class="eyebrow">Your investments</div>
+                  <h2 class="question">Do you avail professional help while investing?</h2>
+                  <div class="yn-row">
+                    <button type="button" class="yn-btn" onclick="selectYN('professionalHelp','Yes',this)">Yes</button>
+                    <button type="button" class="yn-btn" onclick="selectYN('professionalHelp','No',this)">No</button>
+                  </div>
+                  <div class="err">Please select an option.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: portfolioReview -->
+                <div class="step" data-step="portfolioReview">
+                  <div class="eyebrow">Portfolio review</div>
+                  <h2 class="question">Would you like a free review of your existing investment portfolio?</h2>
+                  <div class="yn-row">
+                    <button type="button" class="yn-btn" onclick="selectYN('portfolioReview','Yes',this)">Yes</button>
+                    <button type="button" class="yn-btn" onclick="selectYN('portfolioReview','No',this)">No</button>
+                  </div>
+                  <div class="err">Please select an option.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: wantToStart -->
+                <div class="step" data-step="wantToStart">
+                  <div class="eyebrow">Getting started</div>
+                  <h2 class="question">Would you like to start?</h2>
+                  <p class="hint"><b>Yes</b> means we'll guide you through: Understanding options → Building a plan →
+                    Opening an account → Starting to invest.</p>
+                  <div class="yn-row">
+                    <button type="button" class="yn-btn" onclick="selectYN('wantToStart','Yes',this)">Yes</button>
+                    <button type="button" class="yn-btn" onclick="selectYN('wantToStart','No',this)">No</button>
+                  </div>
+                  <div class="err">Please select an option.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: insuranceHeld -->
+                <div class="step" data-step="insuranceHeld">
+                  <div class="eyebrow">Insurance</div>
+                  <h2 class="question">Do you currently have:</h2>
+                  <p class="hint">Select all that apply.</p>
+                  <div class="chip-grid">
+                    <button type="button" class="chip" onclick="toggleChip('insuranceHeld','Term Plan',this)">Term
+                      Plan</button>
+                    <button type="button" class="chip"
+                      onclick="toggleChip('insuranceHeld','Health Insurance',this)">Health Insurance</button>
+                    <button type="button" class="chip"
+                      onclick="toggleChip('insuranceHeld','Life Policy Plan - Guaranteed Return',this)">Guaranteed Savings
+                      Plan</button>
+                    <button type="button" class="chip" onclick="toggleChip('insuranceHeld','None of the Above',this)">None
+                      of the above</button>
+                  </div>
+                  <div class="err">Please select at least one.</div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" onclick="next()">Continue</button>
+                  </div>
+                </div>
+
+                <!-- Step: followUpDate -->
+                <div class="step" data-step="followUpDate">
+                  <div class="eyebrow">Almost done</div>
+                  <h2 class="question">Preferred date for a follow-up call?</h2>
+                  <p class="hint">Optional — our team will confirm a time with you.</p>
+                  <div class="field" style="margin-bottom: 0;">
+                    <input type="date" id="followUpDate">
+                  </div>
+                  <div class="nav-row">
+                    <button type="button" class="btn btn--ghost" onclick="back()">Back</button>
+                    <button type="button" class="btn" id="submitBtn" onclick="submitForm()">Submit</button>
+                  </div>
+                </div>
+
+                <!-- Step: done -->
+                <div class="step" data-step="done">
+                  <div class="final">
+                    <div class="mark">✓</div>
+                    <h2>Thank you</h2>
+                    <p>We've received your responses. Our team will call you at your preferred time to walk through the
+                      next steps.</p>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+            <p class="footer-note">Your responses are shared only with CA Mrinmoy &amp; Co. / BigMind Consulting.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
 
   </main>
 
