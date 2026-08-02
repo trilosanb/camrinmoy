@@ -8,7 +8,7 @@
   <meta name="description"
     content="Representative engagements handled by Mrinmoy &amp; Co., described in confidence. Examples of the accounting, tax, compliance, systems and advisory work the practice takes on across Northeast India.">
   <meta name="theme-color" content="#0B4F8A">
-  <link rel="canonical" href="https://www.camrinmoy.com/engagements.html">
+  <link rel="canonical" href="https://www.camrinmoy.com/engagements-new.html">
   <meta name="robots" content="index, follow, max-image-preview:large">
 
   <meta property="og:type" content="website">
@@ -16,16 +16,14 @@
   <meta property="og:title" content="Engagements | Mrinmoy &amp; Co.">
   <meta property="og:description"
     content="Representative work, described in confidence — the kinds of engagements the practice takes on.">
-  <meta property="og:url" content="https://www.camrinmoy.com/engagements.html">
-  <meta property="og:image"
-    content="https://www.camrinmoy.com/images/About/1%20BIOGRAPHY.jpeg">
+  <meta property="og:url" content="https://www.camrinmoy.com/engagements-new.html">
+  <meta property="og:image" content="https://www.camrinmoy.com/images/About/1%20BIOGRAPHY.jpeg">
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Engagements | Mrinmoy &amp; Co.">
   <meta name="twitter:description"
     content="Representative, anonymised engagements across accounting, tax, compliance and advisory.">
-  <meta name="twitter:image"
-    content="https://www.camrinmoy.com/images/About/1%20BIOGRAPHY.jpeg">
+  <meta name="twitter:image" content="https://www.camrinmoy.com/images/About/1%20BIOGRAPHY.jpeg">
 
   <link rel="icon" type="image/png" href="assets/img/ca_logo.png">
   <link rel="apple-touch-icon" href="assets/img/ca_logo.png">
@@ -43,7 +41,7 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.camrinmoy.com/index.html" },
-          { "@type": "ListItem", "position": 2, "name": "Engagements", "item": "https://www.camrinmoy.com/engagements.html" }
+          { "@type": "ListItem", "position": 2, "name": "Engagements", "item": "https://www.camrinmoy.com/engagements-new.html" }
         ]
       }
     ]
@@ -234,6 +232,262 @@
       max-width: 720px;
     }
 
+    /* =========================================================
+       PREMIUM SINGLE-FRAME JOURNEY INFOGRAPHIC SECTION
+       ========================================================= */
+    .journey-infographic-card {
+      margin: 2rem 0 3rem;
+      background: #FFFFFF;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 12px 32px rgba(18, 22, 28, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Executive Header Bar */
+    .infographic-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .infographic-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .infographic-title-group h2 {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin: 0;
+      font-family: var(--mono);
+    }
+
+    .map-tag {
+      background: var(--mint);
+      color: var(--forest);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-family: var(--mono);
+    }
+
+    /* Journey Progression Ribbon */
+    .journey-timeline-ribbon {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 50px;
+      padding: 12px 28px;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .ribbon-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .ribbon-step.active {
+      color: var(--forest);
+    }
+
+    .ribbon-step.gold {
+      color: var(--amber);
+    }
+
+    .ribbon-node {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .ribbon-step.active .ribbon-node {
+      background: var(--forest);
+      border-color: var(--forest);
+      color: #fff;
+    }
+
+    .ribbon-step.gold .ribbon-node {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: #fff;
+    }
+
+    .ribbon-connector {
+      flex: 1;
+      height: 2px;
+      background: var(--line);
+      margin: 0 12px;
+    }
+
+    /* Single Frame Canvas */
+    .infographic-canvas {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      min-height: 520px;
+      background-image: radial-gradient(var(--line) 1.2px, transparent 0);
+      background-size: 20px 20px;
+    }
+
+    /* Vector SVG Route Layer */
+    .canvas-svg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* 3-Column Horizontal Layout Grid */
+    .journey-columns-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr 1fr;
+      gap: 24px;
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Stage Column Visual Styles */
+    .stage-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 4px 16px rgba(18, 22, 28, 0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .stage-box-header {
+      margin-bottom: 18px;
+    }
+
+    .stage-pill-head {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-family: var(--mono);
+    }
+
+    .stage-1 .stage-pill-head {
+      background: var(--mint);
+      color: var(--forest);
+    }
+
+    .stage-2 .stage-pill-head {
+      background: var(--mint);
+      color: var(--emerald);
+    }
+
+    .stage-3 .stage-pill-head {
+      background: #fdf6ea;
+      color: var(--amber);
+    }
+
+    .stage-box-header h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--forest);
+      margin-bottom: 4px;
+      font-family: var(--serif);
+    }
+
+    .stage-box-header p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    /* Map Nodes List */
+    .milestones-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .milestone-item {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .milestone-item:hover {
+      border-color: var(--emerald);
+      transform: translateX(3px);
+      box-shadow: 0 4px 12px rgba(18, 22, 28, 0.05);
+    }
+
+    .milestone-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--paper-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .milestone-text {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .milestone-sub {
+      font-size: 10.5px;
+      color: var(--muted);
+      font-weight: 400;
+      display: block;
+      margin-top: 1px;
+    }
+
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -249,6 +503,14 @@
     @media(max-width: 900px) {
       .card-grid {
         grid-template-columns: 1fr;
+      }
+
+      .journey-columns-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .journey-timeline-ribbon {
+        display: none;
       }
     }
   </style>
@@ -270,7 +532,7 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="services.html">Services</a></li>
-          <li><a href="engagements.html" aria-current="page">Engagements</a></li>
+          <li><a href="engagements-new.html" aria-current="page">Engagements</a></li>
           <li><a href="blogs.html">Blogs</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -291,7 +553,7 @@
       <li><a href="index.html"><span class="num">01</span> Home</a></li>
       <li><a href="about.html"><span class="num">02</span> About</a></li>
       <li><a href="services.html"><span class="num">03</span> Services</a></li>
-      <li><a href="engagements.html" aria-current="page"><span class="num">04</span> Engagements</a></li>
+      <li><a href="engagements-new.html" aria-current="page"><span class="num">04</span> Engagements</a></li>
       <li><a href="blogs.html"><span class="num">05</span> Blogs</a></li>
       <li><a href="contact.html"><span class="num">06</span> Contact</a></li>
     </ul>
@@ -313,12 +575,184 @@
         <p class="eyebrow" style="text-transform: uppercase; letter-spacing: 2px;">THE JOURNEY, MAPPED</p>
         <h1>From <span class="accent" style="color: var(--emerald);">Idea to IPO</span> — and everything between.</h1>
         <p class="page-hero__intro">Every business needs something different depending on where it stands — getting
-          started, running and scaling, or raising the next round. Here's how the practice supports each stage, drawn
-          from real engagements (details anonymised to protect confidentiality).</p>
+          started, running and scaling, or raising the next round. Here's how the practice supports each stage.</p>
         <p class="pill-note mt-2"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
             stroke-width="2" aria-hidden="true">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
           </svg> Confidential by default</p>
+
+        <!-- =========================================================
+             MID CONTENT: CFO SUPPORT BLUEPRINT INFOGRAPHIC CANVAS
+             ========================================================= -->
+        <div class="journey-infographic-card" data-reveal>
+          <!-- Top Bar -->
+          <div class="infographic-top-bar">
+            <div class="infographic-title-group">
+              <h2>CFO Support Service Blueprint</h2>
+            </div>
+            <span class="map-tag">EXECUTIVE MAP</span>
+          </div>
+
+          <!-- Top Progression Ribbon -->
+          <div class="journey-timeline-ribbon">
+            <div class="ribbon-step active">
+              <div class="ribbon-node">💡</div>
+              <span>Idea Stage</span>
+            </div>
+            <div class="ribbon-connector"></div>
+            <div class="ribbon-step active">
+              <div class="ribbon-node">01</div>
+              <span>Starting Up</span>
+            </div>
+            <div class="ribbon-connector"></div>
+            <div class="ribbon-step active">
+              <div class="ribbon-node">02</div>
+              <span>Running &amp; Scaling</span>
+            </div>
+            <div class="ribbon-connector"></div>
+            <div class="ribbon-step active">
+              <div class="ribbon-node">03</div>
+              <span>Fundraising</span>
+            </div>
+            <div class="ribbon-connector"></div>
+            <div class="ribbon-step active">
+              <div class="ribbon-node">🔔</div>
+              <span>IPO / Exit</span>
+            </div>
+          </div>
+
+          <!-- Map Canvas -->
+          <div class="infographic-canvas">
+            <!-- SVG Route Layer -->
+            <svg class="canvas-svg-layer" viewBox="0 0 1000 500" preserveAspectRatio="none">
+              <path d="M120,100 C180,60 250,90 300,120 C320,200 180,220 120,100 Z" fill="#e2f0e9" opacity="0.6" />
+              <path d="M420,180 C500,120 620,140 680,200 C600,280 480,260 420,180 Z" fill="#e2f0e9" opacity="0.6" />
+              <path d="M750,110 C850,80 920,150 880,240 C800,250 740,180 750,110 Z" fill="#e2f0e9" opacity="0.6" />
+
+              <path d="M 80 250 C 300 80, 500 420, 920 250" fill="none" stroke="var(--emerald)" stroke-width="3"
+                stroke-dasharray="8,8" opacity="0.4" />
+            </svg>
+
+            <!-- 3 Stage Grid overlay -->
+            <div class="journey-columns-grid">
+
+              <!-- STAGE 1 BOX -->
+              <div class="stage-box stage-1">
+                <div class="stage-box-header">
+                  <span class="stage-pill-head">STAGE ONE</span>
+                  <h3>Starting Up</h3>
+                  <p>Getting the foundation right — before the first invoice is raised.</p>
+                </div>
+
+                <div class="milestones-stack">
+                  <div class="milestone-item">
+                    <div class="milestone-icon">🏛️</div>
+                    <div>
+                      <span class="milestone-text">Entity Selection &amp; Incorporation</span>
+                      <span class="milestone-sub">Proprietorship, LLP, Pvt Ltd, OPC, Sec 8</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STAGE 2 BOX -->
+              <div class="stage-box stage-2">
+                <div class="stage-box-header">
+                  <span class="stage-pill-head">STAGE TWO</span>
+                  <h3>Running &amp; Scaling</h3>
+                  <p>Systems that run without you chasing them, and oversight that shows what's happening.</p>
+                </div>
+
+                <div class="milestones-stack">
+                  <div class="milestone-item">
+                    <div class="milestone-icon">☁️</div>
+                    <div>
+                      <span class="milestone-text">Data Clean-up &amp; Cloud Auto</span>
+                      <span class="milestone-sub">Reconciled &amp; cloud-migrated books</span>
+                    </div>
+                  </div>
+                  <div class="milestone-item">
+                    <div class="milestone-icon">📊</div>
+                    <div>
+                      <span class="milestone-text">Auto-Generated Financials</span>
+                      <span class="milestone-sub">Audit-ready statements</span>
+                    </div>
+                  </div>
+                  <div class="milestone-item">
+                    <div class="milestone-icon">🛡️</div>
+                    <div>
+                      <span class="milestone-text">Tax Compliance Auto-Tracker</span>
+                      <span class="milestone-sub">Filing due dates &amp; status tracking</span>
+                    </div>
+                  </div>
+                  <div class="milestone-item">
+                    <div class="milestone-icon">📈</div>
+                    <div>
+                      <span class="milestone-text">Dashboards &amp; KPI Insight</span>
+                      <span class="milestone-sub">Linked with HR &amp; payroll metrics</span>
+                    </div>
+                  </div>
+                  <div class="milestone-item">
+                    <div class="milestone-icon">💼</div>
+                    <div>
+                      <span class="milestone-text">Outsourced CFO Support</span>
+                      <span class="milestone-sub">Monthly executive reporting packs</span>
+                    </div>
+                  </div>
+                  <div class="milestone-item">
+                    <div class="milestone-icon">📑</div>
+                    <div>
+                      <span class="milestone-text">Notice Representation</span>
+                      <span class="milestone-sub">Tax notice drafting &amp; authority representation</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STAGE 3 BOX -->
+              <div class="stage-box stage-3">
+                <div class="stage-box-header">
+                  <span class="stage-pill-head">STAGE THREE</span>
+                  <h3>Fundraising &amp; Diversification</h3>
+                  <p>Capital on either side — debt, equity, or the diligence that precedes both.</p>
+                </div>
+
+                <div class="milestones-stack">
+                  <div class="milestone-item">
+                    <div class="milestone-icon">🏦</div>
+                    <div>
+                      <span class="milestone-text">Debt Finance — DPR &amp; CMA</span>
+                      <span class="milestone-sub">Bank-ready project reports</span>
+                    </div>
+                  </div>
+                  <div class="milestone-item">
+                    <div class="milestone-icon">🚀</div>
+                    <div>
+                      <span class="milestone-text">Equity &amp; VC Readiness</span>
+                      <span class="milestone-sub">Investor-ready growth story</span>
+                    </div>
+                  </div>
+                  <div class="milestone-item">
+                    <div class="milestone-icon">🔍</div>
+                    <div>
+                      <span class="milestone-text">Due Diligence</span>
+                      <span class="milestone-sub">Pre-deal internal audit review</span>
+                    </div>
+                  </div>
+                  <div class="milestone-item">
+                    <div class="milestone-icon">⚖️</div>
+                    <div>
+                      <span class="milestone-text">Valuation Analysis</span>
+                      <span class="milestone-sub">Defensible business valuation</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -414,8 +848,6 @@
                 </div>
               </div>
 
-
-
             </div>
           </div>
 
@@ -456,30 +888,6 @@
                   <div><span>Sector</span><b>Trading</b></div>
                 </div>
               </div>
-
-              <!-- <div class="card" data-theme="compliance">
-                <span class="tag">Corporate</span>
-                <h3>Section 8 &amp; CSR Compliance</h3>
-                <p class="line">Governance and statutory compliance support for a not-for-profit entity, including the
-                  reporting expected of Section 8 companies and CSR initiatives.</p>
-                <div class="meta">
-                  <div><span>Focus</span><b>Governance</b></div>
-                  <div><span>Sector</span><b>Not-for-profit</b></div>
-                </div>
-              </div> -->
-
-              <!-- <div class="card" data-theme="advisory">
-                <span class="tag">Virtual CFO</span>
-                <h3>Strategic Cash Flow Planning &amp; Budgeting</h3>
-                <p class="line">Developed and implemented dynamic 12-month rolling cash forecasting models and variance
-                  reporting to help a fast-growing technology firm manage burn rates and plan critical hiring.</p>
-                <div class="meta">
-                  <div><span>Focus</span><b>Cash management</b></div>
-                  <div><span>Sector</span><b>Tech Startup</b></div>
-                </div>
-              </div> -->
-
-
 
             </div>
           </div>
@@ -607,7 +1015,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="engagements.html">Engagements</a></li>
+            <li><a href="engagements-new.html">Engagements</a></li>
             <li><a href="blogs.html">Blogs</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
