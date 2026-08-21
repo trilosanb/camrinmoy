@@ -148,8 +148,8 @@
   }
 
   /* -------- Contact form: validation + submit -------- */
-  var form = d.querySelector("[data-contact-form]");
-  if (form) {
+  var contactForms = d.querySelectorAll("[data-contact-form]");
+  contactForms.forEach(function (form) {
     var status = form.querySelector("[data-form-status]");
 
     var setErr = function (field, msg) {
@@ -175,31 +175,75 @@
 
       if (!ok) return;
 
-      /* ---------------------------------------------------------
-         No backend is wired by default. Two ready options:
-         (A) MAILTO (works everywhere, opens the visitor's email app) — active below.
-         (B) Replace the block below with a fetch() to a form service
-             (Formspree / Web3Forms) — see README for the 3-line snippet.
-         --------------------------------------------------------- */
-      var subject = encodeURIComponent("Website enquiry — " + name.value.trim());
-      var svc = form.elements["service"] ? form.elements["service"].value : "";
-      var body = encodeURIComponent(
-        "Name: " + name.value.trim() + "\n" +
-        "Email: " + email.value.trim() + "\n" +
-        (form.elements["phone"] ? "Phone: " + form.elements["phone"].value.trim() + "\n" : "") +
-        (svc ? "Service of interest: " + svc + "\n" : "") +
-        "\n" + message.value.trim()
-      );
-      // TODO: replace with the firm's real address before go-live.
-      window.location.href = "mailto:mrinmoy@camrinmoy.com?subject=" + subject + "&body=" + body;
+      var actionUrl = form.getAttribute("action");
 
-      if (status) {
-        status.classList.add("ok");
-        status.textContent = "Thanks — your email client should open with the message ready to send. If it doesn't, write to mrinmoy@camrinmoy.com or message +91 88118 86677 on WhatsApp.";
+      if (actionUrl) {
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+
+        if (status) {
+          status.classList.remove("err");
+          status.classList.add("ok");
+          status.style.display = "block";
+          status.textContent = "Sending enquiry...";
+        }
+
+        var formData = new FormData(form);
+
+        fetch(actionUrl, {
+          method: "POST",
+          body: formData
+        })
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (btn) btn.disabled = false;
+            if (data.success) {
+              if (status) {
+                status.classList.remove("err");
+                status.classList.add("ok");
+                status.style.display = "block";
+                status.textContent = "Thank you! Your enquiry has been sent successfully. We will get back to you shortly.";
+              }
+              form.reset();
+            } else {
+              if (status) {
+                status.classList.remove("ok");
+                status.classList.add("err");
+                status.style.display = "block";
+                status.textContent = data.message || "Something went wrong. Please try again or email us directly.";
+              }
+            }
+          })
+          .catch(function () {
+            if (btn) btn.disabled = false;
+            if (status) {
+              status.classList.remove("ok");
+              status.classList.add("err");
+              status.style.display = "block";
+              status.textContent = "Unable to send message. Please check your network connection or email us directly.";
+            }
+          });
+      } else {
+        var subject = encodeURIComponent("Website enquiry — " + name.value.trim());
+        var svc = form.elements["service"] ? form.elements["service"].value : "";
+        var body = encodeURIComponent(
+          "Name: " + name.value.trim() + "\n" +
+          "Email: " + email.value.trim() + "\n" +
+          (form.elements["phone"] ? "Phone: " + form.elements["phone"].value.trim() + "\n" : "") +
+          (svc ? "Service of interest: " + svc + "\n" : "") +
+          "\n" + message.value.trim()
+        );
+        window.location.href = "mailto:mrinmoy@camrinmoy.com?subject=" + subject + "&body=" + body;
+
+        if (status) {
+          status.classList.add("ok");
+          status.style.display = "block";
+          status.textContent = "Thanks — your email client should open with the message ready to send. If it doesn't, write to mrinmoy@camrinmoy.com or message +91 88118 86677 on WhatsApp.";
+        }
+        form.reset();
       }
-      form.reset();
     });
-  }
+  });
 
   /* -------- Blog list PDF download (Iframe method) -------- */
   d.querySelectorAll(".download-pdf-btn").forEach(function (btn) {

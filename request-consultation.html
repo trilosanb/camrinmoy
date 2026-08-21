@@ -126,7 +126,8 @@
           <h2>Send an enquiry</h2>
           <p class="lede mt-1">Fields marked <span style="color:var(--emerald)">*</span> are required.</p>
 
-          <form class="mt-2" data-contact-form novalidate>
+          <form class="mt-2" data-contact-form action="https://api.web3forms.com/submit" method="POST" novalidate>
+            <input type="hidden" name="access_key" value="24c4e20b-0941-4445-9fd6-c9ff65ec69d4">
             <div class="field">
               <label for="name">Name <span class="req">*</span></label>
               <input type="text" id="name" name="name" autocomplete="name" required>
