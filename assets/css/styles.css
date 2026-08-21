@@ -646,143 +646,177 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 650; line-height: 1.1; 
 .cta-band p { color: rgba(234,242,250,.82); max-width: 46ch; margin-top: .8rem; }
 .cta-band__actions { display: flex; flex-wrap: wrap; gap: .8rem; }
 
-/* Continuous Non-Stop Horizontal Marquee Ticker (Right to Left) */
-.engagement-ticker-wrapper {
+/* Selected Engagements Stage Board (Groundworks Reference Style) */
+.engagements-stage-board {
   width: 100%;
   max-width: 1140px;
   margin: 0 auto 2.2rem;
-  overflow: hidden;
+  background: var(--paper-2, #f4f7f6);
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 20px;
+  padding: 24px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.engagements-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   position: relative;
-  border-radius: 18px;
-  background: var(--paper);
-  padding: 16px 0;
-  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  align-items: stretch;
 }
 
-.engagement-ticker-track {
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  width: max-content;
-  animation: continuousRTLTicker 32s linear infinite;
-  will-change: transform;
-}
-
-.engagement-ticker-wrapper:hover .engagement-ticker-track {
-  animation-play-state: paused;
-}
-
-.ticker-item {
-  flex: 0 0 auto;
-  display: block;
-  text-decoration: none;
+.stage-card {
+  position: relative;
   border-radius: 14px;
   overflow: hidden;
-  background: #ffffff;
-  border: 1px solid var(--line);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
-}
-
-.ticker-item:hover {
-  transform: translateY(-4px) scale(1.015);
-  border-color: var(--emerald);
-  box-shadow: 0 12px 30px rgba(11, 79, 138, 0.12);
-}
-
-.ticker-item img {
-  height: 310px;
-  width: auto;
-  max-height: 50vh;
-  object-fit: contain;
-  display: block;
-  border-radius: 13px;
-}
-
-/* Interstitial Gap Elements (Minimal Graphic Nodes) */
-.ticker-graphic-node {
-  flex: 0 0 auto;
+  text-decoration: none;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 90px;
-  height: 310px;
-  background: var(--paper-2);
-  border: 1px dashed var(--line-strong);
-  border-radius: 40px;
-  text-decoration: none;
-  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease), box-shadow 0.3s var(--ease);
-}
-
-.ticker-graphic-node:hover {
-  transform: translateY(-3px);
-  border-color: var(--emerald);
-  border-style: solid;
+  min-height: 350px;
   background: #ffffff;
-  box-shadow: 0 8px 24px rgba(11, 79, 138, 0.08);
+  border: 1px solid var(--line, #e2e8f0);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: transform 0.4s var(--ease, ease), box-shadow 0.4s var(--ease, ease), border-color 0.3s ease, z-index 0.3s ease;
+  z-index: 1;
 }
 
-.ticker-graphic-node svg.primary-graphic {
-  width: 48px;
-  height: 48px;
-  transition: transform 0.3s var(--ease);
+.stage-card__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.6s ease;
+  transform: scale(1.08);
 }
 
-.ticker-graphic-node:hover svg.primary-graphic {
-  transform: scale(1.1);
+.stage-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 79, 138, 0.72) 0%, rgba(8, 30, 52, 0.92) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
-.ticker-graphic-node svg.next-graphic-icon {
-  width: 18px;
-  height: 12px;
-  opacity: 0.65;
-  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+.stage-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.ticker-graphic-node:hover svg.next-graphic-icon {
-  transform: translateX(3px);
+.stage-card__num {
+  font-size: 3.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink, #0f172a);
+  letter-spacing: -0.04em;
+  transition: color 0.4s ease;
+}
+
+.stage-card__divider {
+  width: 0px;
+  height: 20px;
+  border-left: 2px dashed var(--line-strong, #cbd5e1);
+  margin: 10px 0 14px;
+  transition: border-color 0.4s ease;
+}
+
+.stage-card__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink, #0f172a);
+  margin-bottom: 8px;
+  line-height: 1.25;
+  transition: color 0.4s ease;
+}
+
+.stage-card__desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--muted, #475569);
+  flex-grow: 1;
+  margin-bottom: 20px;
+  transition: color 0.4s ease;
+}
+
+.stage-card__btn {
+  display: inline-block;
+  width: fit-content;
+  padding: 6px 14px;
+  border: 1px solid var(--line-strong, #cbd5e1);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink, #0f172a);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+/* Featured / Active State (Image background overlay matching Groundworks reference card 03) */
+.stage-card.stage-card--featured,
+.stage-card:hover {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow: 0 16px 32px rgba(11, 79, 138, 0.2);
+  border-color: transparent;
+  z-index: 5;
+}
+
+.stage-card.stage-card--featured .stage-card__bg,
+.stage-card:hover .stage-card__bg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.stage-card.stage-card--featured .stage-card__overlay,
+.stage-card:hover .stage-card__overlay {
   opacity: 1;
 }
 
-@media (max-width: 768px) {
-  .ticker-graphic-node {
-    width: 65px;
-    height: 210px;
-    gap: 6px;
-    border-radius: 30px;
-  }
-  .ticker-graphic-node svg.primary-graphic {
-    width: 36px;
-    height: 36px;
-  }
-  .ticker-graphic-node svg.next-graphic-icon {
-    width: 15px;
-    height: 10px;
-  }
+.stage-card.stage-card--featured .stage-card__num,
+.stage-card:hover .stage-card__num {
+  color: #ffffff;
+}
+
+.stage-card.stage-card--featured .stage-card__divider,
+.stage-card:hover .stage-card__divider {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.stage-card.stage-card--featured .stage-card__title,
+.stage-card:hover .stage-card__title {
+  color: #ffffff;
+}
+
+.stage-card.stage-card--featured .stage-card__desc,
+.stage-card:hover .stage-card__desc {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stage-card.stage-card--featured .stage-card__btn,
+.stage-card:hover .stage-card__btn {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
 }
 
 
 
-/* Right-to-Left Ticker Animation */
-@keyframes continuousRTLTicker {
-  0% {
-    transform: translateX(0);
+@media (max-width: 992px) {
+  .engagements-stage-board {
+    padding: 20px 14px;
+    border-radius: 16px;
   }
-  100% {
-    transform: translateX(-50%);
+  .engagements-stage-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
-}
-
-@media (max-width: 768px) {
-  .ticker-item img {
-    height: 210px;
-  }
-  .engagement-ticker-track {
-    gap: 24px;
-    animation-duration: 24s;
+  .stage-card {
+    min-height: 320px;
   }
 }
 

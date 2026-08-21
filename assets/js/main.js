@@ -293,6 +293,63 @@
     }, 2500);
   }
 
+  /* -------- Selected Engagements: Stage Board Auto-Cycle -------- */
+  var stageBoard = d.querySelector(".engagements-stage-board");
+  if (stageBoard) {
+    var stageCards = Array.prototype.slice.call(stageBoard.querySelectorAll(".stage-card"));
+    if (stageCards.length > 1) {
+      var currentStageIdx = 0;
+      stageCards.forEach(function (card, idx) {
+        if (card.classList.contains("stage-card--featured")) {
+          currentStageIdx = idx;
+        }
+      });
+
+      var stageTimer = null;
+      var stageHovered = false;
+
+      var setFeaturedStage = function (index) {
+        stageCards.forEach(function (card, idx) {
+          card.classList.toggle("stage-card--featured", idx === index);
+        });
+        currentStageIdx = index;
+      };
+
+      var nextStage = function () {
+        if (stageHovered) return;
+        var nextIdx = (currentStageIdx + 1) % stageCards.length;
+        setFeaturedStage(nextIdx);
+      };
+
+      var startStageCycle = function () {
+        if (stageTimer) clearInterval(stageTimer);
+        stageTimer = setInterval(nextStage, 3500);
+      };
+
+      var stopStageCycle = function () {
+        if (stageTimer) {
+          clearInterval(stageTimer);
+          stageTimer = null;
+        }
+      };
+
+      stageCards.forEach(function (card, idx) {
+        card.addEventListener("mouseenter", function () {
+          stageHovered = true;
+          stopStageCycle();
+          setFeaturedStage(idx);
+        });
+      });
+
+      stageBoard.addEventListener("mouseleave", function () {
+        stageHovered = false;
+        startStageCycle();
+      });
+
+      startStageCycle();
+    }
+  }
+
   /* -------- Check for auto-print parameter -------- */
   if (window.location.search.indexOf("print=true") !== -1) {
     window.addEventListener("load", function () {
