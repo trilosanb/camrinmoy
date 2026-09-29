@@ -394,6 +394,95 @@
     }
   }
 
+  /* -------- Google Reviews Carousel (Left to Right) -------- */
+  var reviewsTrack = d.getElementById("reviewsTrack");
+  var reviewsPrevBtn = d.getElementById("reviewsPrevBtn");
+  var reviewsNextBtn = d.getElementById("reviewsNextBtn");
+  var reviewsCounter = d.getElementById("reviewsCounter");
+
+  if (reviewsTrack && reviewsPrevBtn && reviewsNextBtn) {
+    var getCardWidth = function () {
+      var card = reviewsTrack.querySelector(".review-card");
+      if (!card) return 320;
+      var gap = 20; // 1.25rem = 20px gap
+      return card.offsetWidth + gap;
+    };
+
+    var updateReviewsControls = function () {
+      var maxScroll = reviewsTrack.scrollWidth - reviewsTrack.clientWidth;
+      var current = reviewsTrack.scrollLeft;
+      reviewsPrevBtn.disabled = current <= 8;
+      reviewsNextBtn.disabled = maxScroll > 0 ? (current >= maxScroll - 8) : true;
+
+      if (reviewsCounter) {
+        var cards = reviewsTrack.querySelectorAll(".review-card");
+        var total = cards.length;
+        if (total > 0) {
+          var cardW = getCardWidth();
+          var visibleCount = Math.max(1, Math.round(reviewsTrack.clientWidth / cardW));
+          var firstVisible = Math.min(total, Math.max(1, Math.floor(current / cardW) + 1));
+          var lastVisible = Math.min(total, firstVisible + visibleCount - 1);
+          reviewsCounter.textContent = "Reviews " + firstVisible + "–" + lastVisible + " of " + total;
+        }
+      }
+    };
+
+    reviewsPrevBtn.addEventListener("click", function () {
+      var w = getCardWidth();
+      reviewsTrack.scrollBy({ left: -w, behavior: "smooth" });
+    });
+
+    reviewsNextBtn.addEventListener("click", function () {
+      var w = getCardWidth();
+      reviewsTrack.scrollBy({ left: w, behavior: "smooth" });
+    });
+
+    // Touch & Mouse Drag to scroll left-to-right smoothly
+    var isDragging = false;
+    var startX = 0;
+    var startScrollLeft = 0;
+    var moved = false;
+
+    reviewsTrack.addEventListener("mousedown", function (e) {
+      isDragging = true;
+      moved = false;
+      reviewsTrack.classList.add("is-dragging");
+      startX = e.pageX - reviewsTrack.offsetLeft;
+      startScrollLeft = reviewsTrack.scrollLeft;
+    });
+
+    window.addEventListener("mouseup", function () {
+      if (isDragging) {
+        isDragging = false;
+        reviewsTrack.classList.remove("is-dragging");
+      }
+    });
+
+    reviewsTrack.addEventListener("mousemove", function (e) {
+      if (!isDragging) return;
+      var x = e.pageX - reviewsTrack.offsetLeft;
+      var walk = (x - startX) * 1.2;
+      if (Math.abs(walk) > 4) moved = true;
+      reviewsTrack.scrollLeft = startScrollLeft - walk;
+    });
+
+    // Prevent accidental link navigation while dragging
+    reviewsTrack.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        if (moved) {
+          e.preventDefault();
+        }
+      });
+    });
+
+    reviewsTrack.addEventListener("scroll", function () {
+      updateReviewsControls();
+    }, { passive: true });
+
+    window.addEventListener("resize", updateReviewsControls, { passive: true });
+    setTimeout(updateReviewsControls, 100);
+  }
+
   /* -------- Check for auto-print parameter -------- */
   if (window.location.search.indexOf("print=true") !== -1) {
     window.addEventListener("load", function () {

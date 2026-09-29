@@ -120,6 +120,12 @@
       border: 1px solid rgba(31, 122, 92, 0.3);
     }
 
+    .status-badge.error {
+      background: #FEE2E2;
+      color: #DC2626;
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
     .status-badge .indicator {
       width: 8px;
       height: 8px;
@@ -390,6 +396,15 @@
       max-width: 250px;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    td[colspan] {
+      white-space: normal !important;
+      max-width: none !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+      padding: 0 !important;
+      background: var(--bg-surface) !important;
     }
 
     tr:nth-child(even) td {
@@ -1060,6 +1075,10 @@
           <svg class="icon" style="stroke: var(--bg-base);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           Export CSV
         </button>
+        <a id="btnOpenLeadsSheet" href="#" target="_blank" class="btn btn-secondary" title="Open Client Check-In Google Sheet" style="display:none; align-items:center; gap:5px;">
+          <svg class="icon" style="width:14px;height:14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Open Sheet
+        </a>
       </div>
 
       <!-- Leads Table Grid -->
@@ -1135,9 +1154,22 @@
           <svg class="icon" style="stroke: var(--bg-base);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           Export CSV
         </button>
+        <a id="btnOpenCareersSheet" href="#" target="_blank" class="btn btn-secondary" title="Open Job Applications Google Sheet" style="display:none; align-items:center; gap:5px;">
+          <svg class="icon" style="width:14px;height:14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Open Sheet
+        </a>
       </div>
 
-      <!-- Careers Table Grid -->
+      <!-- Live Debug Status Bar -->
+      <div id="careersDebugBar" style="background: #F0F9FF; border: 1px solid #BAE6FD; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #0369A1; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <span id="careersDebugText">Initializing...</span>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn btn-secondary" style="padding: 3px 10px; font-size: 11px;" onclick="forceReloadCareers()">🔄 Force Reload</button>
+          <button class="btn btn-secondary" style="padding: 3px 10px; font-size: 11px;" onclick="loadCareersDemo(true)">📋 Load Demo</button>
+        </div>
+      </div>
+
+
       <div class="table-container" id="careersTableContainer">
         <table id="careersTable">
           <thead>
@@ -1196,21 +1228,48 @@
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label for="leadsScriptUrlInput">Client Leads Web App URL</label>
+        <label for="leadsScriptUrlInput" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Client Leads Web App URL</span>
+          <button type="button" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;" onclick="testLeadsConnection()">Test URL</button>
+        </label>
         <input type="text" id="leadsScriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
+        <div id="leadsTestFeedback" style="display:none; font-size: 12px; margin-top: 6px; padding: 6px 10px; border-radius: 6px;"></div>
         <p class="form-help">
           Paste the web app URL generated after deploying your Google Apps Script for the Client Leads sheet.
         </p>
       </div>
-      <div class="form-group" style="margin-top: 16px;">
-        <label for="careersScriptUrlInput">Job Applications Web App URL</label>
+      <div class="form-group" style="margin-top: 12px;">
+        <label for="leadsSheetUrlInput" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Client Leads Google Sheet URL <span style="font-size:10px; color:var(--text-muted); font-weight:400;">(optional — for Open Sheet button)</span></span>
+          <a id="leadsSheetPreviewLink" href="#" target="_blank" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px; display:none;">Open Sheet ↗</a>
+        </label>
+        <input type="text" id="leadsSheetUrlInput" placeholder="https://docs.google.com/spreadsheets/d/..." oninput="previewSheetLink('leads')">
+        <p class="form-help">Paste the Google Sheets URL directly from your browser's address bar.</p>
+      </div>
+      <div class="form-group" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+        <label for="careersScriptUrlInput" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Job Applications Web App URL</span>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;" onclick="useDefaultCareersUrl()">Default URL</button>
+            <button type="button" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px;" onclick="testCareersConnection()">Test URL</button>
+          </div>
+        </label>
         <input type="text" id="careersScriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
+        <div id="careersTestFeedback" style="display:none; font-size: 12px; margin-top: 6px; padding: 6px 10px; border-radius: 6px;"></div>
         <p class="form-help">
           Paste the web app URL generated after deploying your Google Apps Script for the Job Applications sheet.
         </p>
       </div>
+      <div class="form-group" style="margin-top: 12px;">
+        <label for="careersSheetUrlInput" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Job Applications Google Sheet URL <span style="font-size:10px; color:var(--text-muted); font-weight:400;">(optional — for Open Sheet button)</span></span>
+          <a id="careersSheetPreviewLink" href="#" target="_blank" class="btn btn-secondary" style="padding: 2px 8px; font-size: 11px; display:none;">Open Sheet ↗</a>
+        </label>
+        <input type="text" id="careersSheetUrlInput" placeholder="https://docs.google.com/spreadsheets/d/..." oninput="previewSheetLink('careers')">
+        <p class="form-help">Paste the Google Sheets URL directly from your browser's address bar.</p>
+      </div>
       <p class="form-help" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px;">
-        Leave fields empty to run in simulated mode. Need backend code? Refer to the <a href="file:///c:/Users/TRILOSAN%20%20BORO/Desktop/Ampire/BigMind/camrinmoy-website/apps-script-source.js" target="_blank">setup instructions script file</a> in the project directory.
+        Leave fields empty to run in simulated mode. Need backend code? Refer to <strong>apps-script-careers.js</strong> and <strong>apps-script-leads.js</strong> in your project.
       </p>
     </div>
     <div class="modal-footer">
@@ -1374,6 +1433,7 @@
     if (isAuth) {
       overlay.classList.add("hidden");
       initApp();
+      updateSheetButtons();
     } else {
       overlay.classList.remove("hidden");
     }
@@ -1424,7 +1484,12 @@
 
   // Default production script URLs fallbacks
   const DEFAULT_LEADS_URL = "https://script.google.com/macros/s/AKfycbxLgAOtpmYwrgnbpfBQRLIsQg2I6WGp-O7ybOzKb-pKmvEu7Xtqhx1hJD1VzfhmUWfB/exec";
-  const DEFAULT_CAREERS_URL = ""; // Empty by default
+  const DEFAULT_CAREERS_URL = "https://script.google.com/macros/s/AKfycbw-rCx5EY0crGgmia8GGeFHIxvSF-5lrF0owIzWdPy__K6krDxioyMHvkJq_wt6az8g/exec";
+
+  // Connection states
+  let leadsSyncState = "simulated"; // 'live' | 'simulated' | 'error' | 'syncing'
+  let careersSyncState = "simulated"; // 'live' | 'simulated' | 'error' | 'syncing'
+  let careersFetchError = "";
 
   function initApp() {
     // Delete obsolete key to prevent endpoint cross-contamination
@@ -1433,19 +1498,25 @@
     const leadsUrl = localStorage.getItem("LEADS_SCRIPT_URL") || DEFAULT_LEADS_URL;
     const careersUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_CAREERS_URL;
 
-    updateConnectionStatusDisplay();
-
     // Fetch leads
     if (leadsUrl && leadsUrl.trim().length > 0) {
+      leadsSyncState = "syncing";
+      updateConnectionStatusDisplay();
       fetchLiveLeads(leadsUrl);
     } else {
+      leadsSyncState = "simulated";
+      updateConnectionStatusDisplay();
       loadLeadsDemo();
     }
 
     // Fetch careers
     if (careersUrl && careersUrl.trim().length > 0) {
+      careersSyncState = "syncing";
+      updateConnectionStatusDisplay();
       fetchLiveApplications(careersUrl);
     } else {
+      careersSyncState = "simulated";
+      updateConnectionStatusDisplay();
       loadCareersDemo();
     }
   }
@@ -1454,24 +1525,21 @@
     const statusBadge = document.getElementById("connStatus");
     const textNode = statusBadge.querySelector(".status-text");
 
-    if (currentDashboardMode === "leads") {
-      const leadsUrl = localStorage.getItem("LEADS_SCRIPT_URL") || DEFAULT_LEADS_URL;
-      if (leadsUrl && leadsUrl.trim().length > 0) {
-        statusBadge.className = "status-badge live";
-        textNode.textContent = "Live Connect (Leads)";
-      } else {
-        statusBadge.className = "status-badge simulated";
-        textNode.textContent = "Simulated (Leads)";
-      }
+    const activeState = currentDashboardMode === "leads" ? leadsSyncState : careersSyncState;
+    const modeLabel = currentDashboardMode === "leads" ? "Leads" : "Careers";
+
+    if (activeState === "syncing") {
+      statusBadge.className = "status-badge simulated";
+      textNode.innerHTML = `<span class="spinner" style="width: 12px; height: 12px; border-width: 2px; margin-right: 6px;"></span> Syncing (${modeLabel})...`;
+    } else if (activeState === "live") {
+      statusBadge.className = "status-badge live";
+      textNode.textContent = `Live Connect (${modeLabel})`;
+    } else if (activeState === "error") {
+      statusBadge.className = "status-badge error";
+      textNode.textContent = `Sync Error (${modeLabel})`;
     } else {
-      const careersUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_CAREERS_URL;
-      if (careersUrl && careersUrl.trim().length > 0) {
-        statusBadge.className = "status-badge live";
-        textNode.textContent = "Live Connect (Careers)";
-      } else {
-        statusBadge.className = "status-badge simulated";
-        textNode.textContent = "Simulated (Careers)";
-      }
+      statusBadge.className = "status-badge simulated";
+      textNode.textContent = `Simulated (${modeLabel})`;
     }
   }
 
@@ -1487,7 +1555,7 @@
     }
   }
 
-  function loadCareersDemo() {
+  function loadCareersDemo(previewOnly = false) {
     // Load local submissions + mock apps
     let localApps = [];
     try {
@@ -1495,19 +1563,15 @@
     } catch(e){}
     rawApplications = [...localApps, ...MOCK_APPLICATIONS];
     filteredApplications = [...rawApplications];
+    if (previewOnly) {
+      showToast("Loaded 4 demo candidates into preview view.", "success");
+    }
     if (currentDashboardMode === "careers") {
       updateCareersUI();
     }
   }
 
   function fetchLiveLeads(url) {
-    const statusBadge = document.getElementById("connStatus");
-    const textNode = statusBadge.querySelector(".status-text");
-    
-    if (currentDashboardMode === "leads") {
-      textNode.innerHTML = '<span class="spinner" style="width: 12px; height: 12px; border-width: 2px; margin-right: 6px;"></span> Syncing...';
-    }
-    
     const requestUrl = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
 
     fetch(requestUrl)
@@ -1516,13 +1580,13 @@
         return response.json();
       })
       .then(data => {
-        updateConnectionStatusDisplay();
         if (Array.isArray(data)) {
+          leadsSyncState = "live";
+          updateConnectionStatusDisplay();
           rawLeads = data;
           filteredLeads = [...rawLeads];
-          if (currentDashboardMode === "leads") {
-            updateDashboardUI();
-          }
+          // Always update — regardless of active tab, so data is ready when user switches
+          updateDashboardUI();
           showToast(`Synced ${data.length} client check-ins`, "success");
         } else {
           throw new Error("Response was not a JSON array");
@@ -1530,45 +1594,63 @@
       })
       .catch(err => {
         console.error("Fetch leads failed", err);
+        leadsSyncState = "error";
         updateConnectionStatusDisplay();
-        showToast("Leads sync failed. Loading simulated database...", "error");
+        showToast("Leads sync failed: " + (err.message || "Network / CORS error") + ". Showing simulated data.", "error");
         loadLeadsDemo();
       });
   }
 
   function fetchLiveApplications(url) {
-    const statusBadge = document.getElementById("connStatus");
-    const textNode = statusBadge.querySelector(".status-text");
+    careersSyncState = "syncing";
+    updateConnectionStatusDisplay();
+    updateCareersDebugBar();
 
-    if (currentDashboardMode === "careers") {
-      textNode.innerHTML = '<span class="spinner" style="width: 12px; height: 12px; border-width: 2px; margin-right: 6px;"></span> Syncing...';
+    const tbody = document.getElementById("careersTableBody");
+    if (tbody && currentDashboardMode === "careers" && rawApplications.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state" style="padding: 30px;"><span class="spinner" style="width: 14px; height: 14px; border-width: 2px; margin-right: 8px;"></span> Fetching live job applications from Google Sheets...</div></td></tr>`;
     }
 
     const requestUrl = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+    updateCareersDebugBar("Fetching: " + requestUrl.substring(0, 80) + "...");
 
     fetch(requestUrl)
       .then(response => {
         if (!response.ok) throw new Error("HTTP " + response.status);
-        return response.json();
+        return response.text();
       })
-      .then(data => {
-        updateConnectionStatusDisplay();
+      .then(text => {
+        updateCareersDebugBar("Raw response length: " + text.length + " chars. Parsing JSON...");
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch(parseErr) {
+          throw new Error("JSON parse failed: " + parseErr.message + " — Raw: " + text.substring(0, 100));
+        }
         if (Array.isArray(data)) {
+          careersSyncState = "live";
+          updateConnectionStatusDisplay();
           rawApplications = data;
           filteredApplications = [...rawApplications];
-          if (currentDashboardMode === "careers") {
-            updateCareersUI();
-          }
+          updateCareersDebugBar("✓ Fetched " + data.length + " candidates. Rendering rows...");
+          updateCareersUI();
           showToast(`Synced ${data.length} job applications`, "success");
+        } else if (data && data.status === "error") {
+          throw new Error("Apps Script error: " + (data.message || JSON.stringify(data)));
         } else {
-          throw new Error("Response was not a JSON array");
+          throw new Error("Not an array. Got: " + JSON.stringify(data).substring(0, 100));
         }
       })
       .catch(err => {
         console.error("Fetch applications failed", err);
+        careersSyncState = "error";
+        careersFetchError = err.message || "Network / CORS error";
         updateConnectionStatusDisplay();
-        showToast("Careers sync failed. Loading simulated database...", "error");
-        loadCareersDemo();
+        updateCareersDebugBar("✕ Fetch FAILED: " + careersFetchError, true);
+        showToast("Careers sync failed: " + careersFetchError, "error");
+        rawApplications = [];
+        filteredApplications = [];
+        updateCareersUI();
       });
   }
 
@@ -1594,7 +1676,20 @@
     if (mode === "leads") {
       updateDashboardUI();
     } else {
-      updateCareersUI();
+      const careersUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_CAREERS_URL;
+      if (careersUrl && careersUrl.trim().length > 0 && careersSyncState !== "live" && careersSyncState !== "syncing") {
+        // Not yet fetched — go get the live data
+        fetchLiveApplications(careersUrl);
+      } else if (careersSyncState === "live" && rawApplications.length > 0) {
+        // Data already fetched and available — just re-render the table
+        filteredApplications = [...rawApplications];
+        updateCareersUI();
+      } else if (careersSyncState === "syncing") {
+        // Fetch is in flight — show spinner state
+        renderCareersTableRows();
+      } else {
+        updateCareersUI();
+      }
     }
   }
 
@@ -1900,15 +1995,45 @@
   }
 
   // --- CAREERS DASHBOARD FUNCTIONS ---
+
+  function updateCareersDebugBar(msg, isError) {
+    const bar = document.getElementById("careersDebugBar");
+    const txt = document.getElementById("careersDebugText");
+    if (!bar || !txt) return;
+    const statusMsg = msg || (
+      careersSyncState === "syncing" ? "⏳ Fetching from Google Sheets..." :
+      careersSyncState === "live"    ? `✓ Live — ${rawApplications.length} candidate(s) loaded` :
+      careersSyncState === "error"   ? "✕ Fetch failed — " + careersFetchError :
+                                       "Simulated mode (no URL connected)"
+    );
+    txt.textContent = statusMsg;
+    bar.style.background = isError ? "#FEF2F2" : (careersSyncState === "live" && !isError ? "#F0FDF4" : "#F0F9FF");
+    bar.style.borderColor = isError ? "#FCA5A5" : (careersSyncState === "live" && !isError ? "#86EFAC" : "#BAE6FD");
+    bar.style.color = isError ? "#DC2626" : (careersSyncState === "live" && !isError ? "#166534" : "#0369A1");
+  }
+
+  function forceReloadCareers() {
+    const careersUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_CAREERS_URL;
+    if (!careersUrl) {
+      updateCareersDebugBar("No URL configured — open API Settings to add one.", true);
+      return;
+    }
+    rawApplications = [];
+    filteredApplications = [];
+    careersSyncState = "simulated";
+    fetchLiveApplications(careersUrl);
+  }
+
   function updateCareersUI() {
-    // Normalize data structure for all candidates
+    // Normalize data structure for all candidates (guarantee string types)
     rawApplications.forEach(a => {
-      a.fullName = a.fullName || a.name || a.Name || "";
-      a.email = a.email || a.Email || "";
-      a.phone = a.phone || a.Phone || a.phoneNumber || a.PhoneNumber || a.whatsapp || a.Whatsapp || "";
-      a.message = a.message || a.Message || a.coverLetter || a.CoverLetter || "";
-      a.resumeName = a.resumeName || a.resumeFileName || a.ResumeFileName || "resume.pdf";
-      a.resumeUrl = a.resumeUrl || a.resumeLink || a.ResumeLink || "#";
+      a.fullName = String(a.fullName || a.name || a.Name || "");
+      a.email = String(a.email || a.Email || "");
+      a.phone = String(a.phone !== undefined && a.phone !== null ? a.phone : (a.Phone || a.phoneNumber || a.PhoneNumber || a.whatsapp || a.Whatsapp || ""));
+      a.message = String(a.message || a.Message || a.coverLetter || a.CoverLetter || "");
+      a.resumeName = String(a.resumeName || a.resumeFileName || a.ResumeFileName || "resume.pdf");
+      a.resumeUrl = String(a.resumeUrl || a.resumeLink || a.ResumeLink || a["Resume File Link"] || "#");
+      a.timestamp = a.timestamp || a.date || a.Time || a.Date || a.Timestamp || "";
     });
 
     const total = rawApplications.length;
@@ -1925,6 +2050,7 @@
     document.getElementById("statCareersThisWeek").textContent = thisWeekCount;
     document.getElementById("statCareersNewToday").textContent = newToday;
 
+    updateCareersDebugBar();
     handleCareersSearchFilter();
 
     setTimeout(() => {
@@ -1933,13 +2059,15 @@
   }
 
   function handleCareersSearchFilter() {
-    const query = document.getElementById("careersSearchInput").value.toLowerCase();
+    const input = document.getElementById("careersSearchInput");
+    const query = input ? input.value.trim().toLowerCase() : "";
 
     filteredApplications = rawApplications.filter(app => {
-      const name = (app.fullName || "").toLowerCase();
-      const email = (app.email || "").toLowerCase();
-      const phone = (app.phone || "");
-      const msg = (app.message || "").toLowerCase();
+      if (!query) return true;
+      const name = String(app.fullName || "").toLowerCase();
+      const email = String(app.email || "").toLowerCase();
+      const phone = String(app.phone || "").toLowerCase();
+      const msg = String(app.message || "").toLowerCase();
 
       return name.includes(query) || email.includes(query) || phone.includes(query) || msg.includes(query);
     });
@@ -1949,74 +2077,137 @@
 
   function renderCareersTableRows() {
     const tbody = document.getElementById("careersTableBody");
+    if (!tbody) return;
     tbody.innerHTML = "";
 
     if (filteredApplications.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state">No candidates match the active filters or dataset is empty.</div></td></tr>`;
+      if (careersSyncState === "syncing") {
+        tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state" style="padding: 30px;"><span class="spinner" style="width: 14px; height: 14px; border-width: 2px; margin-right: 8px;"></span> Fetching live job applications from Google Sheets...</div></td></tr>`;
+      } else if (careersSyncState === "error") {
+        tbody.innerHTML = `<tr><td colspan="7">
+          <div style="background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 8px; padding: 24px; text-align: center; margin: 12px auto; max-width: 600px;">
+            <div style="font-size: 28px; margin-bottom: 6px;">⚠️</div>
+            <h4 style="color: #991B1B; margin: 0 0 6px 0; font-size: 15px; font-weight: 600;">Failed to Fetch From Google Sheets</h4>
+            <p style="color: #DC2626; font-size: 12.5px; margin: 0 0 14px 0;"><strong>Error:</strong> ${escapeHtml(careersFetchError || "Could not connect to Google Apps Script Web App")}</p>
+            <div style="background: #FFF; border-radius: 6px; padding: 12px 16px; font-size: 12px; color: #4B5563; text-align: left; margin-bottom: 16px; line-height: 1.6; border: 1px solid #FEE2E2;">
+              <strong>Quick Checklist to fix:</strong><br>
+              1. In your Google Sheet, open <strong>Extensions → Apps Script</strong>.<br>
+              2. Click <strong>Deploy → Manage deployments</strong> → Click the <strong>pencil (Edit)</strong> icon.<br>
+              3. Set <strong>Who has access</strong> to <strong>"Anyone"</strong> (NOT "Only myself").<br>
+              4. In the Version dropdown, choose <strong>"New version"</strong>, then click <strong>Deploy</strong>.<br>
+              5. Copy the URL, open <strong>API Settings</strong> above, and click <strong>Test URL</strong>.
+            </div>
+            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+              <button class="btn btn-primary" style="font-size: 12px;" onclick="refreshData()">Retry Sync</button>
+              <button class="btn btn-secondary" style="font-size: 12px;" onclick="openConfigModal()">Open API Settings</button>
+              <button class="btn btn-secondary" style="font-size: 12px;" onclick="loadCareersDemo(true)">Load Demo Data Instead</button>
+            </div>
+          </div>
+        </td></tr>`;
+      } else if (careersSyncState === "live" && rawApplications.length === 0) {
+        const currentUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_CAREERS_URL;
+        tbody.innerHTML = `<tr><td colspan="7">
+          <div class="empty-state" style="padding: 36px 16px; text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 8px;">📋</div>
+            <h4 style="margin: 0 0 6px; color: var(--text-main); font-size: 16px; font-family: 'Fraunces', serif;">Connected to Live Google Sheet</h4>
+            <p style="margin: 0 0 6px; color: var(--text-muted); font-size: 13px;">Your Google Sheet is connected successfully, but <strong>0 candidate application rows</strong> were returned from the sheet.</p>
+            <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 6px; padding: 8px 12px; margin: 12px auto; max-width: 550px; font-size: 11.5px; color: var(--text-muted); word-break: break-all;">
+              <strong>Active Endpoint:</strong> ${escapeHtml(currentUrl)}
+            </div>
+            <p style="margin: 0 0 16px; color: var(--text-muted); font-size: 12.5px;">If you haven't received applications yet, you can submit a test candidate or load demo candidates below.</p>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+              <a href="careers.html" target="_blank" class="btn btn-secondary" style="font-size: 12px;">Submit Test Application on Careers Page</a>
+              <button class="btn btn-primary" style="font-size: 12px;" onclick="loadCareersDemo(true)">Load Demo Candidates for Preview</button>
+              <button class="btn btn-secondary" style="font-size: 12px;" onclick="resetToDefaultCareersUrl()">Connect to Verified Test Sheet (1 Candidate)</button>
+              <button class="btn btn-secondary" style="font-size: 12px;" onclick="openConfigModal()">Open API Settings</button>
+            </div>
+          </div>
+        </td></tr>`;
+      } else if (careersSyncState === "simulated" && !localStorage.getItem("CAREERS_SCRIPT_URL") && !DEFAULT_CAREERS_URL) {
+        tbody.innerHTML = `<tr><td colspan="7">
+          <div style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 8px; padding: 24px; text-align: center; margin: 12px auto; max-width: 550px;">
+            <div style="font-size: 28px; margin-bottom: 6px;">🔗</div>
+            <h4 style="color: #92400E; margin: 0 0 6px 0; font-size: 15px;">Google Sheet Web App URL Not Connected</h4>
+            <p style="color: #78350F; font-size: 12.5px; margin: 0 0 14px 0;">To fetch your live candidates from Google Sheets, paste your deployed Web App URL into API Settings.</p>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+              <button class="btn btn-primary" style="font-size: 12px;" onclick="openConfigModal()">Configure URL</button>
+              <button class="btn btn-secondary" style="font-size: 12px;" onclick="loadCareersDemo(true)">Preview Demo Candidates</button>
+            </div>
+          </div>
+        </td></tr>`;
+      } else {
+        tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state">No candidates match the active filters or dataset is empty.</div></td></tr>`;
+      }
       return;
     }
 
     filteredApplications.forEach((app) => {
-      const tr = document.createElement("tr");
-      tr.style.cursor = "pointer";
-      
-      tr.onclick = (e) => {
-        if (!e.target.closest(".action-cell-btn") && !e.target.closest("a")) {
-          openApplicationDetails(app);
+      try {
+        const tr = document.createElement("tr");
+        tr.style.cursor = "pointer";
+        
+        tr.onclick = (e) => {
+          if (!e.target.closest(".action-cell-btn") && !e.target.closest("a")) {
+            openApplicationDetails(app);
+          }
+        };
+
+        let dateStr = "N/A";
+        if (app.timestamp) {
+          const d = new Date(app.timestamp);
+          if (!isNaN(d.getTime())) {
+            dateStr = d.toLocaleDateString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+          }
         }
-      };
 
-      let dateStr = "N/A";
-      if (app.timestamp) {
-        const d = new Date(app.timestamp);
-        dateStr = d.toLocaleDateString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+        let msg = String(app.message || "");
+        if (msg.length > 50) {
+          msg = msg.substring(0, 47) + "...";
+        }
+
+        const resumeUrl = String(app.resumeUrl || app.resumeLink || app.ResumeFileLink || app["Resume File Link"] || app.resumeFileLink || app.resumelink || "#");
+        let resumeColContent = "";
+        if (resumeUrl && resumeUrl !== "#" && resumeUrl.startsWith("http")) {
+          resumeColContent = `<a href="${resumeUrl}" target="_blank" class="btn btn-secondary" style="padding: 4px 8px; font-size: 11.5px; display: inline-flex; gap: 4px; align-items: center;" title="View Uploaded Resume in Google Drive">
+            <svg class="icon" style="width: 12px; height: 12px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            View
+          </a>`;
+        } else if (app.resumeBase64) {
+          resumeColContent = `<a href="data:${app.resumeMimeType || 'application/pdf'};base64,${app.resumeBase64}" download="${escapeHtml(app.resumeName || 'resume.pdf')}" class="btn btn-secondary" style="padding: 4px 8px; font-size: 11.5px; display: inline-flex; gap: 4px; align-items: center;" title="Download Attached Resume">
+            <svg class="icon" style="width: 12px; height: 12px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            PDF
+          </a>`;
+        } else {
+          resumeColContent = `<span style="font-size: 12px; color: var(--text-muted); font-style: italic;">No File</span>`;
+        }
+
+        const emailSubject = encodeURIComponent("Job application follow-up — Mrinmoy & Co.");
+        const emailBody = encodeURIComponent(`Hi ${app.fullName || ""},\n\nThank you for applying to Mrinmoy & Co. We received your resume and would like to schedule a quick screening call. Please share your availability.\n\nWarm regards,\nCA Mrinmoy Pathak`);
+        const emailMailto = `mailto:${encodeURIComponent(app.email || "")}?subject=${emailSubject}&body=${emailBody}`;
+
+        let cleanPhone = String(app.phone || "").replace(/[^0-9]/g, "");
+        if (cleanPhone.length === 10) cleanPhone = "91" + cleanPhone;
+        const waMsg = encodeURIComponent(`Hi ${app.fullName || ""}, this is the team at Mrinmoy & Co. We received your resume. Let us know when you're free for a brief call!`);
+        const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${waMsg}`;
+
+        tr.innerHTML = `
+          <td>${dateStr}</td>
+          <td style="font-weight: 600; color: var(--text-main);">${escapeHtml(app.fullName || "Candidate")}</td>
+          <td>${escapeHtml(app.email || "-")}</td>
+          <td>${escapeHtml(app.phone || "-")}</td>
+          <td style="font-size:12.5px; color: var(--text-muted);" title="${escapeHtml(app.message || "")}">${escapeHtml(msg || "-")}</td>
+          <td>${resumeColContent}</td>
+          <td class="action-cell-btn">
+            <div style="display:flex; gap:6px;">
+              <a href="${emailMailto}" class="btn btn-secondary" style="padding: 4px 8px; font-size:11px;" title="Send Email">Email</a>
+              <a href="${waUrl}" target="_blank" class="btn btn-primary" style="padding: 4px 8px; font-size:11px;" title="Message on WhatsApp">WhatsApp</a>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      } catch (rowErr) {
+        console.error("Error rendering row:", rowErr, app);
       }
-
-      let msg = app.message || "";
-      if (msg.length > 50) {
-        msg = msg.substring(0, 47) + "...";
-      }
-
-      const resumeUrl = app.resumeUrl || app.resumeLink || app.ResumeFileLink || app["Resume File Link"] || app.resumeFileLink || app.resumelink || "#";
-      let resumeColContent = "";
-      if (resumeUrl && resumeUrl !== "#" && resumeUrl.startsWith("http")) {
-        resumeColContent = `<a href="${resumeUrl}" target="_blank" class="btn btn-secondary" style="padding: 4px 8px; font-size: 11.5px; display: inline-flex; gap: 4px; align-items: center;" title="View Uploaded Resume in Google Drive">
-          <svg class="icon" style="width: 12px; height: 12px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-          View
-        </a>`;
-      } else if (app.resumeBase64) {
-        resumeColContent = `<a href="data:${app.resumeMimeType || 'application/pdf'};base64,${app.resumeBase64}" download="${app.resumeName || 'resume.pdf'}" class="btn btn-secondary" style="padding: 4px 8px; font-size: 11.5px; display: inline-flex; gap: 4px; align-items: center;" title="Download Attached Resume">
-          <svg class="icon" style="width: 12px; height: 12px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          PDF
-        </a>`;
-      } else {
-        resumeColContent = `<span style="font-size: 12px; color: var(--text-muted); font-style: italic;">Simulated</span>`;
-      }
-
-      const emailSubject = encodeURIComponent("Job application follow-up — Mrinmoy & Co.");
-      const emailBody = encodeURIComponent(`Hi ${app.fullName || ""},\n\nThank you for applying to Mrinmoy & Co. We received your resume and would like to schedule a quick screening call. Please share your availability.\n\nWarm regards,\nCA Mrinmoy Pathak`);
-      const emailMailto = `mailto:${app.email}?subject=${emailSubject}&body=${emailBody}`;
-
-      let cleanPhone = (app.phone || "").replace(/[^0-9]/g, "");
-      if (cleanPhone.length === 10) cleanPhone = "91" + cleanPhone;
-      const waMsg = encodeURIComponent(`Hi ${app.fullName}, this is the team at Mrinmoy & Co. We received your resume. Let us know when you're free for a brief call!`);
-      const waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${waMsg}`;
-
-      tr.innerHTML = `
-        <td>${dateStr}</td>
-        <td style="font-weight: 600; color: var(--text-main);">${escapeHtml(app.fullName || "")}</td>
-        <td>${escapeHtml(app.email || "")}</td>
-        <td>${escapeHtml(app.phone || "")}</td>
-        <td style="font-size:12.5px; color: var(--text-muted);" title="${escapeHtml(app.message || "")}">${escapeHtml(msg)}</td>
-        <td>${resumeColContent}</td>
-        <td class="action-cell-btn">
-          <div style="display:flex; gap:6px;">
-            <a href="${emailMailto}" class="btn btn-secondary" style="padding: 4px 8px; font-size:11px;" title="Send Email">Email</a>
-            <a href="${waUrl}" target="_blank" class="btn btn-primary" style="padding: 4px 8px; font-size:11px;" title="Message on WhatsApp">WhatsApp</a>
-          </div>
-        </td>
-      `;
-      tbody.appendChild(tr);
     });
   }
 
@@ -2109,7 +2300,10 @@
     const dateLabels = Object.keys(dateCounts).reverse();
     const dateValues = Object.values(dateCounts).reverse();
 
-    const ctxTimeline = document.getElementById("timelineChart").getContext("2d");
+    const canvas = document.getElementById("timelineChart");
+    if (!canvas) return;
+    const ctxTimeline = canvas.getContext("2d");
+    if (!ctxTimeline) return;
     if (timelineChartInstance) timelineChartInstance.destroy();
     timelineChartInstance = new Chart(ctxTimeline, {
       type: "bar",
@@ -2184,7 +2378,139 @@
 
     document.getElementById("leadsScriptUrlInput").value = leadsUrl;
     document.getElementById("careersScriptUrlInput").value = careersUrl;
+
+    // Populate sheet URL fields
+    const leadsSheet = localStorage.getItem("LEADS_SHEET_URL") || "";
+    const careersSheet = localStorage.getItem("CAREERS_SHEET_URL") || "";
+    document.getElementById("leadsSheetUrlInput").value = leadsSheet;
+    document.getElementById("careersSheetUrlInput").value = careersSheet;
+    previewSheetLink("leads");
+    previewSheetLink("careers");
+    
+    // Clear previous test feedbacks
+    const lf = document.getElementById("leadsTestFeedback");
+    const cf = document.getElementById("careersTestFeedback");
+    if (lf) lf.style.display = "none";
+    if (cf) cf.style.display = "none";
+
     openModal("configModal");
+  }
+
+  function testLeadsConnection() {
+    const input = document.getElementById("leadsScriptUrlInput");
+    const feedback = document.getElementById("leadsTestFeedback");
+    const url = input.value.trim();
+
+    if (!url) {
+      feedback.style.display = "block";
+      feedback.style.background = "#FEF3C7";
+      feedback.style.color = "#92400E";
+      feedback.textContent = "Please enter a URL first.";
+      return;
+    }
+
+    feedback.style.display = "block";
+    feedback.style.background = "#EFF6FF";
+    feedback.style.color = "#1D4ED8";
+    feedback.innerHTML = '<span class="spinner" style="width: 10px; height: 10px; border-width: 2px; margin-right: 4px;"></span> Testing connection...';
+
+    const testUrl = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+    fetch(testUrl)
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP Status " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data)) {
+          feedback.style.background = "#DCFCE7";
+          feedback.style.color = "#166534";
+          feedback.textContent = `✓ Connection Successful! Found ${data.length} check-in entries in Google Sheets.`;
+        } else if (data && data.status === "error") {
+          feedback.style.background = "#FEE2E2";
+          feedback.style.color = "#DC2626";
+          feedback.textContent = `Apps Script Error: ${data.message}`;
+        } else {
+          feedback.style.background = "#FEF3C7";
+          feedback.style.color = "#92400E";
+          feedback.textContent = "Received response, but unexpected format.";
+        }
+      })
+      .catch(err => {
+        feedback.style.background = "#FEE2E2";
+        feedback.style.color = "#DC2626";
+        feedback.innerHTML = `<strong>✕ Connection Failed:</strong> ${escapeHtml(err.message)}.<br><span style="font-size: 11px;">Verify that "Who has access" is set to "Anyone" and the Web App is authorized.</span>`;
+      });
+  }
+
+  function testCareersConnection() {
+    const input = document.getElementById("careersScriptUrlInput");
+    const feedback = document.getElementById("careersTestFeedback");
+    const url = input.value.trim();
+
+    if (!url) {
+      feedback.style.display = "block";
+      feedback.style.background = "#FEF3C7";
+      feedback.style.color = "#92400E";
+      feedback.textContent = "Please enter a URL first.";
+      return;
+    }
+
+    feedback.style.display = "block";
+    feedback.style.background = "#EFF6FF";
+    feedback.style.color = "#1D4ED8";
+    feedback.innerHTML = '<span class="spinner" style="width: 10px; height: 10px; border-width: 2px; margin-right: 4px;"></span> Testing connection...';
+
+    const testUrl = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+    fetch(testUrl)
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP Status " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data)) {
+          feedback.style.background = "#DCFCE7";
+          feedback.style.color = "#166534";
+          feedback.textContent = `✓ Connection Successful! Found ${data.length} candidate applications in Google Sheets.`;
+          
+          // Auto-save and sync immediately
+          localStorage.setItem("CAREERS_SCRIPT_URL", url);
+          careersSyncState = "live";
+          rawApplications = data;
+          filteredApplications = [...rawApplications];
+          updateConnectionStatusDisplay();
+          if (currentDashboardMode === "careers") {
+            updateCareersUI();
+          }
+          showToast(`Synced ${data.length} job applications from Google Sheets`, "success");
+        } else if (data && data.status === "error") {
+          feedback.style.background = "#FEE2E2";
+          feedback.style.color = "#DC2626";
+          feedback.textContent = `Apps Script Error: ${data.message}`;
+        } else {
+          feedback.style.background = "#FEF3C7";
+          feedback.style.color = "#92400E";
+          feedback.textContent = "Received response, but unexpected format.";
+        }
+      })
+      .catch(err => {
+        feedback.style.background = "#FEE2E2";
+        feedback.style.color = "#DC2626";
+        feedback.innerHTML = `<strong>✕ Connection Failed:</strong> ${escapeHtml(err.message)}.<br><span style="font-size: 11px;">Verify that "Who has access" is set to "Anyone" in Google Apps Script deployment settings.</span>`;
+      });
+  }
+
+  function useDefaultCareersUrl() {
+    const input = document.getElementById("careersScriptUrlInput");
+    input.value = DEFAULT_CAREERS_URL;
+    testCareersConnection();
+  }
+
+  function resetToDefaultCareersUrl() {
+    localStorage.setItem("CAREERS_SCRIPT_URL", DEFAULT_CAREERS_URL);
+    const input = document.getElementById("careersScriptUrlInput");
+    if (input) input.value = DEFAULT_CAREERS_URL;
+    showToast("Connecting to verified Careers Google Sheet...", "success");
+    fetchLiveApplications(DEFAULT_CAREERS_URL);
   }
 
   function saveConfig() {
@@ -2213,6 +2539,15 @@
     } else {
       localStorage.removeItem("CAREERS_SCRIPT_URL");
     }
+
+    // Save Google Sheet URLs
+    const leadsSheet = document.getElementById("leadsSheetUrlInput").value.trim();
+    const careersSheet = document.getElementById("careersSheetUrlInput").value.trim();
+    if (leadsSheet) localStorage.setItem("LEADS_SHEET_URL", leadsSheet);
+    else localStorage.removeItem("LEADS_SHEET_URL");
+    if (careersSheet) localStorage.setItem("CAREERS_SHEET_URL", careersSheet);
+    else localStorage.removeItem("CAREERS_SHEET_URL");
+    updateSheetButtons();
     
     showToast("Saved connection configurations", "success");
     closeModal("configModal");
@@ -2223,13 +2558,58 @@
     localStorage.removeItem("LEADS_SCRIPT_URL");
     localStorage.removeItem("SCRIPT_URL");
     localStorage.removeItem("CAREERS_SCRIPT_URL");
+    localStorage.removeItem("LEADS_SHEET_URL");
+    localStorage.removeItem("CAREERS_SHEET_URL");
     
     document.getElementById("leadsScriptUrlInput").value = "";
     document.getElementById("careersScriptUrlInput").value = "";
+    document.getElementById("leadsSheetUrlInput").value = "";
+    document.getElementById("careersSheetUrlInput").value = "";
+    updateSheetButtons();
     
     closeModal("configModal");
     showToast("Reset connection configurations to simulation mode", "success");
     initApp();
+  }
+
+  // Show/hide Open Sheet buttons based on saved URLs
+  function updateSheetButtons() {
+    const leadsSheet = localStorage.getItem("LEADS_SHEET_URL") || "";
+    const careersSheet = localStorage.getItem("CAREERS_SHEET_URL") || "";
+
+    const leadsBtn = document.getElementById("btnOpenLeadsSheet");
+    const careersBtn = document.getElementById("btnOpenCareersSheet");
+
+    if (leadsBtn) {
+      if (leadsSheet) {
+        leadsBtn.href = leadsSheet;
+        leadsBtn.style.display = "inline-flex";
+      } else {
+        leadsBtn.style.display = "none";
+      }
+    }
+    if (careersBtn) {
+      if (careersSheet) {
+        careersBtn.href = careersSheet;
+        careersBtn.style.display = "inline-flex";
+      } else {
+        careersBtn.style.display = "none";
+      }
+    }
+  }
+
+  // Live preview of sheet link inside the config modal
+  function previewSheetLink(type) {
+    const input = document.getElementById(type === "leads" ? "leadsSheetUrlInput" : "careersSheetUrlInput");
+    const link  = document.getElementById(type === "leads" ? "leadsSheetPreviewLink" : "careersSheetPreviewLink");
+    if (!input || !link) return;
+    const url = input.value.trim();
+    if (url && url.startsWith("https://docs.google.com/spreadsheets/")) {
+      link.href = url;
+      link.style.display = "inline-flex";
+    } else {
+      link.style.display = "none";
+    }
   }
 
   // Modal handlers

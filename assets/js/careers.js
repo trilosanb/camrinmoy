@@ -5,7 +5,7 @@
   "use strict";
 
   const d = document;
-  const DEFAULT_SCRIPT_URL = "";
+  const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-rCx5EY0crGgmia8GGeFHIxvSF-5lrF0owIzWdPy__K6krDxioyMHvkJq_wt6az8g/exec";
 
   // Elements
   const form = d.getElementById("careersForm");
@@ -171,30 +171,32 @@
           message: message.value.trim(),
           resumeName: attachedFile.name,
           resumeMimeType: attachedFile.type,
-          resumeBase64: fileData.split(",")[1] // Remove metadata prefix
+          resumeBase64: fileData.split(",")[1] // Remove data URL prefix
         };
 
         const targetUrl = localStorage.getItem("CAREERS_SCRIPT_URL") || DEFAULT_SCRIPT_URL;
 
-        // Try submitting to Apps Script
-        const response = await fetch(targetUrl, {
-          method: "POST",
-          mode: "no-cors", // Required for Apps Script redirect bypass if response headers are tricky
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
+        // Submit to Apps Script Web App if configured
+        if (targetUrl && targetUrl.trim().length > 0) {
+          await fetch(targetUrl, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(payload)
+          });
+        }
 
-        // Save locally to simulate success and persist in Dashboard (interactive demonstration)
+        // Save locally to persist immediately in Dashboard
         saveApplicationLocally(payload);
 
         // Success State
         showSuccessState();
       } catch (err) {
         console.error("Submission failed", err);
-        // Save locally anyway as fallback (crucial for local offline/simulated dashboard demonstration)
-        const dummyPayload = {
+        // Save locally anyway as fallback
+        const fallbackPayload = {
           type: "application",
           fullName: name.value.trim(),
           phone: phone.value.trim(),
@@ -203,8 +205,7 @@
           resumeName: attachedFile ? attachedFile.name : "resume.pdf",
           resumeMimeType: attachedFile ? attachedFile.type : "application/pdf"
         };
-        saveApplicationLocally(dummyPayload);
-        
+        saveApplicationLocally(fallbackPayload);
         showSuccessState();
       }
     });

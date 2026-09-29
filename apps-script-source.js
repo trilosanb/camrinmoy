@@ -166,10 +166,10 @@ var CAREER_HEADERS = [
   "Resume File Link"
 ];
 
-function doPostCareers(e) {
+function doPost(e) {
   var lock = LockService.getScriptLock();
   try {
-    lock.waitLock(15000);
+    lock.waitLock(30000);
     
     if (!e || !e.postData || !e.postData.contents) {
       return makeJsonResponse({ status: "error", message: "No data received" }, 400);
@@ -178,10 +178,6 @@ function doPostCareers(e) {
     var data = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName("Applications") || ss.getActiveSheet();
-    
-    if (sheet.getName() === "Sheet1") {
-      sheet.setName("Applications");
-    }
     
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(CAREER_HEADERS);
@@ -194,19 +190,9 @@ function doPostCareers(e) {
     var resumeLink = "";
     if (data.resumeBase64 && data.resumeName) {
       try {
-        var folderId = "18iR2x8VJBbUOcKrQQVLBSs6UiAcqdrHs";
-        var folder;
-        try {
-          folder = DriveApp.getFolderById(folderId);
-        } catch (folderErr) {
-          var folderName = "Careers Resumes";
-          var folders = DriveApp.getFoldersByName(folderName);
-          if (folders.hasNext()) {
-            folder = folders.next();
-          } else {
-            folder = DriveApp.createFolder(folderName);
-          }
-        }
+        var folderName = "Careers Resumes (Mrinmoy & Co)";
+        var folders = DriveApp.getFoldersByName(folderName);
+        var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(folderName);
         
         var decodedBytes = Utilities.base64Decode(data.resumeBase64);
         var fileBlob = Utilities.newBlob(decodedBytes, data.resumeMimeType || "application/pdf", data.resumeName);
@@ -238,12 +224,23 @@ function doPostCareers(e) {
   }
 }
 
-function doGetCareers(e) {
+function doGet(e) {
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getSheetByName("Applications") || ss.getActiveSheet();
+    // Look for Applications sheet or active sheet with data
+    var sheet = ss.getSheetByName("Applications");
+    if (!sheet) {
+      var allSheets = ss.getSheets();
+      for (var s = 0; s < allSheets.length; s++) {
+        if (allSheets[s].getLastRow() > 1) {
+          sheet = allSheets[s];
+          break;
+        }
+      }
+      if (!sheet) sheet = ss.getActiveSheet();
+    }
     
-    if (sheet.getLastRow() === 0) {
+    if (sheet.getLastRow() <= 1) {
       return makeJsonResponse([], 200);
     }
     
@@ -251,25 +248,24 @@ function doGetCareers(e) {
     var headers = values[0];
     var dataList = [];
     
-    var careerMapping = {
-      "Timestamp": "timestamp",
-      "Full Name": "fullName",
-      "Email Address": "email",
-      "Phone Number": "phone",
-      "Message": "message",
-      "Resume File Name": "resumeName",
-      "Resume File Link": "resumeUrl"
-    };
-    
     for (var i = 1; i < values.length; i++) {
       var row = values[i];
+      var isEmpty = row.every(function(cell) { return cell === "" || cell === null; });
+      if (isEmpty) continue;
+
       var record = {};
-      
       for (var j = 0; j < headers.length; j++) {
-        var header = headers[j];
-        var propName = careerMapping[header] || header.replace(/[^a-zA-Z0-9]/g, "");
-        var val = row[j];
+        var h = String(headers[j]).trim().toLowerCase();
+        var propName = h;
+        if (/name/i.test(h)) propName = "fullName";
+        else if (/email/i.test(h)) propName = "email";
+        else if (/phone|mobile|contact|whatsapp/i.test(h)) propName = "phone";
+        else if (/message|cover|note/i.test(h)) propName = "message";
+        else if (/resume\s*name|file\s*name/i.test(h)) propName = "resumeName";
+        else if (/resume|cv|link/i.test(h)) propName = "resumeUrl";
+        else if (/time|date/i.test(h)) propName = "timestamp";
         
+        var val = row[j];
         if (val instanceof Date) {
           val = val.toISOString();
         }
@@ -279,20 +275,17 @@ function doGetCareers(e) {
     }
     
     dataList.sort(function(a, b) {
-      return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+      var tA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+      var tB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+      return tB - tA;
     });
     
     return makeJsonResponse(dataList, 200);
     
   } catch (err) {
-    return makeJsonResponse({ status: "error", message: err.toString() }, 500);
+    return makeJsonResponse({ status: "error", message: err.toString() }, 200);
   }
 }
-
-// Rename doGet / doPost to matches sheet entry points for Career sheet
-// Note: When deploying Template 2, name these standard entry points:
-// function doPost(e) { return doPostCareers(e); }
-// function doGet(e) { return doGetCareers(e); }
 
 
 /* ============================================================================
